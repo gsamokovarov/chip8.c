@@ -13,3 +13,6 @@ struct chip8 {
 };
 
 typedef struct chip8 chip8_t;
+
+chip8_t * chip8_new(void);
+void chip8_free(chip8_t *);
