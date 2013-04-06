@@ -21,6 +21,15 @@ void chip8_fetch_opcode(chip8_t * self) {
                  self->memory[self->program_counter + 1];
 }
 
+void chip8_decode_opcode(chip8_t * self) {
+  switch (self->opcode & 0xF000) {
+  case 0xA000:
+    self->index_register = self->opcode & 0x0FFF;
+    self->program_counter += 2;
+    break;
+  }
+}
+
 void chip8_free(chip8_t * self) {
   free(self);
 }
