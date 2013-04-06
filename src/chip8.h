@@ -14,7 +14,7 @@ struct chip8 {
 
 typedef struct chip8 chip8_t;
 
-unsigned short chip8_hex_font[80] = {
+unsigned char chip8_hex_font[80] = {
   0xF0, // 1111 0000
   0x90, // 1001 0000
   0x90, // 1001 0000
