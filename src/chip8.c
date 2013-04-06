@@ -3,7 +3,6 @@
 #include "chip8.h"
 
 chip8_t * chip8_new(void) {
-  int i;
   chip8_t * self = (chip8_t *) malloc(sizeof(chip8_t));
 
   // The first 512 bytes are used by the interpreter.
