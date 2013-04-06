@@ -113,4 +113,5 @@ unsigned char chip8_hex_font[80] = {
 };
 
 chip8_t * chip8_new(void);
+void chip8_fetch_opcode(chip8_t *);
 void chip8_free(chip8_t *);

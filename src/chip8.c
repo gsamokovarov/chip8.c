@@ -16,6 +16,11 @@ chip8_t * chip8_new(void) {
   return self;
 }
 
+void chip8_fetch_opcode(chip8_t * self) {
+  self->opcode = self->memory[self->program_counter] << 8 |
+                 self->memory[self->program_counter + 1];
+}
+
 void chip8_free(chip8_t * self) {
   free(self);
 }
