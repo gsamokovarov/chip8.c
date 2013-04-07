@@ -104,6 +104,7 @@ int main(int argc, char ** argv) {
   test_instruction_jump();
   test_call();
   test_skip_next_if_vx_is_kk();
+  test_skip_next_if_vx_isnt_kk();
 
   return 0;
 }
