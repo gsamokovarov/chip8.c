@@ -134,6 +134,7 @@ int main(int argc, char ** argv) {
   test_call();
   test_skip_next_if_vx_is_kk();
   test_skip_next_if_vx_isnt_kk();
+  test_skip_next_if_vx_is_vy();
 
   return 0;
 }
