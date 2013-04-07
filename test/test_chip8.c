@@ -15,6 +15,8 @@ void test_clear_screen(void) {
   while (i < 64 * 32) {
     assert(chip8->memory[i++] == 0);
   }
+
+  chip8_free(chip8);
 }
 
 void test_instruction_jump(void) {
@@ -27,6 +29,8 @@ void test_instruction_jump(void) {
   chip8_decode_current_opcode(chip8);
 
   assert(chip8->program_counter == 0x123);
+
+  chip8_free(chip8);
 }
 
 void test_call(void) {
@@ -40,6 +44,8 @@ void test_call(void) {
 
   assert(chip8->stack[chip8->stack_pointer] == 0x200);
   assert(chip8->program_counter == 0x123);
+
+  chip8_free(chip8);
 }
 
 int main(int argc, char ** argv) {
