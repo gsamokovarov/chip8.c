@@ -215,6 +215,22 @@ void test_set_vx_to_vx_and_vy(void) {
   chip8_free(chip8);
 }
 
+void test_set_vx_to_vx_xor_vy(void) {
+  chip8_t * chip8 = chip8_new();
+
+  chip8->memory[0x200] = 0x81;
+  chip8->memory[0x201] = 0x23;
+
+  chip8->registers[1] = 0x11;
+  chip8->registers[2] = 0x42;
+
+  chip8_fetch_current_opcode(chip8);
+  chip8_decode_current_opcode(chip8);
+
+  assert(chip8->registers[1] == (0x11 ^ 0x42));
+
+  chip8_free(chip8);
+}
 
 int main(int argc, char ** argv) {
   test_clear_screen();
@@ -228,6 +244,7 @@ int main(int argc, char ** argv) {
   test_set_vx_to_vy();
   test_set_vx_to_vx_or_vy();
   test_set_vx_to_vx_and_vy();
+  test_set_vx_to_vx_xor_vy();
 
   return 0;
 }
