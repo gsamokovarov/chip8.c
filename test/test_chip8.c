@@ -19,6 +19,26 @@ void test_clear_screen(void) {
   chip8_free(chip8);
 }
 
+
+void test_return(void) {
+  chip8_t * chip8 = chip8_new();
+
+  chip8->memory[0x200] = 0x00;
+  chip8->memory[0x201] = 0xEE;
+
+  chip8->stack[2] = 0x202;
+  chip8->stack_pointer = 2;
+
+  chip8_fetch_current_opcode(chip8);
+  chip8_decode_current_opcode(chip8);
+
+
+  assert(chip8->program_counter = 0x202);
+  assert(chip8->stack_pointer = 1);
+
+  chip8_free(chip8);
+}
+
 void test_instruction_jump(void) {
   chip8_t * chip8 = chip8_new();
 
@@ -252,6 +272,7 @@ void test_set_vx_to_vx_plus_vy(void) {
 
 int main(int argc, char ** argv) {
   test_clear_screen();
+  test_return();
   test_instruction_jump();
   test_call();
   test_skip_next_if_vx_is_kk();
