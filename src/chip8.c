@@ -50,7 +50,7 @@ void chip8_decode_current_opcode(chip8_t * self) {
     break;
   case 0x3000:
     if (self->general_purpose_registers[0x0F00 & self->opcode] == (self->opcode & 0x00FF)) {
-      chip8_next_opcode(self);
+      chip8_skip_next_opcode(self);
     }
     break;
   case 0xA000:
