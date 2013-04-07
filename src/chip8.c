@@ -25,6 +25,10 @@ void chip8_next_opcode(chip8_t * self) {
   self->program_counter += 2;
 }
 
+void chip8_skip_next_opcode(chip8_t * self) {
+  self->program_counter += 4;
+}
+
 void chip8_decode_current_opcode(chip8_t * self) {
   switch (self->opcode & 0xF000) {
   case 0x0000:
