@@ -27,10 +27,18 @@ void chip8_next_opcode(chip8_t * self) {
 
 void chip8_decode_current_opcode(chip8_t * self) {
   switch (self->opcode & 0xF000) {
-  case 0x0000: // 0x00E0
-    if ((self->opcode & 0x00F0) == (0x00E0 & 0x00F0)) {
-      memset(self->memory, 0, 64 * 32);
+  case 0x0000:
+    if (self->opcode == 0x00EE) {
+      self->program_counter = self->stack[self->stack_pointer--];
+      break;
     }
+    if (self->opcode == 0x00E0) {
+      memset(self->memory, 0, 64 * 32);
+      break;
+    }
+    break;
+  case 0x1000:
+    self->program_counter = self->opcode & 0x0FFF;
     break;
   case 0xA000:
     self->index_register = self->opcode & 0x0FFF;
