@@ -16,16 +16,20 @@ chip8_t * chip8_new(void) {
   return self;
 }
 
-void chip8_fetch_opcode(chip8_t * self) {
+void chip8_fetch_current_opcode(chip8_t * self) {
   self->opcode = self->memory[self->program_counter] << 8 |
                  self->memory[self->program_counter + 1];
 }
 
-void chip8_decode_opcode(chip8_t * self) {
+void chip8_next_opcode(chip8_t * self) {
+  self->program_counter += 2;
+}
+
+void chip8_decode_current_opcode(chip8_t * self) {
   switch (self->opcode & 0xF000) {
   case 0xA000:
     self->index_register = self->opcode & 0x0FFF;
-    self->program_counter += 2;
+    chip8_next_opcode(self);
     break;
   }
 }
