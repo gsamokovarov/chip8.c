@@ -40,6 +40,9 @@ void chip8_decode_current_opcode(chip8_t * self) {
   case 0x1000:
     self->program_counter = self->opcode & 0x0FFF;
     break;
+  case 0x2000:
+    self->stack[++self->stack_pointer] = self->program_counter;
+    self->program_counter              = self->opcode & 0x0FFF;
   case 0xA000:
     self->index_register = self->opcode & 0x0FFF;
     chip8_next_opcode(self);
