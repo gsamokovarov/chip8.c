@@ -57,8 +57,8 @@ void test_skip_next_if_vx_is_kk(void) {
   chip8->memory[0x202] = 0x00;
   chip8->memory[0x203] = 0xEE;
 
-  chip8->memory[0x204] = 0x10;
-  chip8->memory[0x205] = 0x42;
+  chip8->memory[0x204] = 0x31;
+  chip8->memory[0x205] = 0x43;
 
   chip8->general_purpose_registers[1] = 0x42;
 
@@ -66,6 +66,11 @@ void test_skip_next_if_vx_is_kk(void) {
   chip8_decode_current_opcode(chip8);
 
   assert(chip8->program_counter == 0x204);
+
+  chip8_fetch_current_opcode(chip8);
+  chip8_decode_current_opcode(chip8);
+
+  assert(chip8->program_counter == 0x206);
 
   chip8_free(chip8);
 }
