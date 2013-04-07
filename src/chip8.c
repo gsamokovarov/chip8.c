@@ -44,6 +44,11 @@ void chip8_decode_current_opcode(chip8_t * self) {
     self->stack[++self->stack_pointer] = self->program_counter;
     self->program_counter              = self->opcode & 0x0FFF;
     break;
+  case 0x3000:
+    if (self->general_purpose_registers[0x0F00 & self->opcode] == (self->opcode & 0x00FF)) {
+      chip8_next_opcode(self);
+    }
+    break;
   case 0xA000:
     self->index_register = self->opcode & 0x0FFF;
     chip8_next_opcode(self);
