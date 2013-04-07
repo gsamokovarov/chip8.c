@@ -31,6 +31,7 @@ void chip8_decode_current_opcode(chip8_t * self) {
     if (self->opcode & 0x00F0 == 0x00E0 & 0x00F0) {
       memset(self->memory, 0, 64 * 32);
     }
+    break;
   case 0xA000:
     self->index_register = self->opcode & 0x0FFF;
     chip8_next_opcode(self);
