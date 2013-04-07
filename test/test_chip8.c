@@ -181,7 +181,7 @@ void test_set_vx_to_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_xor_vy(void) {
+void test_set_vx_to_vx_or_vy(void) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -208,7 +208,7 @@ int main(int argc, char ** argv) {
   test_set_vx_to_kk();
   test_set_vx_to_vx_plus_kk();
   test_set_vx_to_vy();
-  test_set_vx_to_vx_xor_vy();
+  test_set_vx_to_vx_or_vy();
 
   return 0;
 }
