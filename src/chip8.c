@@ -75,6 +75,18 @@ void chip8_decode_current_opcode(chip8_t * self) {
     self->registers[(self->opcode & 0x0F00) >> 8] += self->opcode & 0x00FF;
     chip8_next_opcode(self);
     break;
+  case 0x8000:
+    switch (self->opcode & 0x000F) {
+    case 0:
+      self->registers[(self->opcode & 0x0F00) >> 8] =
+        self->registers[(self->opcode & 0x00F0) >> 4];
+      break;
+    case 1:
+      self->registers[(self->opcode & 0x0F00) >> 8] =
+        self->registers[(self->opcode & 0x0F00) >> 8] | self->registers[(self->opcode & 0x00F0) >> 4];
+      break;
+    }
+    break;
   case 0xA000:
     self->index_register = self->opcode & 0x0FFF;
     chip8_next_opcode(self);
