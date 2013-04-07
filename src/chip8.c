@@ -132,6 +132,9 @@ void chip8_decode_current_opcode(chip8_t * self) {
     self->index_register = self->opcode & 0x0FFF;
     chip8_next_opcode(self);
     break;
+  case 0xB000:
+    self->program_counter = self->registers[0] + (self->opcode & 0x0FFF);
+    break;
   }
 }
 
