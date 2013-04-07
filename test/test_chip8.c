@@ -236,7 +236,7 @@ void test_set_vx_to_vx_plus_vy(void) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
-  chip8->memory[0x201] = 0x23;
+  chip8->memory[0x201] = 0x24;
 
   chip8->registers[1] = 0xFF;
   chip8->registers[2] = 0xFF;
@@ -263,6 +263,7 @@ int main(int argc, char ** argv) {
   test_set_vx_to_vx_or_vy();
   test_set_vx_to_vx_and_vy();
   test_set_vx_to_vx_xor_vy();
+  test_set_vx_to_vx_plus_vy();
 
   return 0;
 }
