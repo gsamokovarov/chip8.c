@@ -1,7 +1,7 @@
 struct chip8 {
   unsigned short opcode;
   unsigned char  memory[4096];
-  unsigned char  general_purpose_registers[16];
+  unsigned char  registers[16];
   unsigned short index_register;
   unsigned short program_counter;
   unsigned char  screen[64 * 32];

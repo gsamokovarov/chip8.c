@@ -60,7 +60,7 @@ void test_skip_next_if_vx_is_kk(void) {
   chip8->memory[0x204] = 0x31;
   chip8->memory[0x205] = 0x43;
 
-  chip8->general_purpose_registers[1] = 0x42;
+  chip8->registers[1] = 0x42;
 
   chip8_fetch_current_opcode(chip8);
   chip8_decode_current_opcode(chip8);
@@ -84,7 +84,7 @@ void test_skip_next_if_vx_isnt_kk(void) {
   chip8->memory[0x202] = 0x41;
   chip8->memory[0x203] = 0x43;
 
-  chip8->general_purpose_registers[1] = 0x42;
+  chip8->registers[1] = 0x42;
 
   chip8_fetch_current_opcode(chip8);
   chip8_decode_current_opcode(chip8);
@@ -111,9 +111,9 @@ void test_skip_next_if_vx_is_vy(void) {
   chip8->memory[0x204] = 0x51;
   chip8->memory[0x205] = 0x30;
 
-  chip8->general_purpose_registers[1] = 0x42;
-  chip8->general_purpose_registers[2] = 0x42;
-  chip8->general_purpose_registers[3] = 0x41;
+  chip8->registers[1] = 0x42;
+  chip8->registers[2] = 0x42;
+  chip8->registers[3] = 0x41;
 
   chip8_fetch_current_opcode(chip8);
   chip8_decode_current_opcode(chip8);
