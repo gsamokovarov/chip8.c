@@ -28,7 +28,7 @@ void chip8_next_opcode(chip8_t * self) {
 void chip8_decode_current_opcode(chip8_t * self) {
   switch (self->opcode & 0xF000) {
   case 0x0000: // 0x00E0
-    if (self->opcode & 0x00F0 == 0x00E0 & 0x00F0) {
+    if ((self->opcode & 0x00F0) == (0x00E0 & 0x00F0)) {
       memset(self->memory, 0, 64 * 32);
     }
     break;
