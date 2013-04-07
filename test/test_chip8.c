@@ -99,6 +99,35 @@ void test_skip_next_if_vx_isnt_kk(void) {
   chip8_free(chip8);
 }
 
+void test_skip_next_if_vx_is_vy(void) {
+  chip8_t * chip8 = chip8_new();
+
+  chip8->memory[0x200] = 0x51;
+  chip8->memory[0x201] = 0x20;
+
+  chip8->memory[0x202] = 0x41;
+  chip8->memory[0x203] = 0x43;
+
+  chip8->memory[0x204] = 0x51;
+  chip8->memory[0x205] = 0x30;
+
+  chip8->general_purpose_registers[1] = 0x42;
+  chip8->general_purpose_registers[2] = 0x42;
+  chip8->general_purpose_registers[3] = 0x41;
+
+  chip8_fetch_current_opcode(chip8);
+  chip8_decode_current_opcode(chip8);
+
+  assert(chip8->program_counter == 0x204);
+
+  chip8_fetch_current_opcode(chip8);
+  chip8_decode_current_opcode(chip8);
+
+  assert(chip8->program_counter == 0x206);
+
+  chip8_free(chip8);
+}
+
 int main(int argc, char ** argv) {
   test_clear_screen();
   test_instruction_jump();
