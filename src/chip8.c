@@ -83,44 +83,49 @@ void chip8_decode_current_opcode(chip8_t * self) {
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x00F0) >> 4];
       break;
-    case 1:
+    case 0x0001:
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x0F00) >> 8] |
         self->registers[(self->opcode & 0x00F0) >> 4];
       break;
-    case 2:
+    case 0x0002:
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x0F00) >> 8] &
         self->registers[(self->opcode & 0x00F0) >> 4];
       break;
-    case 3:
+    case 0x0003:
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x0F00) >> 8] ^
         self->registers[(self->opcode & 0x00F0) >> 4];
       break;
-    case 4:
+    case 0x0004:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] +
                              self->registers[(self->opcode & 0x00F0) >> 4] > 0xFF;
       self->registers[(self->opcode & 0x0F00) >> 8] +=
         self->registers[(self->opcode & 0x00F0) >> 4];
       break;
-    case 5:
+    case 0x0005:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] >
                              self->registers[(self->opcode & 0x00F0) >> 4];
       self->registers[(self->opcode & 0x0F00) >> 8] -=
         self->registers[(self->opcode & 0x00F0) >> 4];
       break;
-    case 6:
+    case 0x0006:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] & 0x01;
       self->registers[(self->opcode & 0x0F00) >> 8] >>= 1;
       break;
-    case 7:
+    case 0x0007:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] <
                              self->registers[(self->opcode & 0x00F0) >> 4];
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x00F0) >> 4] -
         self->registers[(self->opcode & 0x0F00) >> 8];
       break;
+    case 0x000E:
+      self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] >> 7;
+      self->registers[(self->opcode & 0x0F00) >> 8] <<= 1;
+      break;
+
     }
     chip8_next_opcode(self);
     break;
