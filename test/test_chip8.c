@@ -32,4 +32,6 @@ void test_instruction_jump(void) {
 int main(int argc, char ** argv) {
   test_clear_screen();
   test_instruction_jump();
+
+  return 0;
 }
