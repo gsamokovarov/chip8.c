@@ -142,6 +142,28 @@ void test_set_vx_to_kk(void) {
   chip8_free(chip8);
 }
 
+void test_set_vx_to_vx_plus_kk(void) {
+  chip8_t * chip8 = chip8_new();
+
+  chip8->memory[0x200] = 0x61;
+  chip8->memory[0x201] = 0x42;
+
+  chip8->memory[0x202] = 0x71;
+  chip8->memory[0x203] = 0x42;
+
+  chip8_fetch_current_opcode(chip8);
+  chip8_decode_current_opcode(chip8);
+
+  assert(chip8->registers[1] == 0x42);
+
+  chip8_fetch_current_opcode(chip8);
+  chip8_decode_current_opcode(chip8);
+
+  assert(chip8->registers[1] == (0x42 + 0x42));
+
+  chip8_free(chip8);
+}
+
 int main(int argc, char ** argv) {
   test_clear_screen();
   test_instruction_jump();
@@ -150,6 +172,7 @@ int main(int argc, char ** argv) {
   test_skip_next_if_vx_isnt_kk();
   test_skip_next_if_vx_is_vy();
   test_set_vx_to_kk();
+  test_set_vx_to_vx_plus_kk();
 
   return 0;
 }
