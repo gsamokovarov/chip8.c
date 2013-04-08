@@ -12,6 +12,7 @@ chip8_t * chip8_new(void) {
   self->opcode          = 0;
 
   memcpy(self->memory, chip8_hex_font, 50);
+  memset(self->screen, 0, 64 * 32);
   srand(time(NULL));
 
   return self;
@@ -138,6 +139,28 @@ void chip8_decode_current_opcode(chip8_t * self) {
     break;
   case 0xC000:
     self->registers[(self->opcode & 0x0F00) >> 8] = rand() & (self->opcode & 0x00FF);
+    chip8_next_opcode(self);
+    break;
+  case 0xD000:
+    {
+      unsigned char i, j, row, pixel;
+      unsigned char x_coord = self->registers[(self->opcode & 0x0F00) >> 8];
+      unsigned char y_coord = self->registers[(self->opcode & 0x00F0) >> 4];
+      unsigned char height  = self->opcode & 0x000F;
+      unsigned char width   = 8;
+
+      self->registers[0xF] = 0;
+      for (i = 0; i < height; i++) {
+        row = self->memory[self->index_register];
+        for (j = 0; j < width; j++) {
+          pixel = row & (0x80 >> j);
+          if (self->screen[32 * (x_coord + j) + (y_coord + i)]) {
+            self->registers[0xF] = 1;
+          }
+          self->screen[32 * (x_coord + j) + (y_coord + i)] ^= 1;
+        }
+      }
+    }
     chip8_next_opcode(self);
     break;
   }
