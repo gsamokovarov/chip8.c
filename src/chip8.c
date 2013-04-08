@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "chip8.h"
 
 chip8_t * chip8_new(void) {
@@ -12,6 +13,7 @@ chip8_t * chip8_new(void) {
   self->opcode          = 0;
 
   memcpy(self->memory, chip8_hex_font, 50);
+  srand(time(NULL))
 
   return self;
 }
@@ -134,6 +136,10 @@ void chip8_decode_current_opcode(chip8_t * self) {
     break;
   case 0xB000:
     self->program_counter = self->registers[0] + (self->opcode & 0x0FFF);
+    break;
+  case 0xC000:
+    self->registers[(self->opcode & 0x0F00) >> 8] = rand() & (self->opcode & 0x00FF);
+    chip8_next_opcode(self);
     break;
   }
 }
