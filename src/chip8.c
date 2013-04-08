@@ -13,6 +13,8 @@ chip8_t * chip8_new(void) {
 
   memcpy(self->memory, chip8_hex_font, 50);
   memset(self->screen, 0, 64 * 32);
+  memset(self->keys, 0, 16);
+
   srand(time(NULL));
 
   return self;
