@@ -19,7 +19,6 @@ void test_clear_screen(void) {
   chip8_free(chip8);
 }
 
-
 void test_return(void) {
   chip8_t * chip8 = chip8_new();
 
