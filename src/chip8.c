@@ -165,6 +165,27 @@ void chip8_decode_current_opcode(chip8_t * self) {
     }
     chip8_next_opcode(self);
     break;
+  case 0xE000:
+    /*
+     * Ex9E - SKP Vx Skip next instruction if key with the value of Vx is
+     * pressed.
+     *
+     * Checks the keyboard, and if the key corresponding to the value of Vx is
+     * currently in the down position, PC is increased by 2.
+     */
+    switch (self->opcode & 0xF0FF) {
+    case 0xE09E:
+      self->keys[self->registers[(self->opcode & 0x0F00) >> 8]]
+        ? chip8_skip_next_opcode(self)
+        : chip8_next_opcode(self);
+      break;
+    case 0xE0A1:
+      self->keys[self->registers[(self->opcode & 0x0F00) >> 8]]
+        ? chip8_next_opcode(self)
+        : chip8_skip_next_opcode(self);
+      break;
+    }
+    break;
   }
 }
 
