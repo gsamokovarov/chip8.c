@@ -13,7 +13,7 @@ chip8_t * chip8_new(void) {
   self->opcode          = 0;
 
   memcpy(self->memory, chip8_hex_font, 50);
-  srand(time(NULL))
+  srand(time(NULL));
 
   return self;
 }
