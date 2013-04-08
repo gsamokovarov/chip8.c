@@ -151,7 +151,7 @@ void chip8_decode_current_opcode(chip8_t * self) {
 
       self->registers[0xF] = 0;
       for (i = 0; i < height; i++) {
-        row = self->memory[self->index_register];
+        row = self->memory[self->index_register + i];
         for (j = 0; j < width; j++) {
           pixel = row & (0x80 >> j);
           if (self->screen[32 * (x_coord + j) + (y_coord + i)]) {
