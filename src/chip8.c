@@ -22,7 +22,7 @@ chip8_t * chip8_new(void) {
   return self;
 }
 
-void chip8_fetch_current_opcode(chip8_t * self) {
+void chip8_fetch_opcode(chip8_t * self) {
   self->opcode = self->memory[self->program_counter] << 8 |
                  self->memory[self->program_counter + 1];
 }
@@ -35,7 +35,7 @@ void chip8_skip_next_opcode(chip8_t * self) {
   self->program_counter += 4;
 }
 
-void chip8_decode_current_opcode(chip8_t * self) {
+void chip8_decode_opcode(chip8_t * self) {
   switch (self->opcode & 0xF000) {
   case 0x0000:
     if (self->opcode == 0x00E0) {
