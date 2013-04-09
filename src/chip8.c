@@ -199,6 +199,10 @@ void chip8_decode_current_opcode(chip8_t * self) {
           }
         }
         break;
+      case 0xF015:
+        self->delay_timer = self->registers[(self->opcode & 0x0F00) >> 8];
+        chip8_next_opcode(self);
+        break;
     }
     break;
   }
