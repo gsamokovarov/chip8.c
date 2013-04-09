@@ -180,6 +180,14 @@ void chip8_decode_current_opcode(chip8_t * self) {
       break;
     }
     break;
+  case 0xF000:
+    switch (self->opcode & 0xF0FF) {
+      case 0xF007:
+        self->registers[(self->opcode & 0x0F00) >> 8] = self->delay_timer;
+        chip8_next_opcode(self);
+        break;
+    }
+    break;
   }
 }
 
