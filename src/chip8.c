@@ -216,13 +216,12 @@ void chip8_decode_current_opcode(chip8_t * self) {
         chip8_next_opcode(self);
         break;
       case 0xF033:
-        {
-          unsigned short value = self->registers[(self->opcode & 0x0F00) >> 8];
-
-          self->memory[self->index_register]     = (value / 100);
-          self->memory[self->index_register + 1] = (value / 10) % 10;
-          self->memory[self->index_register + 2] = (value % 100) % 10;
-        }
+        self->memory[self->index_register] =
+          self->registers[(self->opcode & 0x0F00) >> 8] / 100;
+        self->memory[self->index_register + 1] =
+          (self->registers[(self->opcode & 0x0F00) >> 8] / 10) % 10;
+        self->memory[self->index_register + 2] =
+          (self->registers[(self->opcode & 0x0F00) >> 8] % 100) % 10;
         chip8_next_opcode(self);
         break;
     }
