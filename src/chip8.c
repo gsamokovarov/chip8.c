@@ -207,6 +207,10 @@ void chip8_decode_current_opcode(chip8_t * self) {
         self->sound_timer = self->registers[(self->opcode & 0x0F00) >> 8];
         chip8_next_opcode(self);
         break;
+      case 0xF01E:
+        self->index_register += self->registers[(self->opcode & 0x0F00) >> 8];
+        chip8_next_opcode(self);
+        break;
     }
     break;
   }
