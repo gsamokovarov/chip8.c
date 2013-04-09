@@ -88,37 +88,44 @@ void chip8_decode_opcode(chip8_t * self) {
     case 0x0000:
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x00F0) >> 4];
+      chip8_next_opcode(self);
       break;
     case 0x0001:
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x0F00) >> 8] |
         self->registers[(self->opcode & 0x00F0) >> 4];
+      chip8_next_opcode(self);
       break;
     case 0x0002:
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x0F00) >> 8] &
         self->registers[(self->opcode & 0x00F0) >> 4];
+      chip8_next_opcode(self);
       break;
     case 0x0003:
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x0F00) >> 8] ^
         self->registers[(self->opcode & 0x00F0) >> 4];
+      chip8_next_opcode(self);
       break;
     case 0x0004:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] +
                              self->registers[(self->opcode & 0x00F0) >> 4] > 0xFF;
       self->registers[(self->opcode & 0x0F00) >> 8] +=
         self->registers[(self->opcode & 0x00F0) >> 4];
+      chip8_next_opcode(self);
       break;
     case 0x0005:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] >
                              self->registers[(self->opcode & 0x00F0) >> 4];
       self->registers[(self->opcode & 0x0F00) >> 8] -=
         self->registers[(self->opcode & 0x00F0) >> 4];
+      chip8_next_opcode(self);
       break;
     case 0x0006:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] & 0x01;
       self->registers[(self->opcode & 0x0F00) >> 8] >>= 1;
+      chip8_next_opcode(self);
       break;
     case 0x0007:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] <
@@ -126,13 +133,16 @@ void chip8_decode_opcode(chip8_t * self) {
       self->registers[(self->opcode & 0x0F00) >> 8] =
         self->registers[(self->opcode & 0x00F0) >> 4] -
         self->registers[(self->opcode & 0x0F00) >> 8];
+      chip8_next_opcode(self);
       break;
     case 0x000E:
       self->registers[0xF] = self->registers[(self->opcode & 0x0F00) >> 8] >> 7;
       self->registers[(self->opcode & 0x0F00) >> 8] <<= 1;
+      chip8_next_opcode(self);
       break;
+    default:
+      chip8_no_such_opcode(self);
     }
-    chip8_next_opcode(self);
     break;
   case 0xA000:
     self->index_register = self->opcode & 0x0FFF;
@@ -248,6 +258,8 @@ void chip8_decode_opcode(chip8_t * self) {
         }
         chip8_next_opcode(self);
         break;
+      default:
+        chip8_no_such_opcode(self);
     }
     break;
   default:
