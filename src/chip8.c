@@ -227,6 +227,17 @@ void chip8_decode_opcode(chip8_t * self) {
           (self->registers[(self->opcode & 0x0F00) >> 8] % 100) % 10;
         chip8_next_opcode(self);
         break;
+      case 0xF055:
+        {
+          unsigned char i;
+          unsigned char register_x = self->registers[(self->opcode & 0x0F00) >> 8]; 
+
+          for (i = 0; i < register_x; i++) {
+            self->memory[self->index_register + i] = self->registers[i];
+          }
+        }
+        chip8_next_opcode(self);
+        break;
     }
     break;
   default:
