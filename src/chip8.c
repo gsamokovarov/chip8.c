@@ -186,6 +186,20 @@ void chip8_decode_current_opcode(chip8_t * self) {
         self->registers[(self->opcode & 0x0F00) >> 8] = self->delay_timer;
         chip8_next_opcode(self);
         break;
+      case 0xF00A:
+        {
+          unsigned char i;
+
+          while (1) {
+            for (i = 0; i < 16; i++) {
+              if (self->keys[i]) {
+                self->registers[(self->opcode & 0x0F00) >> 8] = i;
+              }
+            }
+          }
+        }
+        chip8_next_opcode(self);
+        break;
     }
     break;
   }
