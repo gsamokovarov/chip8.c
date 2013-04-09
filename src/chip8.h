@@ -38,4 +38,5 @@ void chip8_fetch_opcode(chip8_t *);
 void chip8_decode_opcode(chip8_t *);
 void chip8_next_opcode(chip8_t *);
 void chip8_skip_next_opcode(chip8_t *);
+void chip8_no_such_opcode(chip8_t *);
 void chip8_free(chip8_t *);

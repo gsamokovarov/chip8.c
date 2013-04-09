@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include "chip8.h"
@@ -228,7 +229,13 @@ void chip8_decode_opcode(chip8_t * self) {
         break;
     }
     break;
+  default:
+    chip8_no_such_opcode(self);
   }
+}
+
+void chip8_no_such_opcode(chip8_t * self) {
+  printf("Unknown opcode: 0x%X", self->opcode);
 }
 
 void chip8_free(chip8_t * self) {
