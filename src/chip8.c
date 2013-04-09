@@ -9,6 +9,8 @@ chip8_t * chip8_new(void) {
   self->program_counter = 0x200;
   self->index_register  = 0;
   self->stack_pointer   = 0;
+  self->sound_timer     = 0;
+  self->delay_timer     = 0;
   self->opcode          = 0;
 
   memcpy(self->memory, chip8_hex_font, 50);
