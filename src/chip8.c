@@ -230,7 +230,7 @@ void chip8_decode_opcode(chip8_t * self) {
       case 0xF055:
         {
           unsigned char i;
-          unsigned char register_x = self->registers[(self->opcode & 0x0F00) >> 8]; 
+          unsigned char register_x = self->registers[(self->opcode & 0x0F00) >> 8];
 
           for (i = 0; i < register_x; i++) {
             self->memory[self->index_register + i] = self->registers[i];
