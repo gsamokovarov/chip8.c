@@ -212,7 +212,7 @@ void chip8_decode_current_opcode(chip8_t * self) {
         chip8_next_opcode(self);
         break;
       case 0xF029:
-        self->index_register = ((self->opcode & 0x0F00) >> 8) * 5;
+        self->index_register = self->registers[(self->opcode & 0x0F00) >> 8] * 5;
         chip8_next_opcode(self);
         break;
     }
