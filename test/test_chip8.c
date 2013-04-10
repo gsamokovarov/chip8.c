@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "../src/chip8.c"
 
 void test_new(void) {
@@ -54,7 +55,6 @@ void test_return(void) {
 
   chip8_fetch_opcode(chip8);
   chip8_decode_opcode(chip8);
-
 
   assert(chip8->program_counter = 0x202);
   assert(chip8->stack_pointer = 1);
