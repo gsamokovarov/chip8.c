@@ -3,7 +3,7 @@
 #include "../src/chip8.c"
 
 void test_new(void) {
-  int i;
+  unsigned int i;
   chip8_t * chip8 = chip8_new();
 
   i = 0;
@@ -27,7 +27,7 @@ void test_new(void) {
 }
 
 void test_clear_screen(void) {
-  int i;
+  unsigned int i;
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x00;
