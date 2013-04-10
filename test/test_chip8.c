@@ -13,7 +13,7 @@ void test_clear_screen(void) {
 
   i = 0;
   while (i < 64 * 32) {
-    assert(chip8->memory[i++] == 0);
+    assert(chip8->screen[i++] == 0);
   }
 
   chip8_free(chip8);
