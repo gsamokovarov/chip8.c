@@ -192,6 +192,8 @@ void chip8_decode_opcode(chip8_t * self) {
         ? chip8_next_opcode(self)
         : chip8_skip_next_opcode(self);
       break;
+    default:
+      chip8_next_opcode(self);
     }
     break;
   case 0xF000:
