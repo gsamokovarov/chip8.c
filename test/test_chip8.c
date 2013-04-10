@@ -7,17 +7,17 @@ void test_new(void) {
   chip8_t * chip8 = chip8_new();
 
   i = 0;
-  while (i < 16) {
+  while (i < sizeof(chip8->keys)) {
     assert(chip8->keys[i++] == 0);
   }
 
   i = 0;
-  while (i < 16) {
+  while (i < sizeof(chip8->stack)) {
     assert(chip8->stack[i++] == 0);
   }
 
   i = 0;
-  while (i < 64 * 32) {
+  while (i < sizeof(chip8->screen)) {
     assert(chip8->screen[i++] == 0);
   }
 
@@ -35,7 +35,7 @@ void test_clear_screen(void) {
   chip8_decode_opcode(chip8);
 
   i = 0;
-  while (i < 64 * 32) {
+  while (i < sizeof(chip8->screen)) {
     assert(chip8->screen[i++] == 0);
   }
 
