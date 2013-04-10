@@ -1,3 +1,6 @@
+#ifndef CHIP8_H
+#define CHIP8_H
+
 struct chip8 {
   unsigned short opcode;
   unsigned char  memory[4096];
@@ -40,3 +43,5 @@ void chip8_next_opcode(chip8_t *);
 void chip8_skip_next_opcode(chip8_t *);
 void chip8_no_such_opcode(chip8_t *);
 void chip8_free(chip8_t *);
+
+#endif
