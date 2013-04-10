@@ -56,8 +56,8 @@ void test_return(void) {
   chip8_fetch_opcode(chip8);
   chip8_decode_opcode(chip8);
 
-  assert(chip8->program_counter = 0x202);
-  assert(chip8->stack_pointer = 1);
+  assert(chip8->program_counter == 0x202);
+  assert(chip8->stack_pointer == 1);
 
   chip8_free(chip8);
 }
