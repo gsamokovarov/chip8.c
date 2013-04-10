@@ -264,6 +264,9 @@ void chip8_decode_opcode(chip8_t * self) {
   default:
     chip8_no_such_opcode(self);
   }
+
+  self->delay_timer--;
+  self->sound_timer--;
 }
 
 void chip8_no_such_opcode(chip8_t * self) {
