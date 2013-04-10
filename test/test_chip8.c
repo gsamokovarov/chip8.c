@@ -21,6 +21,8 @@ void test_new(void) {
     assert(chip8->screen[i++] == 0);
   }
 
+  assert(chip8->program_counter == 0x200);
+
   chip8_free(chip8);
 }
 
