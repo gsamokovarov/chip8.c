@@ -14,9 +14,10 @@ chip8_t * chip8_new(void) {
   self->delay_timer     = 0;
   self->opcode          = 0;
 
-  memcpy(self->memory, chip8_hex_font, 50);
-  memset(self->screen, 0, 64 * 32);
-  memset(self->keys, 0, 16);
+  memcpy(self->memory, chip8_hex_font, sizeof(chip8_hex_font));
+  memset(self->screen, 0, sizeof(self->screen));
+  memset(self->keys, 0, sizeof(self->keys));
+  memset(self->stack, 0, sizeof(self->stack));
 
   srand(time(NULL));
 
@@ -40,7 +41,7 @@ void chip8_decode_opcode(chip8_t * self) {
   switch (self->opcode & 0xF000) {
   case 0x0000:
     if (self->opcode == 0x00E0) {
-      memset(self->screen, 0, 64 * 32);
+      memset(self->screen, 0, sizeof(self->screen));
       chip8_next_opcode(self);
       break;
     }

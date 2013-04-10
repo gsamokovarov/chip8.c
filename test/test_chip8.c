@@ -1,6 +1,28 @@
 #include <assert.h>
 #include "../src/chip8.c"
 
+void test_new(void) {
+  int i;
+  chip8_t * chip8 = chip8_new();
+
+  i = 0;
+  while (i < 16) {
+    assert(chip8->keys[i++] == 0);
+  }
+
+  i = 0;
+  while (i < 16) {
+    assert(chip8->stack[i++] == 0);
+  }
+
+  i = 0;
+  while (i < 64 * 32) {
+    assert(chip8->screen[i++] == 0);
+  }
+
+  chip8_free(chip8);
+}
+
 void test_clear_screen(void) {
   int i;
   chip8_t * chip8 = chip8_new();
@@ -358,6 +380,7 @@ void test_instruction_jump_plus_v0(void) {
 }
 
 int main(int argc, char ** argv) {
+  test_new();
   test_clear_screen();
   test_return();
   test_instruction_jump();
