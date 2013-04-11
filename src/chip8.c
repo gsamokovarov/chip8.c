@@ -19,7 +19,7 @@ chip8_t * chip8_new(void) {
   memset(self->keys, 0, sizeof(self->keys));
   memset(self->stack, 0, sizeof(self->stack));
 
-  srand(time(NULL));
+  srand(time(0));
 
   return self;
 }
