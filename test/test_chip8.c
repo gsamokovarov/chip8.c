@@ -33,8 +33,7 @@ void test_clear_screen(void) {
   chip8->memory[0x200] = 0x00;
   chip8->memory[0x201] = 0xE0;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   i = 0;
   while (i < sizeof(chip8->screen)) {
@@ -55,8 +54,7 @@ void test_return(void) {
   chip8->stack[2] = 0x202;
   chip8->stack_pointer = 2;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == 0x202);
   assert(chip8->stack_pointer == 1);
@@ -70,8 +68,7 @@ void test_instruction_jump(void) {
   chip8->memory[0x200] = 0x11;
   chip8->memory[0x201] = 0x23;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == 0x123);
 
@@ -84,8 +81,7 @@ void test_call(void) {
   chip8->memory[0x200] = 0x21;
   chip8->memory[0x201] = 0x23;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->stack[chip8->stack_pointer] == 0x200);
   assert(chip8->program_counter == 0x123);
@@ -107,13 +103,11 @@ void test_skip_next_if_vx_is_kk(void) {
 
   chip8->registers[1] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == 0x204);
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == 0x206);
 
@@ -131,13 +125,11 @@ void test_skip_next_if_vx_isnt_kk(void) {
 
   chip8->registers[1] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == 0x202);
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == 0x206);
 
@@ -160,13 +152,11 @@ void test_skip_next_if_vx_is_vy(void) {
   chip8->registers[2] = 0x42;
   chip8->registers[3] = 0x41;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == 0x204);
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == 0x206);
 
@@ -179,8 +169,7 @@ void test_set_vx_to_kk(void) {
   chip8->memory[0x200] = 0x61;
   chip8->memory[0x201] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == 0x42);
 
@@ -196,13 +185,11 @@ void test_set_vx_to_vx_plus_kk(void) {
   chip8->memory[0x202] = 0x71;
   chip8->memory[0x203] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == 0x42);
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == (0x42 + 0x42));
 
@@ -218,8 +205,7 @@ void test_set_vx_to_vy(void) {
   chip8->registers[1] = 0x00;
   chip8->registers[2] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == 0x42);
 
@@ -235,8 +221,7 @@ void test_set_vx_to_vx_or_vy(void) {
   chip8->registers[1] = 0x00;
   chip8->registers[2] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == (0x00 | 0x42));
 
@@ -252,8 +237,7 @@ void test_set_vx_to_vx_and_vy(void) {
   chip8->registers[1] = 0x00;
   chip8->registers[2] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == 0x00);
 
@@ -269,8 +253,7 @@ void test_set_vx_to_vx_xor_vy(void) {
   chip8->registers[1] = 0x11;
   chip8->registers[2] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == (0x11 ^ 0x42));
 
@@ -286,8 +269,7 @@ void test_set_vx_to_vx_plus_vy(void) {
   chip8->registers[1] = 0xFF;
   chip8->registers[2] = 0xFF;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == (unsigned char) (0xFF + 0xFF));
   assert(chip8->registers[15] == 1);
@@ -304,8 +286,7 @@ void test_set_vx_to_vx_sub_vy(void) {
   chip8->registers[1] = 0x42;
   chip8->registers[2] = 0xFF;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == (unsigned char) (0x42 - 0xFF));
   assert(chip8->registers[15] == 0);
@@ -321,8 +302,7 @@ void test_set_vx_to_vx_shm_vy(void) {
 
   chip8->registers[1] = 0x05;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == (unsigned char) (0x05 >> 1));
   assert(chip8->registers[15] == 1);
@@ -339,8 +319,7 @@ void test_set_vx_to_vy_sub_vx(void) {
   chip8->registers[1] = 0x42;
   chip8->registers[2] = 0xFF;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == (unsigned char) (0xFF - 0x42));
   assert(chip8->registers[15] == 1);
@@ -356,8 +335,7 @@ void test_set_vx_to_vx_shl_vy(void) {
 
   chip8->registers[1] = 0x81;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->registers[1] == (unsigned char) (0x81 << 1));
   assert(chip8->registers[15] == 1);
@@ -373,8 +351,7 @@ void test_instruction_jump_plus_v0(void) {
 
   chip8->registers[0] = 0x42;
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->program_counter == (0x123 + 0x42));
 
@@ -394,13 +371,11 @@ void test_copy_memory_into_registers(void) {
     chip8->memory[0x204 + i] = i;
   }
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->index_register == 0x204);
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   for (i = 0; i < 16; i++) {
     assert(chip8->registers[i] == i);
@@ -422,13 +397,11 @@ void test_copy_registers_into_memory(void) {
     chip8->registers[i] = i;
   }
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   assert(chip8->index_register == 0x204);
 
-  chip8_fetch_opcode(chip8);
-  chip8_decode_opcode(chip8);
+  chip8_tick(chip8);
 
   for (i = 0; i < 16; i++) {
     assert(chip8->memory[0x204 + i] == i);

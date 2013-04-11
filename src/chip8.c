@@ -274,6 +274,11 @@ void chip8_decode_opcode(chip8_t * self) {
   self->sound_timer--;
 }
 
+void chip8_tick(chip8_t * self) {
+  chip8_fetch_opcode(self);
+  chip8_decode_opcode(self);
+}
+
 int chip8_load_file(chip8_t * self, char * filename) {
   FILE * file;
   long   size, maximum_file_size = 4096 - 0x200;
