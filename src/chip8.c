@@ -273,6 +273,35 @@ void chip8_decode_opcode(chip8_t * self) {
   self->sound_timer--;
 }
 
+int chip8_load_file(chip8_t * self, char * filename) {
+  FILE * file;
+  long   size, maximum_file_size = 4096 - 0x200;
+
+  if (!(file = fopen(filename, "rb"))) {
+    fprintf(stderr, "Can't open file %s", filename);
+    goto error;
+  }
+
+  fseek(file, 0, SEEK_END);
+  if ((size = ftell(file)) > maximum_file_size) {
+    fprintf(stderr, "File is too big, size limit is %ld", maximum_file_size);
+    goto error;
+  }
+  rewind(file);
+
+  fread(self->memory + 0x200, 1, size, file);
+  if (ferror(file)) {
+    fprintf(stderr, "There was an error while reading %s", filename);
+    goto error;
+  }
+
+  fclose(file);
+  return 1;
+error:
+  fclose(file);
+  return 0;
+}
+
 void chip8_no_such_opcode(chip8_t * self) {
   printf("Unknown opcode: 0x%X", self->opcode);
 }
