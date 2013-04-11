@@ -381,6 +381,62 @@ void test_instruction_jump_plus_v0(void) {
   chip8_free(chip8);
 }
 
+void test_copy_memory_into_registers(void) {
+  unsigned int i;
+  chip8_t * chip8 = chip8_new();
+
+  chip8->memory[0x200] = 0xA2;
+  chip8->memory[0x201] = 0x04;
+  chip8->memory[0x202] = 0xFF;
+  chip8->memory[0x203] = 0x65;
+
+  for (i = 0; i < 16; i++) {
+    chip8->memory[0x204 + i] = i;
+  }
+
+  chip8_fetch_opcode(chip8);
+  chip8_decode_opcode(chip8);
+
+  assert(chip8->index_register == 0x204);
+
+  chip8_fetch_opcode(chip8);
+  chip8_decode_opcode(chip8);
+
+  for (i = 0; i < 16; i++) {
+    assert(chip8->registers[i] == i);
+  }
+
+  chip8_free(chip8);
+}
+
+void test_copy_registers_into_memory(void) {
+  unsigned int i;
+  chip8_t * chip8 = chip8_new();
+
+  chip8->memory[0x200] = 0xA2;
+  chip8->memory[0x201] = 0x04;
+  chip8->memory[0x202] = 0xFF;
+  chip8->memory[0x203] = 0x55;
+
+  for (i = 0; i < 16; i++) {
+    chip8->registers[i] = i;
+  }
+
+  chip8_fetch_opcode(chip8);
+  chip8_decode_opcode(chip8);
+
+  assert(chip8->index_register == 0x204);
+
+  chip8_fetch_opcode(chip8);
+  chip8_decode_opcode(chip8);
+
+  for (i = 0; i < 16; i++) {
+    assert(chip8->memory[0x204 + i] == i);
+  }
+
+  chip8_free(chip8);
+}
+
 int main(int argc, char ** argv) {
   test_new();
   test_clear_screen();
@@ -402,6 +458,8 @@ int main(int argc, char ** argv) {
   test_set_vx_to_vy_sub_vx();
   test_set_vx_to_vx_shl_vy();
   test_instruction_jump_plus_v0();
+  test_copy_memory_into_registers();
+  test_copy_registers_into_memory();
 
   return 0;
 }
