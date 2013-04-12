@@ -292,7 +292,7 @@ int chip8_load_file(chip8_t * self, char * filename) {
     fprintf(stderr, "File is too big, size limit is %ld", maximum_file_size);
     goto error;
   }
-  rewind(file);
+  fseek(file, 0, SEEK_SET);
 
   fread(self->memory + 0x200, 1, size, file);
   if (ferror(file)) {
