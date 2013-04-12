@@ -358,6 +358,28 @@ void test_instruction_jump_plus_v0(void) {
   chip8_free(chip8);
 }
 
+void test_get_hex_sprite_location(void) {
+  unsigned int i;
+  chip8_t * chip8 = chip8_new();
+
+  for (i = 0; i < 16; i++) {
+    chip8->registers[i] = i;
+  }
+
+  for (i = 0; i < 16; i++) {
+    chip8->memory[0x200 + (i * 2)]     = 0xF0 + i;
+    chip8->memory[0x200 + (i * 2) + 1] = 0x29;
+  }
+
+  for (i = 0; i < 16; i++) {
+    chip8_tick(chip8);
+
+    assert(chip8->index_register == i * 5);
+  }
+
+  chip8_free(chip8);
+}
+
 void test_binary_coded_decimal(void) {
   chip8_t * chip8 = chip8_new();
 
@@ -452,6 +474,8 @@ int main(int argc, char ** argv) {
   test_set_vx_to_vy_sub_vx();
   test_set_vx_to_vx_shl_vy();
   test_instruction_jump_plus_v0();
+  test_get_hex_sprite_location();
+  test_binary_coded_decimal();
   test_copy_memory_into_registers();
   test_copy_registers_into_memory();
 
