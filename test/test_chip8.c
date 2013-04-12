@@ -358,6 +358,23 @@ void test_instruction_jump_plus_v0(void) {
   chip8_free(chip8);
 }
 
+void test_binary_coded_decimal(void) {
+  chip8_t * chip8 = chip8_new();
+
+  chip8->memory[0x200] = 0xF0;
+  chip8->memory[0x201] = 0x33;
+
+  chip8->registers[0] = 255;
+
+  chip8_tick(chip8);
+
+  assert(chip8->memory[chip8->index_register++] == 0x02);
+  assert(chip8->memory[chip8->index_register++] == 0x05);
+  assert(chip8->memory[chip8->index_register]   == 0x05);
+
+  chip8_free(chip8);
+}
+
 void test_copy_memory_into_registers(void) {
   unsigned int i;
   chip8_t * chip8 = chip8_new();
