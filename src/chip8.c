@@ -246,7 +246,7 @@ void chip8_decode_opcode(chip8_t * self) {
           unsigned char i;
 
           for (i = 0; i <= (self->opcode & 0x0F00) >> 8; i++) {
-            self->memory[self->index_register + i] = self->registers[i];
+            self->memory[self->index_register++] = self->registers[i];
           }
         }
         chip8_next_opcode(self);
@@ -256,8 +256,7 @@ void chip8_decode_opcode(chip8_t * self) {
           unsigned char i;
 
           for (i = 0; i <= (self->opcode & 0x0F00) >> 8; i++) {
-            self->registers[i] = self->memory[self->index_register + i];
-
+            self->registers[i] = self->memory[self->index_register++];
           }
         }
         chip8_next_opcode(self);

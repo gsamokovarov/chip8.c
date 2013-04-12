@@ -381,6 +381,8 @@ void test_copy_memory_into_registers(void) {
     assert(chip8->registers[i] == i);
   }
 
+  assert(chip8->index_register == (0x204 + 16));
+
   chip8_free(chip8);
 }
 
@@ -406,6 +408,8 @@ void test_copy_registers_into_memory(void) {
   for (i = 0; i < 16; i++) {
     assert(chip8->memory[0x204 + i] == i);
   }
+
+  assert(chip8->index_register == (0x204 + 16));
 
   chip8_free(chip8);
 }
