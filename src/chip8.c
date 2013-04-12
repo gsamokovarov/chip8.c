@@ -307,6 +307,18 @@ error:
   return 0;
 }
 
+void chip8_render_to_terminal(chip8_t * self) {
+  unsigned char i, j;
+
+  for (j = 0; j < 32; j++) {
+    for (i = 0; i < 64; i++) {
+      printf(self->screen[32 * i + j] ? "█" : " ");
+    }
+    printf("\n");
+  }
+  printf("\033[32A");
+}
+
 void chip8_no_such_opcode(chip8_t * self) {
   fprintf(stderr, "Unknown opcode: 0x%X\n", self->opcode);
 }
