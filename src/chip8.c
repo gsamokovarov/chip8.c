@@ -309,7 +309,7 @@ error:
 }
 
 void chip8_no_such_opcode(chip8_t * self) {
-  printf("Unknown opcode: 0x%X", self->opcode);
+  fprintf(stderr, "Unknown opcode: 0x%X", self->opcode);
 }
 
 void chip8_free(chip8_t * self) {
