@@ -205,70 +205,72 @@ void chip8_decode_opcode(chip8_t * self) {
     break;
   case 0xF000:
     switch (self->opcode & 0xF0FF) {
-      case 0xF007:
-        self->registers[(self->opcode & 0x0F00) >> 8] = self->delay_timer;
-        chip8_next_opcode(self);
-        break;
-      case 0xF00A:
-        {
-          unsigned char i;
+    case 0xF007:
+      self->registers[(self->opcode & 0x0F00) >> 8] = self->delay_timer;
+      chip8_next_opcode(self);
+      break;
+    case 0xF00A:
+      {
+        unsigned char i;
 
-          for (i = 0; i < 16; i++) {
-            if (self->keys[i]) {
-              self->registers[(self->opcode & 0x0F00) >> 8] = i;
-              chip8_next_opcode(self);
-              break;
-            }
+        for (i = 0; i < 16; i++) {
+          if (self->keys[i]) {
+            self->registers[(self->opcode & 0x0F00) >> 8] = i;
+            chip8_next_opcode(self);
+            break;
           }
         }
-        break;
-      case 0xF015:
-        self->delay_timer = self->registers[(self->opcode & 0x0F00) >> 8];
-        chip8_next_opcode(self);
-        break;
-      case 0xF018:
-        self->sound_timer = self->registers[(self->opcode & 0x0F00) >> 8];
-        chip8_next_opcode(self);
-        break;
-      case 0xF01E:
-        self->index_register += self->registers[(self->opcode & 0x0F00) >> 8];
-        chip8_next_opcode(self);
-        break;
-      case 0xF029:
-        self->index_register = self->registers[(self->opcode & 0x0F00) >> 8] * 5;
-        chip8_next_opcode(self);
-        break;
-      case 0xF033:
-        self->memory[self->index_register] =
-          self->registers[(self->opcode & 0x0F00) >> 8] / 100;
-        self->memory[self->index_register + 1] =
-          (self->registers[(self->opcode & 0x0F00) >> 8] / 10) % 10;
-        self->memory[self->index_register + 2] =
-          (self->registers[(self->opcode & 0x0F00) >> 8] % 100) % 10;
-        chip8_next_opcode(self);
-        break;
-      case 0xF055:
-        {
-          unsigned char i;
+      }
+      break;
+    case 0xF015:
+      self->delay_timer = self->registers[(self->opcode & 0x0F00) >> 8];
+      chip8_next_opcode(self);
+      break;
+    case 0xF018:
+      self->sound_timer = self->registers[(self->opcode & 0x0F00) >> 8];
+      chip8_next_opcode(self);
+      break;
+    case 0xF01E:
+      self->registers[0xF] = (self->index_register +
+                              self->registers[(self->opcode & 0x0F00) >> 8]) > 0xFFF;
+      self->index_register += self->registers[(self->opcode & 0x0F00) >> 8];
+      chip8_next_opcode(self);
+      break;
+    case 0xF029:
+      self->index_register = self->registers[(self->opcode & 0x0F00) >> 8] * 5;
+      chip8_next_opcode(self);
+      break;
+    case 0xF033:
+      self->memory[self->index_register] =
+        self->registers[(self->opcode & 0x0F00) >> 8] / 100;
+      self->memory[self->index_register + 1] =
+        (self->registers[(self->opcode & 0x0F00) >> 8] / 10) % 10;
+      self->memory[self->index_register + 2] =
+        (self->registers[(self->opcode & 0x0F00) >> 8] % 100) % 10;
+      chip8_next_opcode(self);
+      break;
+    case 0xF055:
+      {
+        unsigned char i;
 
-          for (i = 0; i <= (self->opcode & 0x0F00) >> 8; i++) {
-            self->memory[self->index_register++] = self->registers[i];
-          }
+        for (i = 0; i <= (self->opcode & 0x0F00) >> 8; i++) {
+          self->memory[self->index_register++] = self->registers[i];
         }
-        chip8_next_opcode(self);
-        break;
-      case 0xF065:
-        {
-          unsigned char i;
+      }
+      chip8_next_opcode(self);
+      break;
+    case 0xF065:
+      {
+        unsigned char i;
 
-          for (i = 0; i <= (self->opcode & 0x0F00) >> 8; i++) {
-            self->registers[i] = self->memory[self->index_register++];
-          }
+        for (i = 0; i <= (self->opcode & 0x0F00) >> 8; i++) {
+          self->registers[i] = self->memory[self->index_register++];
         }
-        chip8_next_opcode(self);
-        break;
-      default:
-        chip8_no_such_opcode(self);
+      }
+      chip8_next_opcode(self);
+      break;
+    default:
+      chip8_no_such_opcode(self);
     }
     break;
   default:
