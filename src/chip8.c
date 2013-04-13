@@ -229,8 +229,8 @@ void chip8_decode_opcode(chip8_t * self) {
       chip8_next_opcode(self);
       break;
     case 0xF01E:
-      self->registers[0xF] = (self->index_register +
-                              self->registers[(self->opcode & 0x0F00) >> 8]) > 0xFFF;
+      self->registers[0xF] = self->index_register +
+                             self->registers[(self->opcode & 0x0F00) >> 8] > 0xFFF;
       self->index_register += self->registers[(self->opcode & 0x0F00) >> 8];
       chip8_next_opcode(self);
       break;
