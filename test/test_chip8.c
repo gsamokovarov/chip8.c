@@ -453,7 +453,7 @@ void test_copy_registers_into_memory(void) {
   chip8_free(chip8);
 }
 
-int main(int argc, char ** argv) {
+int main(void) {
   test_new();
   test_clear_screen();
   test_return();

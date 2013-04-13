@@ -279,8 +279,8 @@ void chip8_tick(chip8_t * self) {
 }
 
 int chip8_load_file(chip8_t * self, char * filename) {
-  FILE * file;
-  long   size, maximum_file_size = 4096 - 0x200;
+  FILE *        file;
+  unsigned long size, maximum_file_size = 4096 - 0x200;
 
   if (!(file = fopen(filename, "rb"))) {
     goto error;
@@ -292,8 +292,7 @@ int chip8_load_file(chip8_t * self, char * filename) {
   }
   fseek(file, 0, SEEK_SET);
 
-  fread(self->memory + 0x200, 1, size, file);
-  if (ferror(file)) {
+  if (fread(self->memory + 0x200, 1, size, file) != size) {
     goto error;
   }
 
