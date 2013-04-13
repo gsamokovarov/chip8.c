@@ -151,6 +151,7 @@ void chip8_decode_opcode(chip8_t * self) {
      self->registers[(self->opcode & 0x00F0) >> 4])
       ? chip8_next_opcode(self)
       : chip8_skip_next_opcode(self);
+    break;
   case 0xA000:
     self->index_register = self->opcode & 0x0FFF;
     chip8_next_opcode(self);

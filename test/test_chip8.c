@@ -163,6 +163,33 @@ void test_skip_next_if_vx_is_vy(void) {
   chip8_free(chip8);
 }
 
+void test_skip_next_if_vx_isnt_vy(void) {
+  chip8_t * chip8 = chip8_new();
+
+  chip8->memory[0x200] = 0x91;
+  chip8->memory[0x201] = 0x20;
+
+  chip8->memory[0x202] = 0x41;
+  chip8->memory[0x203] = 0x43;
+
+  chip8->memory[0x204] = 0x91;
+  chip8->memory[0x205] = 0x30;
+
+  chip8->registers[1] = 0x42;
+  chip8->registers[2] = 0x12;
+  chip8->registers[3] = 0x42;
+
+  chip8_tick(chip8);
+
+  assert(chip8->program_counter == 0x204);
+
+  chip8_tick(chip8);
+
+  assert(chip8->program_counter == 0x206);
+
+  chip8_free(chip8);
+}
+
 void test_set_vx_to_kk(void) {
   chip8_t * chip8 = chip8_new();
 
@@ -462,6 +489,7 @@ int main(void) {
   test_skip_next_if_vx_is_kk();
   test_skip_next_if_vx_isnt_kk();
   test_skip_next_if_vx_is_vy();
+  test_skip_next_if_vx_isnt_vy();
   test_set_vx_to_kk();
   test_set_vx_to_vx_plus_kk();
   test_set_vx_to_vy();
