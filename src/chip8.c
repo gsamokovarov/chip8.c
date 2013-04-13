@@ -283,20 +283,17 @@ int chip8_load_file(chip8_t * self, char * filename) {
   long   size, maximum_file_size = 4096 - 0x200;
 
   if (!(file = fopen(filename, "rb"))) {
-    fprintf(stderr, "Can't open file %s\n", filename);
     goto error;
   }
 
   fseek(file, 0, SEEK_END);
   if ((size = ftell(file)) > maximum_file_size) {
-    fprintf(stderr, "File is too big, size limit is %ld\n", maximum_file_size);
     goto error;
   }
   fseek(file, 0, SEEK_SET);
 
   fread(self->memory + 0x200, 1, size, file);
   if (ferror(file)) {
-    fprintf(stderr, "There was an error while reading %s\n", filename);
     goto error;
   }
 
@@ -306,6 +303,7 @@ error:
   if (file) {
     fclose(file);
   }
+  perror("Error");
   return 0;
 }
 
