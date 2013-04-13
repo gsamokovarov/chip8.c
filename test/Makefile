@@ -7,7 +7,7 @@ immediate: test
 	@(./$^)
 
 test: *.c
-	$(CC) $(CFLAGS) -o $@ $^ ../src/chip8.h
+	$(CC) $(CFLAGS) -o $@ $^ ../src/chip8.c
 
 clean:
 	@([ -e test ] && $(RM) test)
