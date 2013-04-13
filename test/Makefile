@@ -9,7 +9,7 @@ immediate: test
 test: *.c
 	$(CC) $(CFLAGS) -o $@ $^ ../src/chip8.h
 
-.PHONY: clean immediate
-
 clean:
-	$(RM) test
+	@$(RM) test
+
+.PHONY: immediate test clean
