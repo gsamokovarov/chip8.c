@@ -10,6 +10,6 @@ test: *.c
 	$(CC) $(CFLAGS) -o $@ $^ ../src/chip8.h
 
 clean:
-	@$(RM) test
+	@([ -e test ] && $(RM) test)
 
 .PHONY: immediate test clean
