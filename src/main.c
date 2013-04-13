@@ -9,7 +9,7 @@ int main(int argc, char ** argv) {
     if (!chip8_load_file(chip8, argv[1])) {
       goto error;
     };
-    setvbuf(stdout, 0, _IOFBF, 4096);
+    setvbuf(stdout, 0, _IOFBF, 0);
     while (1) {
       chip8_tick(chip8);
       chip8_render_to_terminal(chip8);
