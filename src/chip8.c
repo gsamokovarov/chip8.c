@@ -303,7 +303,9 @@ int chip8_load_file(chip8_t * self, char * filename) {
   fclose(file);
   return 1;
 error:
-  fclose(file);
+  if (file) {
+    fclose(file);
+  }
   return 0;
 }
 
