@@ -1,11 +1,11 @@
-test:
-	@(cd test; make immediate)
-
 compile:
 	@(cd src; make chip8)
+
+test:
+	@(cd test; make immediate)
 
 clean:
 	@(cd src; make clean)
 	@(cd test; make clean)
 
-.PHONY: test
+.PHONY: test compile clean

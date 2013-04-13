@@ -9,4 +9,4 @@ chip8: *.c
 clean:
 	@([ -e chip8 ] && $(RM) chip8)
 
-.PHONY: clean
+.PHONY: chip8 clean
