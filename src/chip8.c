@@ -40,14 +40,16 @@ void chip8_skip_next_opcode(chip8_t * self) {
 void chip8_decode_opcode(chip8_t * self) {
   switch (self->opcode & 0xF000) {
   case 0x0000:
-    if (self->opcode == 0x00E0) {
+    switch (self->opcode & 0x00FF) {
+    case 0x00E0:
       memset(self->screen, 0, sizeof(self->screen));
       chip8_next_opcode(self);
       break;
-    }
-    if (self->opcode == 0x00EE) {
+    case 0x00EE:
       self->program_counter = self->stack[self->stack_pointer--];
       break;
+    default:
+      chip8_no_such_opcode(self);
     }
     break;
   case 0x1000:
