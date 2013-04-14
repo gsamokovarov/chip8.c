@@ -1,6 +1,15 @@
 #ifndef CHIP8_H
 #define CHIP8_H
 
+#define PC(chip8) chip8->program_counter
+#define V(chip8)  chip8->registers
+#define V0(chip8) chip8->registers[0]
+#define VF(chip8) chip8->registers[0xF]
+#define I(chip8)  chip8->index_register
+#define DT(chip8) chip8->delay_timer
+#define ST(chip8) chip8->sound_timer
+#define SP(chip8) chip8->stack_pointer
+
 struct chip8 {
   unsigned short opcode;
   unsigned char  memory[4096];
