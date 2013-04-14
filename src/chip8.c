@@ -3,7 +3,10 @@
 #include <string.h>
 #include <time.h>
 #include "chip8.h"
-#include "dsl.h"
+
+#define BYTE3(blob) ((blob & 0x0F00) >> 8)
+#define BYTE2(blob) ((blob & 0x00F0) >> 4)
+#define BYTE1(blob) ((blob & 0x000F))
 
 chip8_t * chip8_new(void) {
   chip8_t * self = (chip8_t *) malloc(sizeof(chip8_t));
