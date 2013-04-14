@@ -25,25 +25,15 @@ chip8_t * chip8_new(void) {
   return self;
 }
 
-void chip8_fetch_opcode(chip8_t * self) {
+void chip8_tick(chip8_t * self) {
   self->opcode = self->memory[PC(self)] << 8 | self->memory[PC(self) + 1];
-}
 
-void chip8_next_opcode(chip8_t * self) {
-  PC(self) += 2;
-}
-
-void chip8_skip_next_opcode(chip8_t * self) {
-  PC(self) += 4;
-}
-
-void chip8_decode_opcode(chip8_t * self) {
   switch (self->opcode & 0xF000) {
   case 0x0000:
     switch (self->opcode & 0x00FF) {
     case 0x00E0:
       memset(self->screen, 0, sizeof(self->screen));
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x00EE:
       PC(self) = self->stack[SP(self)--];
@@ -63,69 +53,69 @@ void chip8_decode_opcode(chip8_t * self) {
   case 0x4000:
     if (V(self)[BYTE3(self->opcode)] == (self->opcode & 0x00FF)) {
       (self->opcode & 0xF000) == 0x3000
-        ? chip8_skip_next_opcode(self)
-        : chip8_next_opcode(self);
+        ? (PC(self) += 4)
+        : (PC(self) += 2);
     } else {
       (self->opcode & 0xF000) == 0x4000
-        ? chip8_skip_next_opcode(self)
-        : chip8_next_opcode(self);
+        ? (PC(self) += 4)
+        : (PC(self) += 2);
     }
     break;
   case 0x5000:
     (V(self)[BYTE3(self->opcode)] == V(self)[BYTE2(self->opcode)])
-      ? chip8_skip_next_opcode(self)
-      : chip8_next_opcode(self);
+      ? (PC(self) += 4)
+      : (PC(self) += 2);
     break;
   case 0x6000:
     V(self)[BYTE3(self->opcode)] = self->opcode & 0x00FF;
-    chip8_next_opcode(self);
+    PC(self) += 2;
     break;
   case 0x7000:
     V(self)[BYTE3(self->opcode)] += self->opcode & 0x00FF;
-    chip8_next_opcode(self);
+    PC(self) += 2;
     break;
   case 0x8000:
     switch (self->opcode & 0x000F) {
     case 0x0000:
       V(self)[BYTE3(self->opcode)] = V(self)[BYTE2(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x0001:
       V(self)[BYTE3(self->opcode)] |= V(self)[BYTE2(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x0002:
       V(self)[BYTE3(self->opcode)] &= V(self)[BYTE2(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x0003:
       V(self)[BYTE3(self->opcode)] ^= V(self)[BYTE2(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x0004:
       VF(self) = V(self)[BYTE3(self->opcode)] + V(self)[BYTE2(self->opcode)] > 0xFF;
       V(self)[BYTE3(self->opcode)] += V(self)[BYTE2(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x0005:
       VF(self) = V(self)[BYTE3(self->opcode)] > V(self)[BYTE2(self->opcode)];
       V(self)[BYTE3(self->opcode)] -= V(self)[BYTE2(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x0006:
       VF(self) = V(self)[BYTE3(self->opcode)] & 1;
       V(self)[BYTE3(self->opcode)] >>= 1;
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x0007:
       VF(self) = V(self)[BYTE3(self->opcode)] < V(self)[BYTE2(self->opcode)];
       V(self)[BYTE3(self->opcode)] = V(self)[BYTE2(self->opcode)] - V(self)[BYTE3(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0x000E:
       VF(self) = V(self)[BYTE3(self->opcode)] >> 7;
       V(self)[BYTE3(self->opcode)] <<= 1;
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     default:
       chip8_no_such_opcode(self);
@@ -133,19 +123,19 @@ void chip8_decode_opcode(chip8_t * self) {
     break;
   case 0x9000:
     (V(self)[BYTE3(self->opcode)] == V(self)[BYTE2(self->opcode)])
-      ? chip8_next_opcode(self)
-      : chip8_skip_next_opcode(self);
+      ? (PC(self) += 2)
+      : (PC(self) += 4);
     break;
   case 0xA000:
     I(self) = self->opcode & 0x0FFF;
-    chip8_next_opcode(self);
+    PC(self) += 2;
     break;
   case 0xB000:
     PC(self) = V0(self) + (self->opcode & 0x0FFF);
     break;
   case 0xC000:
     V(self)[BYTE3(self->opcode)] = rand() & (self->opcode & 0x00FF);
-    chip8_next_opcode(self);
+    PC(self) += 2;
     break;
   case 0xD000:
     {
@@ -169,29 +159,29 @@ void chip8_decode_opcode(chip8_t * self) {
         }
       }
     }
-    chip8_next_opcode(self);
+    PC(self) += 2;
     break;
   case 0xE000:
     switch (self->opcode & 0xF0FF) {
     case 0xE09E:
       self->keys[V(self)[BYTE3(self->opcode)]]
-        ? chip8_skip_next_opcode(self)
-        : chip8_next_opcode(self);
+        ? (PC(self) += 4)
+        : (PC(self) += 2);
       break;
     case 0xE0A1:
       self->keys[V(self)[BYTE3(self->opcode)]]
-        ? chip8_next_opcode(self)
-        : chip8_skip_next_opcode(self);
+        ? (PC(self) += 2)
+        : (PC(self) += 4);
       break;
     default:
-      chip8_next_opcode(self);
+      PC(self) += 2;
     }
     break;
   case 0xF000:
     switch (self->opcode & 0xF0FF) {
     case 0xF007:
       V(self)[BYTE3(self->opcode)] = DT(self);
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0xF00A:
       {
@@ -200,7 +190,7 @@ void chip8_decode_opcode(chip8_t * self) {
         for (i = 0; i < 16; i++) {
           if (self->keys[i]) {
             V(self)[BYTE3(self->opcode)] = i;
-            chip8_next_opcode(self);
+            PC(self) += 2;
             break;
           }
         }
@@ -208,26 +198,26 @@ void chip8_decode_opcode(chip8_t * self) {
       break;
     case 0xF015:
       DT(self) = V(self)[BYTE3(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0xF018:
       ST(self) = V(self)[BYTE3(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0xF01E:
       VF(self) = I(self) + V(self)[BYTE3(self->opcode)] > 0xFFF;
       I(self) += V(self)[BYTE3(self->opcode)];
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0xF029:
       I(self) = V(self)[BYTE3(self->opcode)] * 5;
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0xF033:
       self->memory[I(self)]     = (V(self)[BYTE3(self->opcode)] / 100);
       self->memory[I(self) + 1] = (V(self)[BYTE3(self->opcode)] / 10) % 10;
       self->memory[I(self) + 2] = (V(self)[BYTE3(self->opcode)] % 100) % 10;
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0xF055:
       {
@@ -237,7 +227,7 @@ void chip8_decode_opcode(chip8_t * self) {
           self->memory[I(self)++] = V(self)[i];
         }
       }
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     case 0xF065:
       {
@@ -247,7 +237,7 @@ void chip8_decode_opcode(chip8_t * self) {
           V(self)[i] = self->memory[I(self)++];
         }
       }
-      chip8_next_opcode(self);
+      PC(self) += 2;
       break;
     default:
       chip8_no_such_opcode(self);
@@ -259,11 +249,6 @@ void chip8_decode_opcode(chip8_t * self) {
 
   DT(self)--;
   ST(self)--;
-}
-
-void chip8_tick(chip8_t * self) {
-  chip8_fetch_opcode(self);
-  chip8_decode_opcode(self);
 }
 
 int chip8_load_file(chip8_t * self, char * filename) {
