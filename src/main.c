@@ -17,7 +17,7 @@ int main(int argc, char ** argv) {
       fflush(stdout);
     }
   } else {
-    fprintf(stderr, "Usage %s filename\n", argv[0]);
+    fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
   }
 
   chip8_free(chip8);
