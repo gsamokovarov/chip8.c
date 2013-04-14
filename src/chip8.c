@@ -91,15 +91,15 @@ void chip8_decode_opcode(chip8_t * self) {
       chip8_next_opcode(self);
       break;
     case 0x0001:
-      V(self)[BYTE3(self->opcode)] = V(self)[BYTE3(self->opcode)] | V(self)[BYTE2(self->opcode)];
+      V(self)[BYTE3(self->opcode)] |= V(self)[BYTE2(self->opcode)];
       chip8_next_opcode(self);
       break;
     case 0x0002:
-      V(self)[BYTE3(self->opcode)] = V(self)[BYTE3(self->opcode)] & V(self)[BYTE2(self->opcode)];
+      V(self)[BYTE3(self->opcode)] &= V(self)[BYTE2(self->opcode)];
       chip8_next_opcode(self);
       break;
     case 0x0003:
-      V(self)[BYTE3(self->opcode)] = V(self)[BYTE3(self->opcode)] ^ V(self)[BYTE2(self->opcode)];
+      V(self)[BYTE3(self->opcode)] ^= V(self)[BYTE2(self->opcode)];
       chip8_next_opcode(self);
       break;
     case 0x0004:
@@ -113,7 +113,7 @@ void chip8_decode_opcode(chip8_t * self) {
       chip8_next_opcode(self);
       break;
     case 0x0006:
-      VF(self) = V(self)[BYTE3(self->opcode)] & 0x01;
+      VF(self) = V(self)[BYTE3(self->opcode)] & 1;
       V(self)[BYTE3(self->opcode)] >>= 1;
       chip8_next_opcode(self);
       break;
