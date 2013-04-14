@@ -385,6 +385,35 @@ void test_instruction_jump_plus_v0(void) {
   chip8_free(chip8);
 }
 
+void test_draw_xor_mode(void) {
+  chip8_t * chip8 = chip8_new();
+
+  chip8->registers[0] = 0;
+
+  chip8->memory[0x200] = 0xF0;
+  chip8->memory[0x201] = 0x29;
+
+  chip8->memory[0x202] = 0xD0;
+  chip8->memory[0x203] = 0x05;
+
+  chip8->memory[0x204] = 0x12;
+  chip8->memory[0x205] = 0x02;
+
+  chip8_tick(chip8);
+  chip8_tick(chip8);
+
+  assert(chip8->screen[0]      == 1);
+  assert(chip8->registers[0xF] == 0);
+
+  chip8_tick(chip8);
+  chip8_tick(chip8);
+
+  assert(chip8->screen[0]      == 0);
+  assert(chip8->registers[0xF] == 1);
+
+  chip8_free(chip8);
+}
+
 void test_get_hex_sprite_location(void) {
   unsigned int i;
   chip8_t * chip8 = chip8_new();
@@ -502,6 +531,7 @@ int main(void) {
   test_set_vx_to_vy_sub_vx();
   test_set_vx_to_vx_shl_vy();
   test_instruction_jump_plus_v0();
+  test_draw_xor_mode();
   test_get_hex_sprite_location();
   test_binary_coded_decimal();
   test_copy_memory_into_registers();
