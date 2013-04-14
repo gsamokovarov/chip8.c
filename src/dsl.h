@@ -7,7 +7,7 @@
 #define ST(chip8)  chip8->sound_timer
 #define SP(chip8)  chip8->stack_pointer
 
-#define X___(blob) ((blob & 0xF000) >> 16)
-#define _X__(blob) ((blob & 0x0F00) >> 8)
-#define __X_(blob) ((blob & 0x00F0) >> 4)
-#define ___X(blob) ((blob & 0x000F))
+#define BYTE4(blob) ((blob & 0xF000) >> 16)
+#define BYTE3(blob) ((blob & 0x0F00) >> 8)
+#define BYTE2(blob) ((blob & 0x00F0) >> 4)
+#define BYTE1(blob) ((blob & 0x000F))
