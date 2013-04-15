@@ -177,7 +177,7 @@ void chip8_tick(chip8_t * self) {
         : (PC(self) += 4);
       break;
     default:
-      PC(self) += 2;
+      chip8_no_such_opcode(self);
     }
     break;
   case 0xF000:
