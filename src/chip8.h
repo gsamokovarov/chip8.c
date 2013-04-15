@@ -10,7 +10,7 @@
 #define ST(chip8) chip8->sound_timer
 #define SP(chip8) chip8->stack_pointer
 
-struct chip8 {
+typedef struct chip8 {
   unsigned short opcode;
   unsigned char  memory[4096];
   unsigned char  registers[16];
@@ -22,9 +22,7 @@ struct chip8 {
   unsigned short stack[16];
   unsigned short stack_pointer;
   unsigned char  keys[16];
-};
-
-typedef struct chip8 chip8_t;
+} chip8_t;
 
 static const unsigned char chip8_hex_font[80] = {
   0xF0, 0x90, 0x90, 0x90, 0xF0, /* 0 */
