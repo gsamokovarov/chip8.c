@@ -51,7 +51,7 @@ void test_return(void) {
   chip8->memory[0x200] = 0x00;
   chip8->memory[0x201] = 0xEE;
 
-  chip8->stack[2] = 0x202;
+  chip8->stack[1] = 0x200;
   chip8->stack_pointer = 2;
 
   chip8_tick(chip8);
@@ -83,7 +83,7 @@ void test_call(void) {
 
   chip8_tick(chip8);
 
-  assert(chip8->stack[chip8->stack_pointer] == 0x200);
+  assert(chip8->stack[chip8->stack_pointer - 1] == 0x200);
   assert(chip8->program_counter == 0x123);
 
   chip8_free(chip8);
