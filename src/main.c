@@ -12,12 +12,11 @@ int main(int argc, char ** argv) {
     if (!chip8_load_file(chip8, argv[1])) {
       goto error;
     };
-    setvbuf(stdout, 0, _IOFBF, 0);
+    io->setup(io);
     while (1) {
       chip8_tick(chip8);
       io->render(io, chip8);
-      usleep(16667);
-      fflush(stdout);
+      usleep(1667);
     }
   } else {
     fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
