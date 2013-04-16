@@ -10,14 +10,20 @@ SDL_Surface * surface;
 io_t * sdl_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
+  self->setup = &sdl_io_setup;
   self->render = &sdl_io_render;
   self->listen = &sdl_io_listen;
+  self->teardown = &sdl_io_teardown;
+
+  return self;
+}
+
+void sdl_io_setup(io_t * self) {
+  UNUSED(self);
 
   SDL_Init(SDL_INIT_AUDIO|SDL_INIT_VIDEO);
 
   surface = SDL_SetVideoMode(64 * 8, 32 * 8, 32, SDL_HWSURFACE);
-
-  return self;
 }
 
 void sdl_io_render(io_t * self, chip8_t * chip8) {
@@ -40,6 +46,12 @@ void sdl_io_render(io_t * self, chip8_t * chip8) {
   }
 
   SDL_Flip(surface);
+}
+
+void sdl_io_teardown(io_t * self) {
+  UNUSED(self);
+
+  SDL_Quit();
 }
 
 void sdl_io_listen(io_t * self, chip8_t * chip8) {
