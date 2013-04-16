@@ -39,7 +39,7 @@ void chip8_tick(chip8_t * self) {
       PC(self) += 2;
       break;
     case 0x00EE:
-      PC(self) = self->stack[SP(self)--];
+      PC(self) = self->stack[--SP(self)] + 2;
       break;
     default:
       chip8_no_such_opcode(self);
@@ -49,7 +49,7 @@ void chip8_tick(chip8_t * self) {
     PC(self) = self->opcode & 0x0FFF;
     break;
   case 0x2000:
-    self->stack[++SP(self)] = PC(self);
+    self->stack[SP(self)++] = PC(self);
     PC(self) = self->opcode & 0x0FFF;
     break;
   case 0x3000:
