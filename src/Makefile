@@ -3,7 +3,7 @@ CFLAGS = -O3 -Wall -Wextra
 
 RM     = rm
 
-chip8: *.c
+chip8: *.c */*.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
