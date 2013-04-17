@@ -31,6 +31,7 @@ int main(int argc, char ** argv) {
   chip8_free(chip8);
   io_free(io);
   return 0;
+
 error:
   io->teardown(io);
   chip8_free(chip8);
@@ -40,5 +41,6 @@ error:
 
 void handle_interrupt(int signal) {
   UNUSED(signal);
+
   chip8_is_running = 0;
 }
