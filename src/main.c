@@ -29,7 +29,9 @@ int main(int argc, char ** argv) {
     signal(SIGINT, handle_interrupt);
     io_setup(io);
     while (chip8_is_running) {
-      io_listen(io, chip8);
+      if (!io_listen(io, chip8)) {
+        break;
+      };
       chip8_tick(chip8);
       io_render(io, chip8);
       usleep(167);

@@ -38,9 +38,11 @@ void terminal_io_render(io_t * self, chip8_t * chip8) {
   fflush(stdout);
 }
 
-void terminal_io_listen(io_t * self, chip8_t * chip8) {
+int terminal_io_listen(io_t * self, chip8_t * chip8) {
   UNUSED(self);
   UNUSED(chip8);
+
+  return 1;
 }
 
 void terminal_io_teardown(io_t * self) {

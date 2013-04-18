@@ -43,132 +43,137 @@ void sdl_io_render(io_t * self, chip8_t * chip8) {
   SDL_Flip(SDL_IO_CUSTOM(self)->surface);
 }
 
-void sdl_io_listen(io_t * self, chip8_t * chip8) {
+int sdl_io_listen(io_t * self, chip8_t * chip8) {
   UNUSED(self);
 
   SDL_Event event;
-  SDL_PollEvent(&event);
-
-  switch (event.type) {
-  case SDL_KEYDOWN:
-    switch (event.key.keysym.sym) {
-    case SDLK_KP_PERIOD:
-      chip8->keys[0x0] = 1;
-      break;
-    case SDLK_KP7:
-      chip8->keys[0x1] = 1;
-      break;
-    case SDLK_KP8:
-      chip8->keys[0x2] = 1;
-      break;
-    case SDLK_KP9:
-      chip8->keys[0x3] = 1;
-      break;
-    case SDLK_KP4:
-      chip8->keys[0x4] = 1;
-      break;
-    case SDLK_KP5:
-      chip8->keys[0x5] = 1;
-      break;
-    case SDLK_KP6:
-      chip8->keys[0x6] = 1;
-      break;
-    case SDLK_KP1:
-      chip8->keys[0x7] = 1;
-      break;
-    case SDLK_KP2:
-      chip8->keys[0x8] = 1;
-      break;
-    case SDLK_KP3:
-      chip8->keys[0x9] = 1;
-      break;
-    case SDLK_KP0:
-      chip8->keys[0xA] = 1;
-      break;
-    case SDLK_KP_ENTER:
-      chip8->keys[0xB] = 1;
-      break;
-    case SDLK_KP_DIVIDE:
-      chip8->keys[0xC] = 1;
-      break;
-    case SDLK_KP_MULTIPLY:
-      chip8->keys[0xD] = 1;
-      break;
-    case SDLK_KP_MINUS:
-      chip8->keys[0xE] = 1;
-      break;
-    case SDLK_KP_PLUS:
-      chip8->keys[0xF] = 1;
-      break;
-    default:
+  if (SDL_PollEvent(&event)) {
+    switch (event.type) {
+    case SDL_QUIT:
+      return 0;
+    case SDL_KEYDOWN:
+      switch (event.key.keysym.sym) {
+      case SDLK_KP_PERIOD:
+        chip8->keys[0x0] = 1;
+        break;
+      case SDLK_KP7:
+        chip8->keys[0x1] = 1;
+        break;
+      case SDLK_KP8:
+        chip8->keys[0x2] = 1;
+        break;
+      case SDLK_KP9:
+        chip8->keys[0x3] = 1;
+        break;
+      case SDLK_KP4:
+        chip8->keys[0x4] = 1;
+        break;
+      case SDLK_KP5:
+        chip8->keys[0x5] = 1;
+        break;
+      case SDLK_KP6:
+        chip8->keys[0x6] = 1;
+        break;
+      case SDLK_KP1:
+        chip8->keys[0x7] = 1;
+        break;
+      case SDLK_KP2:
+        chip8->keys[0x8] = 1;
+        break;
+      case SDLK_KP3:
+        chip8->keys[0x9] = 1;
+        break;
+      case SDLK_KP0:
+        chip8->keys[0xA] = 1;
+        break;
+      case SDLK_KP_ENTER:
+        chip8->keys[0xB] = 1;
+        break;
+      case SDLK_KP_DIVIDE:
+        chip8->keys[0xC] = 1;
+        break;
+      case SDLK_KP_MULTIPLY:
+        chip8->keys[0xD] = 1;
+        break;
+      case SDLK_KP_MINUS:
+        chip8->keys[0xE] = 1;
+        break;
+      case SDLK_KP_PLUS:
+        chip8->keys[0xF] = 1;
+        break;
+      default:
 #if CHIP8_DEBUG
-      if (event.key.keysym.sym) {
-        fprintf(stderr, "Unknown key: 0x%X\n", event.key.keysym.sym);
-      }
+        if (event.key.keysym.sym) {
+          fprintf(stderr, "Unknown key: 0x%X\n", event.key.keysym.sym);
+        }
 #endif
+        break;
+      }
+      break;
+    case SDL_KEYUP:
+      switch (event.key.keysym.sym) {
+      case SDLK_KP_PERIOD:
+        chip8->keys[0x0] = 0;
+        break;
+      case SDLK_KP7:
+        chip8->keys[0x1] = 0;
+        break;
+      case SDLK_KP8:
+        chip8->keys[0x2] = 0;
+        break;
+      case SDLK_KP9:
+        chip8->keys[0x3] = 0;
+        break;
+      case SDLK_KP4:
+        chip8->keys[0x4] = 0;
+        break;
+      case SDLK_KP5:
+        chip8->keys[0x5] = 0;
+        break;
+      case SDLK_KP6:
+        chip8->keys[0x6] = 0;
+        break;
+      case SDLK_KP1:
+        chip8->keys[0x7] = 0;
+        break;
+      case SDLK_KP2:
+        chip8->keys[0x8] = 0;
+        break;
+      case SDLK_KP3:
+        chip8->keys[0x9] = 0;
+        break;
+      case SDLK_KP0:
+        chip8->keys[0xA] = 0;
+        break;
+      case SDLK_KP_ENTER:
+        chip8->keys[0xB] = 0;
+        break;
+      case SDLK_KP_DIVIDE:
+        chip8->keys[0xC] = 0;
+        break;
+      case SDLK_KP_MULTIPLY:
+        chip8->keys[0xD] = 0;
+        break;
+      case SDLK_KP_MINUS:
+        chip8->keys[0xE] = 0;
+        break;
+      case SDLK_KP_PLUS:
+        chip8->keys[0xF] = 0;
+        break;
+      default:
+#if CHIP8_DEBUG
+        if (event.key.keysym.sym) {
+          fprintf(stderr, "Unknown key: 0x%X\n", event.key.keysym.sym);
+        }
+#endif
+        break;
+      }
       break;
     }
-    break;
-  case SDL_KEYUP:
-    switch (event.key.keysym.sym) {
-    case SDLK_KP_PERIOD:
-      chip8->keys[0x0] = 0;
-      break;
-    case SDLK_KP7:
-      chip8->keys[0x1] = 0;
-      break;
-    case SDLK_KP8:
-      chip8->keys[0x2] = 0;
-      break;
-    case SDLK_KP9:
-      chip8->keys[0x3] = 0;
-      break;
-    case SDLK_KP4:
-      chip8->keys[0x4] = 0;
-      break;
-    case SDLK_KP5:
-      chip8->keys[0x5] = 0;
-      break;
-    case SDLK_KP6:
-      chip8->keys[0x6] = 0;
-      break;
-    case SDLK_KP1:
-      chip8->keys[0x7] = 0;
-      break;
-    case SDLK_KP2:
-      chip8->keys[0x8] = 0;
-      break;
-    case SDLK_KP3:
-      chip8->keys[0x9] = 0;
-      break;
-    case SDLK_KP0:
-      chip8->keys[0xA] = 0;
-      break;
-    case SDLK_KP_ENTER:
-      chip8->keys[0xB] = 0;
-      break;
-    case SDLK_KP_DIVIDE:
-      chip8->keys[0xC] = 0;
-      break;
-    case SDLK_KP_MULTIPLY:
-      chip8->keys[0xD] = 0;
-      break;
-    case SDLK_KP_MINUS:
-      chip8->keys[0xE] = 0;
-      break;
-    case SDLK_KP_PLUS:
-      chip8->keys[0xF] = 0;
-      break;
-    default:
-#if CHIP8_DEBUG
-      if (event.key.keysym.sym) {
-        fprintf(stderr, "Unknown key: 0x%X\n", event.key.keysym.sym);
-      }
-#endif
-      break;
-    }
-    break;
   }
+
+
+  return 1;
 }
 
 void sdl_io_teardown(io_t * self) {
