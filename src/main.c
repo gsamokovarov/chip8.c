@@ -12,7 +12,7 @@ int chip8_is_running = 1;
 
 int main(int argc, char ** argv) {
   chip8_t * chip8 = chip8_new();
-  io_t * io = 0;
+  io_t    * io    = 0;
 
   if (argc == 3) {
     if (!chip8_load_file(chip8, argv[2])) {
