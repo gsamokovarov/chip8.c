@@ -18,5 +18,8 @@ void io_teardown(io_t * self) {
 }
 
 void io_free(io_t * self) {
+  if (self->custom) {
+    free(self->custom);
+  }
   free(self);
 }
