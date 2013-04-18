@@ -32,7 +32,7 @@ void chip8_tick(chip8_t * self) {
   self->opcode = self->memory[PC(self)] << 8 | self->memory[PC(self) + 1];
 
 #if CHIP8_DEBUG
-  fprintf(stderr, "Executing opcode: 0x%X", self->opcode);
+  fprintf(stderr, "Executing opcode: 0x%X\n", self->opcode);
 #endif
 
   switch (self->opcode & 0xF000) {
