@@ -107,7 +107,7 @@ void sdl_io_listen(io_t * self, chip8_t * chip8) {
       break;
     default:
 #if CHIP8_DEBUG
-      fprintf(stderr, "Unknown key: 0x%X", event.key.keysym.sym);
+      fprintf(stderr, "Unknown key: 0x%X\n", event.key.keysym.sym);
 #endif
       break;
     }
@@ -164,7 +164,7 @@ void sdl_io_listen(io_t * self, chip8_t * chip8) {
       break;
     default:
 #if CHIP8_DEBUG
-      fprintf(stderr, "Unknown key: 0x%X", event.key.keysym.sym);
+      fprintf(stderr, "Unknown key: 0x%X\n", event.key.keysym.sym);
 #endif
       break;
     }
