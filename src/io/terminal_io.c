@@ -7,10 +7,11 @@
 io_t * terminal_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
-  self->setup = &terminal_io_setup;
-  self->render = &terminal_io_render;
-  self->listen = &terminal_io_listen;
+  self->setup    = &terminal_io_setup;
+  self->render   = &terminal_io_render;
+  self->listen   = &terminal_io_listen;
   self->teardown = &terminal_io_teardown;
+  self->custom   = 0;
 
   return self;
 }
