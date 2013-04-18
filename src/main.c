@@ -18,24 +18,24 @@ int main(int argc, char ** argv) {
       goto error;
     };
     signal(SIGINT, handle_interrupt);
-    io->setup(io);
+    io_setup(io);
     while (chip8_is_running) {
-      io->listen(io, chip8);
+      io_listen(io, chip8);
       chip8_tick(chip8);
-      io->render(io, chip8);
+      io_render(io, chip8);
       usleep(167);
     }
   } else {
     fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
   }
 
-  io->teardown(io);
+  io_teardown(io);
   chip8_free(chip8);
   io_free(io);
   return 0;
 
 error:
-  io->teardown(io);
+  io_teardown(io);
   chip8_free(chip8);
   io_free(io);
   return -1;
