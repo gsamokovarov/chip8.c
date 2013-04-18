@@ -48,13 +48,126 @@ void sdl_io_render(io_t * self, chip8_t * chip8) {
   SDL_Flip(surface);
 }
 
+void sdl_io_listen(io_t * self, chip8_t * chip8) {
+  UNUSED(self);
+
+  SDL_Event event;
+
+  SDL_PollEvent(&event);
+  switch (event.type) {
+  case SDL_KEYDOWN:
+    switch (event.key.keysym.sym) {
+    case SDLK_KP_PERIOD:
+      chip8->keys[0] = 1;
+      break;
+    case SDLK_KP7:
+      chip8->keys[1] = 1;
+      break;
+    case SDLK_KP8:
+      chip8->keys[2] = 1;
+      break;
+    case SDLK_KP9:
+      chip8->keys[3] = 1;
+      break;
+    case SDLK_KP4:
+      chip8->keys[4] = 1;
+      break;
+    case SDLK_KP5:
+      chip8->keys[5] = 1;
+      break;
+    case SDLK_KP6:
+      chip8->keys[6] = 1;
+      break;
+    case SDLK_KP1:
+      chip8->keys[7] = 1;
+      break;
+    case SDLK_KP2:
+      chip8->keys[8] = 1;
+      break;
+    case SDLK_KP3:
+      chip8->keys[9] = 1;
+      break;
+    case SDLK_KP0:
+      chip8->keys[10] = 1;
+      break;
+    case SDLK_KP_ENTER:
+      chip8->keys[11] = 1;
+      break;
+    case SDLK_KP_DIVIDE:
+      chip8->keys[12] = 1;
+      break;
+    case SDLK_KP_MULTIPLY:
+      chip8->keys[13] = 1;
+      break;
+    case SDLK_KP_MINUS:
+      chip8->keys[14] = 1;
+      break;
+    case SDLK_KP_PLUS:
+      chip8->keys[15] = 1;
+      break;
+    default:
+      break;
+    }
+    break;
+  case SDL_KEYUP:
+    switch (event.key.keysym.sym) {
+    case SDLK_KP_PERIOD:
+      chip8->keys[0] = 0;
+      break;
+    case SDLK_KP7:
+      chip8->keys[1] = 0;
+      break;
+    case SDLK_KP8:
+      chip8->keys[2] = 0;
+      break;
+    case SDLK_KP9:
+      chip8->keys[3] = 0;
+      break;
+    case SDLK_KP4:
+      chip8->keys[4] = 0;
+      break;
+    case SDLK_KP5:
+      chip8->keys[5] = 0;
+      break;
+    case SDLK_KP6:
+      chip8->keys[6] = 0;
+      break;
+    case SDLK_KP1:
+      chip8->keys[7] = 0;
+      break;
+    case SDLK_KP2:
+      chip8->keys[8] = 0;
+      break;
+    case SDLK_KP3:
+      chip8->keys[9] = 0;
+      break;
+    case SDLK_KP0:
+      chip8->keys[10] = 0;
+      break;
+    case SDLK_KP_ENTER:
+      chip8->keys[11] = 0;
+      break;
+    case SDLK_KP_DIVIDE:
+      chip8->keys[12] = 0;
+      break;
+    case SDLK_KP_MULTIPLY:
+      chip8->keys[13] = 0;
+      break;
+    case SDLK_KP_MINUS:
+      chip8->keys[14] = 0;
+      break;
+    case SDLK_KP_PLUS:
+      chip8->keys[15] = 0;
+      break;
+    default:
+      break;
+    }
+    break;
+  }
+}
+
 void sdl_io_teardown(io_t * self) {
   UNUSED(self);
 
   SDL_Quit();
-}
-
-void sdl_io_listen(io_t * self, chip8_t * chip8) {
-  UNUSED(self);
-  UNUSED(chip8);
 }

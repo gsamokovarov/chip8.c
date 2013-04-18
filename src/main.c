@@ -20,6 +20,7 @@ int main(int argc, char ** argv) {
     signal(SIGINT, handle_interrupt);
     io->setup(io);
     while (chip8_is_running) {
+      io->listen(io, chip8);
       chip8_tick(chip8);
       io->render(io, chip8);
       usleep(167);
