@@ -38,7 +38,7 @@ error:
   io_teardown(io);
   chip8_free(chip8);
   io_free(io);
-  return -1;
+  return 1;
 }
 
 void handle_interrupt(int signal) {
