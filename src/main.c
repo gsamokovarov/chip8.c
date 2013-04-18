@@ -4,13 +4,14 @@
 #include "chip8.h"
 #include "io.h"
 #include "io/terminal_io.h"
+#include "io/sdl_io.h"
 
 void handle_interrupt(int);
 int chip8_is_running = 1;
 
 int main(int argc, char ** argv) {
   chip8_t * chip8 = chip8_new();
-  io_t * io = terminal_io_new();
+  io_t * io = sdl_io_new();
 
   if (argc == 2) {
     if (!chip8_load_file(chip8, argv[1])) {

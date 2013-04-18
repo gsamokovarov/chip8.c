@@ -4,7 +4,7 @@ CFLAGS = -O3 -Wall -Wextra
 RM     = rm
 
 chip8: *.c */*.c
-	$(CC) $(CFLAGS) -o $@ $^ -lSDL
+	$(CC) $(CFLAGS) -o $@ $^ -lSDL -DCHIP8_DEBUG
 
 clean:
 	@([ -e chip8 ] && $(RM) chip8)
