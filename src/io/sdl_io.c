@@ -58,52 +58,52 @@ void sdl_io_listen(io_t * self, chip8_t * chip8) {
   case SDL_KEYDOWN:
     switch (event.key.keysym.sym) {
     case SDLK_KP_PERIOD:
-      chip8->keys[0] = 1;
+      chip8->keys[0x0] = 1;
       break;
     case SDLK_KP7:
-      chip8->keys[1] = 1;
+      chip8->keys[0x1] = 1;
       break;
     case SDLK_KP8:
-      chip8->keys[2] = 1;
+      chip8->keys[0x2] = 1;
       break;
     case SDLK_KP9:
-      chip8->keys[3] = 1;
+      chip8->keys[0x3] = 1;
       break;
     case SDLK_KP4:
-      chip8->keys[4] = 1;
+      chip8->keys[0x4] = 1;
       break;
     case SDLK_KP5:
-      chip8->keys[5] = 1;
+      chip8->keys[0x5] = 1;
       break;
     case SDLK_KP6:
-      chip8->keys[6] = 1;
+      chip8->keys[0x6] = 1;
       break;
     case SDLK_KP1:
-      chip8->keys[7] = 1;
+      chip8->keys[0x7] = 1;
       break;
     case SDLK_KP2:
-      chip8->keys[8] = 1;
+      chip8->keys[0x8] = 1;
       break;
     case SDLK_KP3:
-      chip8->keys[9] = 1;
+      chip8->keys[0x9] = 1;
       break;
     case SDLK_KP0:
-      chip8->keys[10] = 1;
+      chip8->keys[0xA] = 1;
       break;
     case SDLK_KP_ENTER:
-      chip8->keys[11] = 1;
+      chip8->keys[0xB] = 1;
       break;
     case SDLK_KP_DIVIDE:
-      chip8->keys[12] = 1;
+      chip8->keys[0xC] = 1;
       break;
     case SDLK_KP_MULTIPLY:
-      chip8->keys[13] = 1;
+      chip8->keys[0xD] = 1;
       break;
     case SDLK_KP_MINUS:
-      chip8->keys[14] = 1;
+      chip8->keys[0xE] = 1;
       break;
     case SDLK_KP_PLUS:
-      chip8->keys[15] = 1;
+      chip8->keys[0xF] = 1;
       break;
     default:
       break;
@@ -112,52 +112,52 @@ void sdl_io_listen(io_t * self, chip8_t * chip8) {
   case SDL_KEYUP:
     switch (event.key.keysym.sym) {
     case SDLK_KP_PERIOD:
-      chip8->keys[0] = 0;
+      chip8->keys[0x0] = 0;
       break;
     case SDLK_KP7:
-      chip8->keys[1] = 0;
+      chip8->keys[0x1] = 0;
       break;
     case SDLK_KP8:
-      chip8->keys[2] = 0;
+      chip8->keys[0x2] = 0;
       break;
     case SDLK_KP9:
-      chip8->keys[3] = 0;
+      chip8->keys[0x3] = 0;
       break;
     case SDLK_KP4:
-      chip8->keys[4] = 0;
+      chip8->keys[0x4] = 0;
       break;
     case SDLK_KP5:
-      chip8->keys[5] = 0;
+      chip8->keys[0x5] = 0;
       break;
     case SDLK_KP6:
-      chip8->keys[6] = 0;
+      chip8->keys[0x6] = 0;
       break;
     case SDLK_KP1:
-      chip8->keys[7] = 0;
+      chip8->keys[0x7] = 0;
       break;
     case SDLK_KP2:
-      chip8->keys[8] = 0;
+      chip8->keys[0x8] = 0;
       break;
     case SDLK_KP3:
-      chip8->keys[9] = 0;
+      chip8->keys[0x9] = 0;
       break;
     case SDLK_KP0:
-      chip8->keys[10] = 0;
+      chip8->keys[0xA] = 0;
       break;
     case SDLK_KP_ENTER:
-      chip8->keys[11] = 0;
+      chip8->keys[0xB] = 0;
       break;
     case SDLK_KP_DIVIDE:
-      chip8->keys[12] = 0;
+      chip8->keys[0xC] = 0;
       break;
     case SDLK_KP_MULTIPLY:
-      chip8->keys[13] = 0;
+      chip8->keys[0xD] = 0;
       break;
     case SDLK_KP_MINUS:
-      chip8->keys[14] = 0;
+      chip8->keys[0xE] = 0;
       break;
     case SDLK_KP_PLUS:
-      chip8->keys[15] = 0;
+      chip8->keys[0xF] = 0;
       break;
     default:
       break;
