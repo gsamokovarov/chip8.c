@@ -52,8 +52,8 @@ void sdl_io_listen(io_t * self, chip8_t * chip8) {
   UNUSED(self);
 
   SDL_Event event;
-
   SDL_PollEvent(&event);
+
   switch (event.type) {
   case SDL_KEYDOWN:
     switch (event.key.keysym.sym) {
