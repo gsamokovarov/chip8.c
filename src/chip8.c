@@ -105,7 +105,7 @@ void chip8_tick(chip8_t * self) {
       PC(self) += 2;
       break;
     case 0x0005:
-      VF(self) = V(self)[BYTE3(self->opcode)] > V(self)[BYTE2(self->opcode)];
+      VF(self) = V(self)[BYTE3(self->opcode)] >= V(self)[BYTE2(self->opcode)];
       V(self)[BYTE3(self->opcode)] -= V(self)[BYTE2(self->opcode)];
       PC(self) += 2;
       break;
@@ -115,7 +115,7 @@ void chip8_tick(chip8_t * self) {
       PC(self) += 2;
       break;
     case 0x0007:
-      VF(self) = V(self)[BYTE3(self->opcode)] < V(self)[BYTE2(self->opcode)];
+      VF(self) = V(self)[BYTE3(self->opcode)] <= V(self)[BYTE2(self->opcode)];
       V(self)[BYTE3(self->opcode)] = V(self)[BYTE2(self->opcode)] - V(self)[BYTE3(self->opcode)];
       PC(self) += 2;
       break;
