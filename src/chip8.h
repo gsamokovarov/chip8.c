@@ -1,5 +1,5 @@
-#ifndef CHIP8_H
-#define CHIP8_H
+#ifndef _CHIP8_H
+#define _CHIP8_H
 
 #define PC(chip8) chip8->program_counter
 #define V(chip8)  chip8->registers

@@ -1,5 +1,5 @@
-#ifndef SDL_IO_H
-#define SDL_IO_H
+#ifndef _SDL_IO_H
+#define _SDL_IO_H
 
 typedef struct io io_t;
 typedef struct chip8 chip8_t;
