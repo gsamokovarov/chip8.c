@@ -10,12 +10,14 @@ typedef void (* io_setup_t)(io_t *);
 typedef void (* io_render_t)(io_t *, chip8_t *);
 typedef void (* io_listen_t)(io_t *, chip8_t *);
 typedef void (* io_teardown_t)(io_t *);
+typedef void * io_custom_t;
 
 typedef struct io {
   io_setup_t    setup;
   io_render_t   render;
   io_listen_t   listen;
   io_teardown_t teardown;
+  io_custom_t   custom;
 } io_t;
 
 void io_setup(io_t *);
