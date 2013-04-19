@@ -82,6 +82,9 @@ void chip8_tick(chip8_t * self) {
     (V(self)[BYTE3(self->opcode)]) == (self->opcode & 0x00FF)
       ? (PC(self) += 2)
       : (PC(self) += 4);
+#if CHIP8_DEBUG
+    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
+#endif
     break;
   case 0x5000:
     (V(self)[BYTE3(self->opcode)] == V(self)[BYTE2(self->opcode)])
