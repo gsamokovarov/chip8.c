@@ -8,7 +8,7 @@
 #include "io/sdl_io.h"
 
 void handle_interrupt(int);
-int chip8_is_running = 1;
+int chip8_isnt_interrupted = 1;
 
 int main(int argc, char ** argv) {
   chip8_t * chip8 = chip8_new();
@@ -28,7 +28,7 @@ int main(int argc, char ** argv) {
     }
     signal(SIGINT, handle_interrupt);
     io_setup(io);
-    while (chip8_is_running) {
+    while (chip8_isnt_interrupted) {
       if (!io_listen(io, chip8)) {
         break;
       };
@@ -61,5 +61,5 @@ error:
 void handle_interrupt(int signal) {
   UNUSED(signal);
 
-  chip8_is_running = 0;
+  chip8_isnt_interrupted = 0;
 }
