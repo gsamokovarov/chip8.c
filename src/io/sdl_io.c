@@ -172,7 +172,6 @@ int sdl_io_listen(io_t * self, chip8_t * chip8) {
     }
   }
 
-
   return 1;
 }
 
