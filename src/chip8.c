@@ -48,7 +48,7 @@ void chip8_tick(chip8_t * self) {
 #if CHIP8_DEBUG
       fprintf(stderr, "SP: 0x%X\n", SP(self));
       fprintf(stderr, "Stack at (SP + 1): 0x%X\n", self->stack[SP(self) + 1]);
-      fprintf(stderr, "PC: 0x%X\n", PC(self));
+      fprintf(stderr, "Change PC: 0x%X\n", PC(self));
 #endif
       break;
     default:
@@ -67,7 +67,7 @@ void chip8_tick(chip8_t * self) {
 #if CHIP8_DEBUG
     fprintf(stderr, "SP: 0x%X\n", SP(self));
     fprintf(stderr, "Stack at (SP - 1): 0x%X\n", self->stack[SP(self) - 1]);
-    fprintf(stderr, "PC: 0x%X\n", PC(self));
+    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
 #endif
     break;
   case 0x3000:
@@ -75,7 +75,7 @@ void chip8_tick(chip8_t * self) {
       ? (PC(self) += 4)
       : (PC(self) += 2);
 #if CHIP8_DEBUG
-    fprintf(stderr, "PC: 0x%X\n", PC(self));
+    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
 #endif
     break;
   case 0x4000:
@@ -88,7 +88,7 @@ void chip8_tick(chip8_t * self) {
       ? (PC(self) += 4)
       : (PC(self) += 2);
 #if CHIP8_DEBUG
-    fprintf(stderr, "PC: 0x%X\n", PC(self));
+    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
 #endif
     break;
   case 0x6000:
@@ -151,7 +151,7 @@ void chip8_tick(chip8_t * self) {
       ? (PC(self) += 2)
       : (PC(self) += 4);
 #if CHIP8_DEBUG
-    fprintf(stderr, "PC: 0x%X\n", PC(self));
+    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
 #endif
     break;
   case 0xA000:
@@ -161,7 +161,7 @@ void chip8_tick(chip8_t * self) {
   case 0xB000:
     PC(self) = V0(self) + (self->opcode & 0x0FFF);
 #if CHIP8_DEBUG
-    fprintf(stderr, "PC: 0x%X\n", PC(self));
+    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
 #endif
     break;
   case 0xC000:
@@ -204,7 +204,7 @@ void chip8_tick(chip8_t * self) {
         ? (PC(self) += 4)
         : (PC(self) += 2);
 #if CHIP8_DEBUG
-      fprintf(stderr, "PC: 0x%X\n", PC(self));
+      fprintf(stderr, "Change PC: 0x%X\n", PC(self));
 #endif
       break;
     case 0xE0A1:
@@ -212,7 +212,7 @@ void chip8_tick(chip8_t * self) {
         ? (PC(self) += 2)
         : (PC(self) += 4);
 #if CHIP8_DEBUG
-      fprintf(stderr, "PC: 0x%X\n", PC(self));
+      fprintf(stderr, "Change PC: 0x%X\n", PC(self));
 #endif
       break;
     default:
@@ -256,7 +256,7 @@ void chip8_tick(chip8_t * self) {
       PC(self) += 2;
       break;
     case 0xF01E:
-      VF(self) = I(self) + V(self)[BYTE3(self->opcode)] > 0xFFF;
+      VF(self) = (I(self) + V(self)[BYTE3(self->opcode)]) > 0xFFF;
       I(self) += V(self)[BYTE3(self->opcode)];
 #if CHIP8_DEBUG
       fprintf(stderr, "Register VF: 0x%X", VF(self));
