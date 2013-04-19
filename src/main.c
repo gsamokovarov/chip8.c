@@ -8,7 +8,7 @@
 #include "io/sdl_io.h"
 
 void handle_interrupt(int);
-int chip8_isnt_interrupted = 1;
+volatile sig_atomic_t chip8_isnt_interrupted = 1;
 
 int main(int argc, char ** argv) {
   chip8_t * chip8 = chip8_new();
