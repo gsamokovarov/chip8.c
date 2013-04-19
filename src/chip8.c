@@ -160,6 +160,9 @@ void chip8_tick(chip8_t * self) {
     break;
   case 0xB000:
     PC(self) = V0(self) + (self->opcode & 0x0FFF);
+#if CHIP8_DEBUG
+    fprintf(stderr, "PC: 0x%X\n", PC(self));
+#endif
     break;
   case 0xC000:
     V(self)[BYTE3(self->opcode)] = rand() & (self->opcode & 0x00FF);
