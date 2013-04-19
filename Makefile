@@ -1,3 +1,6 @@
+compile-with-debug:
+	@(cd src; make chip8-debug)
+
 compile:
 	@(cd src; make chip8)
 
