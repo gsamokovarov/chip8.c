@@ -36,13 +36,13 @@ int main(int argc, char ** argv) {
       io_render(io, chip8);
       usleep(167);
     }
+    io_teardown(io);
   } else {
     fprintf(stderr, "Usage: %s <sdl|terminal> <filename>\n", argv[0]);
   }
 
   chip8_free(chip8);
   if (io) {
-    io_teardown(io);
     io_free(io);
   }
 
@@ -51,7 +51,6 @@ int main(int argc, char ** argv) {
 error:
   chip8_free(chip8);
   if (io) {
-    io_teardown(io);
     io_free(io);
   }
 
