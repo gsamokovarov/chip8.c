@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <signal.h>
-#include <unistd.h>
 #include <string.h>
 #include "chip8.h"
 #include "io.h"
@@ -34,7 +33,7 @@ int main(int argc, char ** argv) {
       };
       chip8_tick(chip8);
       io_render(io, chip8);
-      usleep(167);
+      io_delay(io, chip8);
     }
     io_teardown(io);
   } else {

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "../io.h"
 #include "../chip8.h"
 #include "terminal_io.h"
@@ -11,6 +12,7 @@ io_t * terminal_io_new(void) {
   self->render   = &terminal_io_render;
   self->listen   = &terminal_io_listen;
   self->teardown = &terminal_io_teardown;
+  self->delay    = &terminal_io_delay;
   self->custom   = 0;
 
   return self;
@@ -43,6 +45,13 @@ int terminal_io_listen(io_t * self, chip8_t * chip8) {
   UNUSED(chip8);
 
   return 1;
+}
+
+void terminal_io_delay(io_t * self, chip8_t * chip8) {
+  UNUSED(self);
+  UNUSED(chip8);
+
+  usleep(167);
 }
 
 void terminal_io_teardown(io_t * self) {

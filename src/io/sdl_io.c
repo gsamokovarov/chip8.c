@@ -11,6 +11,7 @@ io_t * sdl_io_new(void) {
   self->setup    = &sdl_io_setup;
   self->render   = &sdl_io_render;
   self->listen   = &sdl_io_listen;
+  self->delay    = &sdl_io_delay;
   self->teardown = &sdl_io_teardown;
   self->custom   = (sdl_io_custom_t *) malloc(sizeof(sdl_io_custom_t));
 
@@ -174,6 +175,13 @@ int sdl_io_listen(io_t * self, chip8_t * chip8) {
   }
 
   return 1;
+}
+
+void sdl_io_delay(io_t * self, chip8_t * chip8) {
+  UNUSED(self);
+  UNUSED(chip8);
+
+  SDL_Delay(1);
 }
 
 void sdl_io_teardown(io_t * self) {

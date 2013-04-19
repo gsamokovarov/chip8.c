@@ -13,6 +13,10 @@ int io_listen(io_t * self, chip8_t * chip8) {
   return self->listen(self, chip8);
 }
 
+void io_delay(io_t * self, chip8_t * chip8) {
+  self->delay(self, chip8);
+}
+
 void io_teardown(io_t * self) {
   self->teardown(self);
 }

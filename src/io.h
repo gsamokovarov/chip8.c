@@ -8,6 +8,7 @@ typedef struct io io_t;
 
 typedef void (* io_setup_t)(io_t *);
 typedef void (* io_render_t)(io_t *, chip8_t *);
+typedef void (* io_delay_t)(io_t *, chip8_t *);
 typedef int  (* io_listen_t)(io_t *, chip8_t *);
 typedef void (* io_teardown_t)(io_t *);
 typedef void * io_custom_t;
@@ -15,6 +16,7 @@ typedef void * io_custom_t;
 typedef struct io {
   io_setup_t    setup;
   io_render_t   render;
+  io_delay_t    delay;
   io_listen_t   listen;
   io_teardown_t teardown;
   io_custom_t   custom;
@@ -22,6 +24,7 @@ typedef struct io {
 
 void io_setup(io_t *);
 void io_render(io_t *, chip8_t *);
+void io_delay(io_t *, chip8_t *);
 int  io_listen(io_t *, chip8_t *);
 void io_teardown(io_t *);
 void io_free(io_t *);
