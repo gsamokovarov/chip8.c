@@ -11,5 +11,6 @@ chip8: *.c */*.c
 
 clean:
 	@([ -e chip8 ] && $(RM) chip8)
+	@([ -e chip8-debug ] && $(RM) chip8-debug)
 
-.PHONY: chip8 clean
+.PHONY: chip8-debug chip8 clean
