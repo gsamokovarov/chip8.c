@@ -23,7 +23,7 @@ int main(int argc, char ** argv) {
     } else if (strcmp(argv[1], "terminal") == 0) {
       io = terminal_io_new();
     } else {
-      fprintf(stderr, "Invalid io, use sdl or terminal");
+      fprintf(stderr, "Invalid io, use sdl or terminal\n");
       goto error;
     }
     signal(SIGINT, handle_interrupt);
