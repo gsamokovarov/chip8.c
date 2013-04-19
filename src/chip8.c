@@ -257,7 +257,7 @@ void chip8_tick(chip8_t * self) {
 }
 
 int chip8_load_file(chip8_t * self, char * filename) {
-  FILE *        file;
+  FILE        * file;
   unsigned long size, maximum_file_size = 4096 - 0x200;
 
   if (!(file = fopen(filename, "rb"))) {
