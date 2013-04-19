@@ -33,7 +33,7 @@ void chip8_tick(chip8_t * self) {
 
 #if CHIP8_DEBUG
   fprintf(stderr, "Running opcode: 0x%X\n", self->opcode);
-  fprintf(stderr, "PC: 0x%X\n", PC(self));
+  fprintf(stderr, "Starting at PC: 0x%X\n", PC(self));
 #endif
 
   switch (self->opcode & 0xF000) {
@@ -46,8 +46,8 @@ void chip8_tick(chip8_t * self) {
     case 0x00EE:
       PC(self) = self->stack[--SP(self)] + 2;
 #if CHIP8_DEBUG
-      fprintf(stderr, "SP: 0x%X", SP(self));
-      fprintf(stderr, "Stack at (SP + 1): 0x%X", self->stack[SP(self) + 1]);
+      fprintf(stderr, "SP: 0x%X\n", SP(self));
+      fprintf(stderr, "Stack at (SP + 1): 0x%X\n", self->stack[SP(self) + 1]);
       fprintf(stderr, "PC: 0x%X\n", PC(self));
 #endif
       break;
@@ -65,8 +65,8 @@ void chip8_tick(chip8_t * self) {
     self->stack[SP(self)++] = PC(self);
     PC(self) = self->opcode & 0x0FFF;
 #if CHIP8_DEBUG
-    fprintf(stderr, "SP: 0x%X", SP(self));
-    fprintf(stderr, "Stack at (SP - 1): 0x%X", self->stack[SP(self) - 1]);
+    fprintf(stderr, "SP: 0x%X\n", SP(self));
+    fprintf(stderr, "Stack at (SP - 1): 0x%X\n", self->stack[SP(self) - 1]);
     fprintf(stderr, "PC: 0x%X\n", PC(self));
 #endif
     break;
@@ -175,6 +175,11 @@ void chip8_tick(chip8_t * self) {
       unsigned char y_coord = V(self)[BYTE2(self->opcode)];
       unsigned char height  = BYTE1(self->opcode);
       unsigned char width   = 8;
+
+#if CHIP8_DEBUG
+      fprintf(stderr, "Drawing %d bytes: 0x%X\n", height, I(self));
+      fprintf(stderr, "Drawing at: %d x %d\n", x_coord, y_coord);
+#endif
 
       VF(self) = 0;
       for (i = 0; i < height; i++) {
