@@ -21,7 +21,7 @@ io_t * sdl_io_new(void) {
 void sdl_io_setup(io_t * self) {
   SDL_Init(SDL_INIT_EVERYTHING);
 
-  SDL_IO_CUSTOM(self)->surface = SDL_SetVideoMode(64 * 8, 32 * 8, 32, SDL_HWSURFACE);
+  SDL_IO_CUSTOM(self)->surface = SDL_SetVideoMode(64 * 8, 32 * 8, 32, SDL_HWSURFACE|SDL_DOUBLEBUF);
 }
 
 void sdl_io_render(io_t * self, chip8_t * chip8) {
