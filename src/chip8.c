@@ -139,7 +139,7 @@ void chip8_tick(chip8_t * self) {
       PC(self) += 2;
       break;
     case 0x0004:
-      VF(self) = (V(self)[BYTE3(self->opcode)] + V(self)[BYTE2(self->opcode)]) > 0xFF;
+      VF(self) = V(self)[BYTE3(self->opcode)] + V(self)[BYTE2(self->opcode)] > 0xFF;
       V(self)[BYTE3(self->opcode)] += V(self)[BYTE2(self->opcode)];
 #if CHIP8_DEBUG
       fprintf(stderr, "Register VF: 0x%X\n", VF(self));
