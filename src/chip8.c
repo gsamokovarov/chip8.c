@@ -193,10 +193,16 @@ void chip8_tick(chip8_t * self) {
       VF(self) = 0;
       for (i = 0; i < height; i++) {
         row = self->memory[I(self) + i];
+#if CHIP8_DEBUG
+        fprintf(stderr, "Row at 0x%X: 0x%X\n", I(self) + i, row);
+#endif
         for (j = 0; j < width; j++) {
           if (!(pixel = row & (0x80 >> j))) {
             continue;
           }
+#if CHIP8_DEBUG
+          fprintf(stderr, "Drawing pixel at: %d\n", 32 * (x_coord + j) + (y_coord + i));
+#endif
           if (self->screen[32 * (x_coord + j) + (y_coord + i)]) {
             VF(self) = 1;
           }
