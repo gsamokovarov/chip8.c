@@ -148,7 +148,7 @@ void chip8_tick(chip8_t * self) {
       PC(self) += 2;
       break;
     case 0x0005:
-      VF(self) = V(self)[BYTE3(self->opcode)] >= V(self)[BYTE2(self->opcode)];
+      VF(self) = V(self)[BYTE2(self->opcode)] <= V(self)[BYTE3(self->opcode)];
       V(self)[BYTE3(self->opcode)] -= V(self)[BYTE2(self->opcode)];
 #if CHIP8_DEBUG
       fprintf(stderr, "Register VF: 0x%X\n", VF(self));
@@ -166,7 +166,7 @@ void chip8_tick(chip8_t * self) {
       PC(self) += 2;
       break;
     case 0x0007:
-      VF(self) = V(self)[BYTE2(self->opcode)] >= V(self)[BYTE3(self->opcode)];
+      VF(self) = V(self)[BYTE3(self->opcode)] <= V(self)[BYTE2(self->opcode)];
       V(self)[BYTE3(self->opcode)] = V(self)[BYTE2(self->opcode)] - V(self)[BYTE3(self->opcode)];
 #if CHIP8_DEBUG
       fprintf(stderr, "Register VF: 0x%X\n", VF(self));
@@ -233,6 +233,9 @@ void chip8_tick(chip8_t * self) {
 #endif
         for (j = 0; j < width; j++) {
           if (!(pixel = row & (0x80 >> j))) {
+            continue;
+          }
+          if ((32 * (x_coord + j) + (y_coord + i)) > (64 * 32)) {
             continue;
           }
 #if CHIP8_DEBUG
