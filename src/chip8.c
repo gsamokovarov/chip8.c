@@ -58,7 +58,7 @@ void chip8_tick(chip8_t * self) {
   case 0x1000:
     PC(self) = self->opcode & 0x0FFF;
 #if CHIP8_DEBUG
-    fprintf(stderr, "PC: 0x%X\n", PC(self));
+    fprintf(stderr, "Jump PC: 0x%X\n", PC(self));
 #endif
     break;
   case 0x2000:
@@ -207,6 +207,9 @@ void chip8_tick(chip8_t * self) {
     break;
   case 0xC000:
     V(self)[BYTE3(self->opcode)] = rand() & (self->opcode & 0x00FF);
+#if CHIP8_DEBUG
+    fprintf(stderr, "Register V%X random: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
     PC(self) += 2;
     break;
   case 0xD000:
