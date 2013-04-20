@@ -370,7 +370,9 @@ void chip8_tick(chip8_t * self) {
     chip8_no_such_opcode(self);
   }
 
-  DT(self)--;
+  if (DT(self)) {
+    DT(self)--;
+  }
   ST(self)--;
 }
 
