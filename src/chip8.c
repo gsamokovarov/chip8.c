@@ -112,43 +112,75 @@ void chip8_tick(chip8_t * self) {
     switch (self->opcode & 0x000F) {
     case 0x0000:
       V(self)[BYTE3(self->opcode)] = V(self)[BYTE2(self->opcode)];
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     case 0x0001:
       V(self)[BYTE3(self->opcode)] |= V(self)[BYTE2(self->opcode)];
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     case 0x0002:
       V(self)[BYTE3(self->opcode)] &= V(self)[BYTE2(self->opcode)];
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     case 0x0003:
       V(self)[BYTE3(self->opcode)] ^= V(self)[BYTE2(self->opcode)];
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     case 0x0004:
       VF(self) = (V(self)[BYTE3(self->opcode)] + V(self)[BYTE2(self->opcode)]) > 0xFF;
       V(self)[BYTE3(self->opcode)] += V(self)[BYTE2(self->opcode)];
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     case 0x0005:
       VF(self) = V(self)[BYTE3(self->opcode)] >= V(self)[BYTE2(self->opcode)];
       V(self)[BYTE3(self->opcode)] -= V(self)[BYTE2(self->opcode)];
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     case 0x0006:
       VF(self) = V(self)[BYTE3(self->opcode)] & 1;
       V(self)[BYTE3(self->opcode)] >>= 1;
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     case 0x0007:
       VF(self) = V(self)[BYTE2(self->opcode)] >= V(self)[BYTE3(self->opcode)];
       V(self)[BYTE3(self->opcode)] = V(self)[BYTE2(self->opcode)] - V(self)[BYTE3(self->opcode)];
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     case 0x000E:
       VF(self) = V(self)[BYTE3(self->opcode)] >> 7;
       V(self)[BYTE3(self->opcode)] <<= 1;
+#if CHIP8_DEBUG
+      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+#endif
       PC(self) += 2;
       break;
     default:
