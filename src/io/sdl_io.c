@@ -13,7 +13,7 @@ io_t * sdl_io_new(void) {
   self->listen   = &sdl_io_listen;
   self->delay    = &sdl_io_delay;
   self->teardown = &sdl_io_teardown;
-  self->custom   = (sdl_io_custom_t *) malloc(sizeof(sdl_io_custom_t));
+  self->custom   = malloc(sizeof(sdl_io_custom_t));
 
   return self;
 }
