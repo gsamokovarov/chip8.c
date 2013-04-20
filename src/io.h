@@ -22,11 +22,11 @@ typedef struct io {
   io_custom_t   custom;
 } io_t;
 
-void io_setup(io_t *);
-void io_render(io_t *, chip8_t *);
-void io_delay(io_t *, chip8_t *);
-int  io_listen(io_t *, chip8_t *);
-void io_teardown(io_t *);
-void io_free(io_t *);
+inline void io_setup(io_t *);
+inline void io_render(io_t *, chip8_t *);
+inline void io_delay(io_t *, chip8_t *);
+inline int  io_listen(io_t *, chip8_t *);
+inline void io_teardown(io_t *);
+inline void io_free(io_t *);
 
 #endif
