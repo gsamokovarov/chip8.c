@@ -97,14 +97,14 @@ void chip8_tick(chip8_t * self) {
   case 0x6000:
     V(self)[BYTE3(self->opcode)] = self->opcode & 0x00FF;
 #if CHIP8_DEBUG
-    fprintf(stderr, "Register V%X: 0x%X", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+    fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
 #endif
     PC(self) += 2;
     break;
   case 0x7000:
     V(self)[BYTE3(self->opcode)] += self->opcode & 0x00FF;
 #if CHIP8_DEBUG
-    fprintf(stderr, "Register V%X: 0x%X", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
+    fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
 #endif
     PC(self) += 2;
     break;
@@ -233,7 +233,7 @@ void chip8_tick(chip8_t * self) {
     case 0xF007:
       V(self)[BYTE3(self->opcode)] = DT(self);
 #if CHIP8_DEBUG
-      fprintf(stderr, "Register V%X: 0x%X", BYTE3(self->opcode), DT(self));
+      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), DT(self));
 #endif
       PC(self) += 2;
       break;
@@ -268,7 +268,7 @@ void chip8_tick(chip8_t * self) {
       VF(self) = (I(self) + V(self)[BYTE3(self->opcode)]) > 0xFFF;
       I(self) += V(self)[BYTE3(self->opcode)];
 #if CHIP8_DEBUG
-      fprintf(stderr, "Register VF: 0x%X", VF(self));
+      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
       fprintf(stderr, "Register I: 0x%X\n",  I(self));
 #endif
       PC(self) += 2;
