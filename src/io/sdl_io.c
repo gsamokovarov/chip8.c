@@ -103,6 +103,8 @@ int sdl_io_listen(io_t * self, chip8_t * chip8) {
       case SDLK_KP_PLUS:
         chip8->keys[0xF] = 1;
         break;
+      case SDLK_ESCAPE:
+        return 0;
       default:
 #if CHIP8_DEBUG
         if (event.key.keysym.sym) {
