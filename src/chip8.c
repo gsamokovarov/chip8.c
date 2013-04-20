@@ -253,7 +253,7 @@ void chip8_tick(chip8_t * self) {
     case 0xF015:
       DT(self) = V(self)[BYTE3(self->opcode)];
 #if CHIP8_DEBUG
-      fprintf(stderr, "Delay timer: 0x%X\n",  ST(self));
+      fprintf(stderr, "Delay timer: 0x%X\n",  DT(self));
 #endif
       PC(self) += 2;
       break;
