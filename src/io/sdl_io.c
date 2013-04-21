@@ -112,6 +112,9 @@ int sdl_io_listen(io_t * self, chip8_t * chip8) {
         break;
       case SDLK_ESCAPE:
         return 0;
+      case SDLK_BACKSPACE:
+        chip8_reset(chip8);
+        break;
       default:
 #if CHIP8_DEBUG
         if (event.key.keysym.sym) {
