@@ -31,11 +31,6 @@ chip8_t * chip8_new(void) {
 void chip8_tick(chip8_t * self) {
   self->opcode = self->memory[PC(self)] << 8 | self->memory[PC(self) + 1];
 
-#if CHIP8_DEBUG
-  fprintf(stderr, "Running opcode: 0x%X\n", self->opcode);
-  fprintf(stderr, "Starting at PC: 0x%X\n", PC(self));
-#endif
-
   switch (self->opcode & 0xF000) {
   case 0x0000:
     switch (self->opcode & 0x00FF) {
@@ -45,11 +40,6 @@ void chip8_tick(chip8_t * self) {
       break;
     case 0x00EE:
       PC(self) = self->stack[--SP(self)] + 2;
-#if CHIP8_DEBUG
-      fprintf(stderr, "SP: 0x%X\n", SP(self));
-      fprintf(stderr, "Stack at (SP + 1): 0x%X\n", self->stack[SP(self) + 1]);
-      fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
       break;
     default:
       chip8_no_such_opcode(self);
@@ -57,130 +47,75 @@ void chip8_tick(chip8_t * self) {
     break;
   case 0x1000:
     PC(self) = self->opcode & 0x0FFF;
-#if CHIP8_DEBUG
-    fprintf(stderr, "Jump PC: 0x%X\n", PC(self));
-#endif
     break;
   case 0x2000:
     self->stack[SP(self)++] = PC(self);
     PC(self) = self->opcode & 0x0FFF;
-#if CHIP8_DEBUG
-    fprintf(stderr, "SP: 0x%X\n", SP(self));
-    fprintf(stderr, "Stack at (SP - 1): 0x%X\n", self->stack[SP(self) - 1]);
-    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
     break;
   case 0x3000:
     (V(self)[BYTE3(self->opcode)]) == (self->opcode & 0x00FF)
       ? (PC(self) += 4)
       : (PC(self) += 2);
-#if CHIP8_DEBUG
-    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
     break;
   case 0x4000:
     (V(self)[BYTE3(self->opcode)]) == (self->opcode & 0x00FF)
       ? (PC(self) += 2)
       : (PC(self) += 4);
-#if CHIP8_DEBUG
-    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
     break;
   case 0x5000:
     (V(self)[BYTE3(self->opcode)] == V(self)[BYTE2(self->opcode)])
       ? (PC(self) += 4)
       : (PC(self) += 2);
-#if CHIP8_DEBUG
-    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
     break;
   case 0x6000:
     V(self)[BYTE3(self->opcode)] = self->opcode & 0x00FF;
-#if CHIP8_DEBUG
-    fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
     PC(self) += 2;
     break;
   case 0x7000:
     V(self)[BYTE3(self->opcode)] += self->opcode & 0x00FF;
-#if CHIP8_DEBUG
-    fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
     PC(self) += 2;
     break;
   case 0x8000:
     switch (self->opcode & 0x000F) {
     case 0x0000:
       V(self)[BYTE3(self->opcode)] = V(self)[BYTE2(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     case 0x0001:
       V(self)[BYTE3(self->opcode)] |= V(self)[BYTE2(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     case 0x0002:
       V(self)[BYTE3(self->opcode)] &= V(self)[BYTE2(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     case 0x0003:
       V(self)[BYTE3(self->opcode)] ^= V(self)[BYTE2(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     case 0x0004:
       VF(self) = V(self)[BYTE3(self->opcode)] + V(self)[BYTE2(self->opcode)] > 0xFF;
       V(self)[BYTE3(self->opcode)] += V(self)[BYTE2(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     case 0x0005:
       VF(self) = V(self)[BYTE2(self->opcode)] <= V(self)[BYTE3(self->opcode)];
       V(self)[BYTE3(self->opcode)] -= V(self)[BYTE2(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     case 0x0006:
       VF(self) = V(self)[BYTE3(self->opcode)] & 1;
       V(self)[BYTE3(self->opcode)] >>= 1;
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     case 0x0007:
       VF(self) = V(self)[BYTE3(self->opcode)] <= V(self)[BYTE2(self->opcode)];
       V(self)[BYTE3(self->opcode)] = V(self)[BYTE2(self->opcode)] - V(self)[BYTE3(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     case 0x000E:
       VF(self) = V(self)[BYTE3(self->opcode)] >> 7;
       V(self)[BYTE3(self->opcode)] <<= 1;
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
       PC(self) += 2;
       break;
     default:
@@ -191,9 +126,6 @@ void chip8_tick(chip8_t * self) {
     (V(self)[BYTE3(self->opcode)] == V(self)[BYTE2(self->opcode)])
       ? (PC(self) += 2)
       : (PC(self) += 4);
-#if CHIP8_DEBUG
-    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
     break;
   case 0xA000:
     I(self) = self->opcode & 0x0FFF;
@@ -201,15 +133,9 @@ void chip8_tick(chip8_t * self) {
     break;
   case 0xB000:
     PC(self) = V0(self) + (self->opcode & 0x0FFF);
-#if CHIP8_DEBUG
-    fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
     break;
   case 0xC000:
     V(self)[BYTE3(self->opcode)] = rand() & (self->opcode & 0x00FF);
-#if CHIP8_DEBUG
-    fprintf(stderr, "Register V%X random: 0x%X\n", BYTE3(self->opcode), V(self)[BYTE3(self->opcode)]);
-#endif
     PC(self) += 2;
     break;
   case 0xD000:
@@ -220,17 +146,9 @@ void chip8_tick(chip8_t * self) {
       unsigned char height  = BYTE1(self->opcode);
       unsigned char width   = 8;
 
-#if CHIP8_DEBUG
-      fprintf(stderr, "Drawing %d bytes: 0x%X\n", height, I(self));
-      fprintf(stderr, "Drawing at: %d x %d\n", x_coord, y_coord);
-#endif
-
       VF(self) = 0;
       for (i = 0; i < height; i++) {
         row = self->memory[I(self) + i];
-#if CHIP8_DEBUG
-        fprintf(stderr, "Row at 0x%X: 0x%X\n", I(self) + i, row);
-#endif
         for (j = 0; j < width; j++) {
           if (!(pixel = row & (0x80 >> j))) {
             continue;
@@ -238,9 +156,6 @@ void chip8_tick(chip8_t * self) {
           if ((32 * (x_coord + j) + (y_coord + i)) > (64 * 32)) {
             continue;
           }
-#if CHIP8_DEBUG
-          fprintf(stderr, "Drawing pixel at: %d\n", 32 * (x_coord + j) + (y_coord + i));
-#endif
           if (self->screen[32 * (x_coord + j) + (y_coord + i)]) {
             VF(self) = 1;
           }
@@ -256,17 +171,11 @@ void chip8_tick(chip8_t * self) {
       self->keys[V(self)[BYTE3(self->opcode)]]
         ? (PC(self) += 4)
         : (PC(self) += 2);
-#if CHIP8_DEBUG
-      fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
       break;
     case 0xE0A1:
       self->keys[V(self)[BYTE3(self->opcode)]]
         ? (PC(self) += 2)
         : (PC(self) += 4);
-#if CHIP8_DEBUG
-      fprintf(stderr, "Change PC: 0x%X\n", PC(self));
-#endif
       break;
     default:
       chip8_no_such_opcode(self);
@@ -276,9 +185,6 @@ void chip8_tick(chip8_t * self) {
     switch (self->opcode & 0xF0FF) {
     case 0xF007:
       V(self)[BYTE3(self->opcode)] = DT(self);
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register V%X: 0x%X\n", BYTE3(self->opcode), DT(self));
-#endif
       PC(self) += 2;
       break;
     case 0xF00A:
@@ -296,32 +202,19 @@ void chip8_tick(chip8_t * self) {
       break;
     case 0xF015:
       DT(self) = V(self)[BYTE3(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Delay timer: 0x%X\n",  DT(self));
-#endif
       PC(self) += 2;
       break;
     case 0xF018:
       ST(self) = V(self)[BYTE3(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Sound timer: 0x%X\n",  ST(self));
-#endif
       PC(self) += 2;
       break;
     case 0xF01E:
       VF(self) = (I(self) + V(self)[BYTE3(self->opcode)]) > 0xFFF;
       I(self) += V(self)[BYTE3(self->opcode)];
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register VF: 0x%X\n", VF(self));
-      fprintf(stderr, "Register I: 0x%X\n",  I(self));
-#endif
       PC(self) += 2;
       break;
     case 0xF029:
       I(self) = V(self)[BYTE3(self->opcode)] * 5;
-#if CHIP8_DEBUG
-      fprintf(stderr, "Register I: 0x%X\n",  I(self));
-#endif
       PC(self) += 2;
       break;
     case 0xF033:
@@ -336,13 +229,7 @@ void chip8_tick(chip8_t * self) {
 
         for (i = 0; i <= BYTE3(self->opcode); i++) {
           self->memory[I(self)++] = V(self)[i];
-#if CHIP8_DEBUG
-          fprintf(stderr, "Memory 0x%X: 0x%X\n", I(self) - 1, V(self)[i]);
-#endif
         }
-#if CHIP8_DEBUG
-        fprintf(stderr, "Register I: 0x%X\n",  I(self));
-#endif
       }
       PC(self) += 2;
       break;
@@ -352,13 +239,7 @@ void chip8_tick(chip8_t * self) {
 
         for (i = 0; i <= BYTE3(self->opcode); i++) {
           V(self)[i] = self->memory[I(self)++];
-#if CHIP8_DEBUG
-          fprintf(stderr, "Register V%X: 0x%X\n", i, V(self)[i]);
-#endif
         }
-#if CHIP8_DEBUG
-        fprintf(stderr, "Register I: 0x%X\n",  I(self));
-#endif
       }
       PC(self) += 2;
       break;
