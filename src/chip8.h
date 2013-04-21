@@ -45,6 +45,7 @@ static const unsigned char chip8_hex_font[80] = {
 
 chip8_t * chip8_new(void);
 void chip8_tick(chip8_t *);
+void chip8_reset(chip8_t *);
 int  chip8_load_file(chip8_t *, char *);
 void chip8_no_such_opcode(chip8_t *);
 void chip8_free(chip8_t *);

@@ -260,6 +260,18 @@ void chip8_tick(chip8_t * self) {
   }
 }
 
+void chip8_reset(chip8_t * self) {
+  self->program_counter = 0x200;
+  self->index_register  = 0;
+  self->stack_pointer   = 0;
+  self->sound_timer     = 0;
+  self->delay_timer     = 0;
+  self->opcode          = 0;
+
+  memset(self->screen, 0, sizeof(self->screen));
+  memset(self->stack, 0, sizeof(self->stack));
+}
+
 int chip8_load_file(chip8_t * self, char * filename) {
   FILE        * file;
   unsigned long size, maximum_file_size = 4096 - 0x200;
