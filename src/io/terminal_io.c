@@ -10,6 +10,7 @@ io_t * terminal_io_new(void) {
 
   self->setup    = &terminal_io_setup;
   self->render   = &terminal_io_render;
+  self->beep     = &terminal_io_beep;
   self->listen   = &terminal_io_listen;
   self->teardown = &terminal_io_teardown;
   self->delay    = &terminal_io_delay;
@@ -38,6 +39,16 @@ void terminal_io_render(io_t * self, chip8_t * chip8) {
   }
   printf("\033[32A");
   fflush(stdout);
+}
+
+void terminal_io_beep(io_t * self, chip8_t * chip8) {
+  UNUSED(self);
+  UNUSED(chip8);
+
+  if (ST(chip8) == 1) {
+    printf("\a");
+    printf("\033[1D");
+  }
 }
 
 int terminal_io_listen(io_t * self, chip8_t * chip8) {

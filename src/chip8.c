@@ -254,7 +254,10 @@ void chip8_tick(chip8_t * self) {
   if (DT(self)) {
     DT(self)--;
   }
-  ST(self)--;
+
+  if (ST(self)) {
+    ST(self)--;
+  }
 }
 
 int chip8_load_file(chip8_t * self, char * filename) {

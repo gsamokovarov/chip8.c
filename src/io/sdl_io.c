@@ -10,6 +10,7 @@ io_t * sdl_io_new(void) {
 
   self->setup    = &sdl_io_setup;
   self->render   = &sdl_io_render;
+  self->beep     = &sdl_io_beep;
   self->listen   = &sdl_io_listen;
   self->delay    = &sdl_io_delay;
   self->teardown = &sdl_io_teardown;
@@ -43,6 +44,11 @@ void sdl_io_render(io_t * self, chip8_t * chip8) {
   }
 
   SDL_Flip(SDL_IO_CUSTOM(self)->surface);
+}
+
+void sdl_io_beep(io_t * self, chip8_t * chip8) {
+  UNUSED(self);
+  UNUSED(chip8);
 }
 
 int sdl_io_listen(io_t * self, chip8_t * chip8) {

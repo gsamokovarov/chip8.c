@@ -33,6 +33,7 @@ int main(int argc, char ** argv) {
       };
       chip8_tick(chip8);
       io_render(io, chip8);
+      io_beep(io, chip8);
       io_delay(io, chip8);
     }
     io_teardown(io);
