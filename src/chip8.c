@@ -53,12 +53,12 @@ void chip8_tick(chip8_t * self) {
     PC(self) = self->opcode & 0x0FFF;
     break;
   case 0x3000:
-    (V(self)[BYTE3(self->opcode)]) == (self->opcode & 0x00FF)
+    (V(self)[BYTE3(self->opcode)] == (self->opcode & 0x00FF))
       ? (PC(self) += 4)
       : (PC(self) += 2);
     break;
   case 0x4000:
-    (V(self)[BYTE3(self->opcode)]) == (self->opcode & 0x00FF)
+    (V(self)[BYTE3(self->opcode)] == (self->opcode & 0x00FF))
       ? (PC(self) += 2)
       : (PC(self) += 4);
     break;
