@@ -4,6 +4,7 @@
 #include "chip8.h"
 #include "io.h"
 #include "io/terminal_io.h"
+#include "io/ncurses_io.h"
 #include "io/sdl_io.h"
 
 void handle_interrupt(int);
@@ -19,6 +20,8 @@ int main(int argc, char ** argv) {
     };
     if (strcmp(argv[1], "sdl") == 0) {
       io = sdl_io_new();
+    } else if (strcmp(argv[1], "ncurses") == 0) {
+      io = ncurses_io_new();
     } else if (strcmp(argv[1], "terminal") == 0) {
       io = terminal_io_new();
     } else {
