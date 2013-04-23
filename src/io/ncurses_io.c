@@ -34,7 +34,7 @@ void ncurses_io_render(io_t * self, chip8_t * chip8) {
   for (j = 0; j < 32; j++) {
     move(j, 0);
     for (i = 0; i < 64; i++) {
-      addch(chip8->screen[32 * i + j] ? ACS_BLOCK : ' ');
+      addch(chip8->screen[32 * i + j] ? ' '|A_REVERSE : ' ');
     }
   }
   refresh();
