@@ -44,7 +44,7 @@ void ncurses_io_render(io_t * self, chip8_t * chip8) {
 void ncurses_io_beep(io_t * self, chip8_t * chip8) {
   UNUSED(self);
 
-  if (DT(chip8) == 1) {
+  if (ST(chip8) == 1) {
     beep();
   }
 }
