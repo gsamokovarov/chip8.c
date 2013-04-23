@@ -24,6 +24,8 @@ void ncurses_io_setup(io_t * self) {
 
   initscr();
   noecho();
+  cbreak();
+  nodelay(stdscr, 1);
   curs_set(0);
 }
 
