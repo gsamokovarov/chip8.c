@@ -24,6 +24,7 @@ void ncurses_io_setup(io_t * self) {
 
   initscr();
   noecho();
+  curs_set(0);
 }
 
 void ncurses_io_render(io_t * self, chip8_t * chip8) {
@@ -34,7 +35,7 @@ void ncurses_io_render(io_t * self, chip8_t * chip8) {
   for (j = 0; j < 32; j++) {
     move(j, 0);
     for (i = 0; i < 64; i++) {
-      addch(chip8->screen[32 * i + j] ? ' '|A_REVERSE : ' ');
+      addch(chip8->screen[32 * i + j] ? ' ' | A_REVERSE : ' ');
     }
   }
   refresh();
