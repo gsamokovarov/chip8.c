@@ -31,14 +31,17 @@ void sdl_io_render(io_t * self, chip8_t * chip8) {
   Uint32 black, white;
   SDL_Rect rect;
 
-  rect.w = 8, rect.h = 8;
+  rect.w = 8;
+  rect.h = 8;
 
   black = SDL_MapRGB(SDL_IO_CUSTOM(self)->surface->format, 0, 0, 0);
   white = SDL_MapRGB(SDL_IO_CUSTOM(self)->surface->format, 255, 255, 255);
 
   for (j = 0; j < 32; j++) {
     for (i = 0; i < 64; i++) {
-      rect.x = (i * 8), rect.y = (j * 8);
+      rect.x = (i * 8);
+      rect.y = (j * 8);
+
       SDL_FillRect(SDL_IO_CUSTOM(self)->surface, &rect, chip8->screen[32 * i + j] ? white : black);
     }
   }
