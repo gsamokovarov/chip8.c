@@ -19,6 +19,7 @@ chip8_t * chip8_new(void) {
   self->opcode          = 0;
 
   memcpy(self->memory, chip8_hex_font, sizeof(chip8_hex_font));
+  memset(self->registers, 0, sizeof(self->registers));
   memset(self->screen, 0, sizeof(self->screen));
   memset(self->keys, 0, sizeof(self->keys));
   memset(self->stack, 0, sizeof(self->stack));
@@ -268,6 +269,7 @@ void chip8_reset(chip8_t * self) {
   self->delay_timer     = 0;
   self->opcode          = 0;
 
+  memset(self->registers, 0, sizeof(self->registers));
   memset(self->screen, 0, sizeof(self->screen));
   memset(self->stack, 0, sizeof(self->stack));
 }
