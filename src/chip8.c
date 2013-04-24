@@ -142,11 +142,12 @@ void chip8_tick(chip8_t * self) {
     break;
   case 0xD000:
     {
-      uint8_t i, j, row, pixel;
-      uint8_t x_coord = V(self)[BYTE3(self->opcode)];
-      uint8_t y_coord = V(self)[BYTE2(self->opcode)];
-      uint8_t height  = BYTE1(self->opcode);
-      uint8_t width   = 8;
+      uint8_t  i, j, row, pixel;
+      uint16_t location;
+      uint8_t  x_coord = V(self)[BYTE3(self->opcode)];
+      uint8_t  y_coord = V(self)[BYTE2(self->opcode)];
+      uint8_t  height  = BYTE1(self->opcode);
+      uint8_t  width   = 8;
 
       VF(self) = 0;
       for (i = 0; i < height; i++) {
@@ -155,13 +156,13 @@ void chip8_tick(chip8_t * self) {
           if (!(pixel = row & (0x80 >> j))) {
             continue;
           }
-          if ((32 * (x_coord + j) + (y_coord + i)) > (64 * 32)) {
+          if ((location = 32 * (x_coord + j) + (y_coord + i)) > (64 * 32)) {
             continue;
           }
-          if (self->screen[32 * (x_coord + j) + (y_coord + i)]) {
+          if (self->screen[location]) {
             VF(self) = 1;
           }
-          self->screen[32 * (x_coord + j) + (y_coord + i)] ^= 1;
+          self->screen[location] ^= 1;
         }
       }
     }
