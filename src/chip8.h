@@ -1,6 +1,8 @@
 #ifndef _CHIP8_H
 #define _CHIP8_H
 
+#include <stdint.h>
+
 #define PC(chip8) chip8->program_counter
 #define V(chip8)  chip8->registers
 #define V0(chip8) chip8->registers[0]
@@ -11,20 +13,20 @@
 #define SP(chip8) chip8->stack_pointer
 
 typedef struct chip8 {
-  unsigned short opcode;
-  unsigned char  memory[4096];
-  unsigned char  registers[16];
-  unsigned short index_register;
-  unsigned short program_counter;
-  unsigned char  screen[64 * 32];
-  unsigned char  delay_timer;
-  unsigned char  sound_timer;
-  unsigned short stack[16];
-  unsigned short stack_pointer;
-  unsigned char  keys[16];
+  uint16_t opcode;
+  uint8_t  memory[4096];
+  uint8_t  registers[16];
+  uint16_t index_register;
+  uint16_t program_counter;
+  uint8_t  screen[64 * 32];
+  uint8_t  delay_timer;
+  uint8_t  sound_timer;
+  uint16_t stack[16];
+  uint16_t stack_pointer;
+  uint8_t  keys[16];
 } chip8_t;
 
-static const unsigned char chip8_hex_font[80] = {
+static const uint8_t chip8_hex_font[80] = {
   0xF0, 0x90, 0x90, 0x90, 0xF0, /* 0 */
   0x20, 0x60, 0x20, 0x20, 0xF0, /* 1 */
   0xF0, 0x10, 0xF0, 0x80, 0xF0, /* 2 */

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -141,11 +142,11 @@ void chip8_tick(chip8_t * self) {
     break;
   case 0xD000:
     {
-      unsigned char i, j, row, pixel;
-      unsigned char x_coord = V(self)[BYTE3(self->opcode)];
-      unsigned char y_coord = V(self)[BYTE2(self->opcode)];
-      unsigned char height  = BYTE1(self->opcode);
-      unsigned char width   = 8;
+      uint8_t i, j, row, pixel;
+      uint8_t x_coord = V(self)[BYTE3(self->opcode)];
+      uint8_t y_coord = V(self)[BYTE2(self->opcode)];
+      uint8_t height  = BYTE1(self->opcode);
+      uint8_t width   = 8;
 
       VF(self) = 0;
       for (i = 0; i < height; i++) {
@@ -190,7 +191,7 @@ void chip8_tick(chip8_t * self) {
       break;
     case 0xF00A:
       {
-        unsigned char i;
+        uint8_t i;
 
         for (i = 0; i < 16; i++) {
           if (self->keys[i]) {
@@ -226,7 +227,7 @@ void chip8_tick(chip8_t * self) {
       break;
     case 0xF055:
       {
-        unsigned char i;
+        uint8_t i;
 
         for (i = 0; i <= BYTE3(self->opcode); i++) {
           self->memory[I(self)++] = V(self)[i];
@@ -236,7 +237,7 @@ void chip8_tick(chip8_t * self) {
       break;
     case 0xF065:
       {
-        unsigned char i;
+        uint8_t i;
 
         for (i = 0; i <= BYTE3(self->opcode); i++) {
           V(self)[i] = self->memory[I(self)++];
@@ -275,8 +276,8 @@ void chip8_reset(chip8_t * self) {
 }
 
 int chip8_load_file(chip8_t * self, char * filename) {
-  FILE        * file;
-  unsigned long size, maximum_file_size = 4096 - 0x200;
+  FILE   * file;
+  uint64_t size, maximum_file_size = 4096 - 0x200;
 
   if (!(file = fopen(filename, "rb"))) {
     goto error;
