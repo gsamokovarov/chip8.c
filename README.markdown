@@ -1,6 +1,7 @@
 > CHIP-8 is an interpreted programming language, developed by Joseph
-> Weisbecker.  It was initially used on the COSMAC VIP and Telmac 1800 8-bit
-> microcomputers in the mid-1970s
+> Weisbecker. Initially used on the COSMAC VIP and Telmac 1800 8-bit
+> microcomputers in the mid-1970s, it allowed video games to be easily
+> programmable.
 
 Usage
 =====
