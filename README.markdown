@@ -7,8 +7,8 @@ Usage
 
 | # | # | # | # |
 |---|---|---|---|
-|   | C | D | E |
-| 1 | 2 | 3 | F |
-| 4 | 5 | 6 |   |
-| 7 | 8 | 9 | B |
-| A |   | 0 |   |
+|   | <kbd>C</kbd> | <kbd>D</kbd> | <kbd>E</kbd> |
+| <kbd>1</kbd> | <kbd>2</kbd> | <kbd>3</kbd> | <kbd>F</kbd> |
+| <kbd>4</kbd> | <kbd>5</kbd> | <kbd>6</kbd> |   |
+| <kbd>7</kbd> | <kbd>8</kbd> | <kbd>9</kbd> | <kbd>B</kbd> |
+| <kbd>A</kbd> |   | <kbd>0</kbd> |   |
