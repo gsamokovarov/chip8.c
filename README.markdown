@@ -13,7 +13,7 @@ Usage
 =====
 
 The CHIP-8 used a hexadecimal keyboard, which maps rather well to the layout of
-the current generation ketboard's num pad.
+the current generation keyboard's num pad.
 
 |      #       |      #       |      #       |      #       |
 |--------------|--------------|--------------|--------------|
