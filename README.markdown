@@ -1,3 +1,9 @@
+    ████ █  █ █    ████ ████
+    █    █  █ █    █  █ █  █
+    ██   ████ ██   ████ ████
+    ██   ██ █ ██   ██   █  █
+    ████ ██ █ ██   ██   ████
+
 > CHIP-8 is an interpreted programming language, developed by Joseph
 > Weisbecker. Initially used on the COSMAC VIP and Telmac 1800 8-bit
 > microcomputers in the mid-1970s, it allowed video games to be easily
@@ -6,7 +12,7 @@
 Usage
 =====
 
-The Chip-8 used a hexadecimal keyboard, which maps rather well to the layout of
+The CHIP-8 used a hexadecimal keyboard, which maps rather well to the layout of
 the current generation ketboard's num pad.
 
 |      #       |      #       |      #       |      #       |
