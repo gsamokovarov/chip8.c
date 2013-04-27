@@ -14,7 +14,7 @@ link_directories(${SDL_LIBRARY_DIRS})
 
 # We softly depend on ncurses too.
 find_package(Curses)
-if (CURSES_FOUND AND CURSES_USE_NCURSES)
+if (CURSES_FOUND)
   include_directories(${Curses_INCLUDE_DIRS})
   link_directories(${Curses_LIBRARY_DIRS})
 endif()
@@ -34,7 +34,10 @@ file(GLOB_RECURSE CHIP8_SOURCES src/*.c)
 # Define our one and only executable.
 add_executable(chip8 ${CHIP8_SOURCES})
 
-target_link_libraries(chip8 ${SDL_LIBRARY} ${Curses_LIBRARY})
+target_link_libraries(chip8 ${SDL_LIBRARY})
+if (CURSES_FOUND)
+  target_link_libraries(chip8 ${CURSES_LIBRARIES})
+endif()
 
 # Define an install target.
 install(TARGETS chip8 RUNTIME DESTINATION bin)
