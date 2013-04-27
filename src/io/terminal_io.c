@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "../io.h"
-#include "../chip8.h"
-#include "terminal_io.h"
+#include "io.h"
+#include "chip8.h"
+#include "io/terminal_io.h"
 
 io_t * terminal_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));

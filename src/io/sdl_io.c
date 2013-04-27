@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL/SDL.h>
-#include "../io.h"
-#include "../chip8.h"
-#include "sdl_io.h"
+#include "io.h"
+#include "chip8.h"
+#include "io/sdl_io.h"
 
 io_t * sdl_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));

@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <ncurses.h>
-#include "../io.h"
-#include "../chip8.h"
-#include "ncurses_io.h"
+#include "io.h"
+#include "chip8.h"
+#include "io/ncurses_io.h"
 
 io_t * ncurses_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));

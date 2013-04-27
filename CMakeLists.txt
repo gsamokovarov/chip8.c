@@ -10,11 +10,13 @@ cmake_minimum_required(VERSION 2.6)
 # on it.
 find_package(SDL 1.2.0 REQUIRED)
 include_directories(${SDL_INCLUDE_DIRS})
+link_directories(${SDL_LIBRARY_DIRS})
 
 # We softly depend on ncurses too.
-find_package(CURSES)
+find_package(Curses)
 if (CURSES_FOUND AND CURSES_USE_NCURSES)
-  include_directories(${CURSES_INCLUDE_DIRS})
+  include_directories(${Curses_INCLUDE_DIRS})
+  link_directories(${Curses_LIBRARY_DIRS})
 endif()
 
 # Now that we are done with the dependencies, lets add the essential stuff.
@@ -31,3 +33,8 @@ file(GLOB_RECURSE CHIP8_SOURCES src/*.c)
 
 # Define our one and only executable.
 add_executable(chip8 ${CHIP8_SOURCES})
+
+target_link_libraries(chip8 ${SDL_LIBRARY} ${Curses_LIBRARY})
+
+# Define an install target.
+install(TARGETS chip8 RUNTIME DESTINATION bin)
