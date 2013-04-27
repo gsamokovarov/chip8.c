@@ -15,8 +15,8 @@ link_directories(${SDL_LIBRARY_DIRS})
 # We softly depend on ncurses too.
 find_package(Curses)
 if (CURSES_FOUND)
-  include_directories(${Curses_INCLUDE_DIRS})
-  link_directories(${Curses_LIBRARY_DIRS})
+  include_directories(${CURSES_INCLUDE_DIRS})
+  link_directories(${CURSES_LIBRARY_DIRS})
 endif()
 
 # Now that we are done with the dependencies, lets add the essential stuff.
