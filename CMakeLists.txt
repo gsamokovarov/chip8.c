@@ -39,5 +39,21 @@ if (CURSES_FOUND)
   target_link_libraries(chip8 ${CURSES_LIBRARIES})
 endif()
 
-# Define an install target.
+# Enable CTest testing.
+enable_testing()
+
+# Define the test files and their requirements.
+file(GLOB_RECURSE TEST_SOURCES test/*.c src/chip8.c)
+
+# Add a test_chip8 target.
+add_executable(test_chip8 ${TEST_SOURCES})
+add_dependencies(test_chip8 chip8)
+
+# Add a test running the actual unit tests through CMake.
+add_test(test test_chip8)
+
+# Add an autoconf-like `make check`.
+add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS test_chip8)
+
+# Define an install target for the chip8 executable.
 install(TARGETS chip8 RUNTIME DESTINATION bin)

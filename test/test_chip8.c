@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include "../src/chip8.h"
+#include "chip8.h"
 
 void test_new(void) {
   unsigned int i;
