@@ -10,16 +10,29 @@ bq. CHIP-8 is an interpreted programming language, developed by Joseph Weisbecke
 
 h2. Build
 
-Running @cmake .@ at the project root directory will result in a lot of cruft files needed by the CMake build process. A better idea is to run:
+The project uses CMake as a build system and has the following dependencies:
+
+* SDL (required, version >= 1.2.0)
+* ncurses (optional)
+
+To build the project, be sure to have CMake installed and run:
 
 <pre>
-$ cd build
-$ cmake ..
+cmake .
+make
+</pre>
+
+However, Running @cmake .@ at the project root directory will result in a lot of cruft files needed by the CMake build process. A better idea is to run:
+
+<pre>
+cd build
+cmake ..
+make
 </pre>
 
 That will keep the CMake specific files in a convinient location.
 
-Once the CMake files are generated, running @make@ will build the interpreter and you can use @make install@ to install it.
+Once the CMake files are generated, use @sudo make install@ to install it.
 
 h2. Install
 
@@ -31,15 +44,15 @@ h3. CheckInstall
 
 On Ubuntu Linux "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ is not installed by the default and you can install it with:
 
-<code>
+<pre>
 sudo apt-get install checkinstall
-</code>
+</pre>
 
 Asuming that you have already built the project in the @build@ directory, run:
 
-<code>
+<pre>
 sudo checkinstall --pkgname=chip8.c
-</code>
+</pre>
 
 Just follow the instructions and if everything went successful, you should see a message like the following:
 
