@@ -1,8 +1,34 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
 #include <getopt.h>
-#include "app.h"
+#include "chip8.h"
 #include "io.h"
+#include "app.h"
+
+void app_run(app_t * self) {
+  if (self->io && self->chip8) {
+    while (self->running) {
+      if (io_listen(self->io, self->chip8)) {
+        break;
+      };
+      chip8_tick(self->chip8);
+      io_render(self->io, self->chip8);
+      io_beep(self->io, self->chip8);
+      io_delay(self->io, self->chip8);
+    }
+  } else {
+#if CHIP8_DEBUG
+    fprintf(stderr, "Trying to run an app with a NULL io or chip8\n");
+#endif
+  }
+}
+
+void app_setup(app_t * self) {
+  if (self->io) {
+    io_setup(self->io);
+  }
+}
 
 void app_parse_command_line(app_t * self, int argc, char ** argv) {
   struct option options[] = {
@@ -11,12 +37,28 @@ void app_parse_command_line(app_t * self, int argc, char ** argv) {
   };
 }
 
+void app_teardown(app_t * self) {
+  if (self->io) {
+    io_teardown(self->io);
+  }
+}
+
+void app_free(app_t * self) {
+  if (self->chip8) {
+    chip8_free(self->chip8);
+  }
+  if (self->io) {
+    io_free(self->io);
+  }
+  free(self);
+}
+
 void current_app_setup_signal_handlers(void) {
   if (current_app) {
     signal(SIGINT, current_app_handle_interrupt);
   } else {
 #if CHIP8_DEBUG
-    fprintf(stderr, "Trying to setup signal handlers on NULL current_app");
+    fprintf(stderr, "Trying to setup signal handlers on NULL current_app\n");
 #endif
   }
 }
@@ -28,7 +70,7 @@ void current_app_handle_interrupt(int signal) {
     current_app->running = 0;
   } else {
 #if CHIP8_DEBUG
-    fprintf(stderr, "Trying to stop a NULL current_app");
+    fprintf(stderr, "Trying to stop a NULL current_app\n");
 #endif
   }
 }
