@@ -8,6 +8,53 @@
 
 bq. CHIP-8 is an interpreted programming language, developed by Joseph Weisbecker. Initially used on the COSMAC VIP and Telmac 1800 8-bit microcomputers in the mid-1970s, it allowed video games to be easily programmable.
 
+h2. Build
+
+Running @cmake .@ at the project root directory will result in a lot of cruft files needed by the CMake build process. A better idea is to run:
+
+<pre>
+$ cd build
+$ cmake ..
+</pre>
+
+That will keep the CMake specific files in a convinient location.
+
+Once the CMake files are generated, running @make@ will build the interpreter and you can use @make install@ to install it.
+
+h2. Install
+
+Installing source packages with `make install` is not always a great idea. If you are running some Unix flavour you may want to utilize your system packaging tools. An utility named @checkinstall@ is pretty convinient in those situations. You can use it to generate and install a package, that is suitible for you. This package will be named @chip8.c@ and will be easily uninstallable through your package system.
+
+I'm going to guide you through the process of installing @checkinstall@ on Ubuntu Linux. The process will be similar for other Linux distributions or your favorite Unix-like operating system.
+
+On Ubuntu Linux the @checkinstall@ is not installed by the default and you can install it with:
+
+<code>
+sudo apt-get install checkinstall
+</code>
+
+Asuming that you have already built the project in the @build@ directory, run:
+
+<code>
+sudo checkinstall --pkgname=chip8.c
+</code>
+
+Just follow the instructions and once done and if everything went successful, you should see a message like the following:
+
+<pre>
+**********************************************************************
+
+ Done. The new package has been installed and saved to
+
+ /home/user/chip8.c/build/chip8.c_20130428-1_amd64.deb
+
+ You can remove it from your system anytime using:
+
+      dpkg -r chip8.c
+
+**********************************************************************
+</pre>
+
 h2. Usage
 
 p. The CHIP-8 uses a hexadecimal keyboard, which maps rather well to the layout of the current generation keyboard numeric pad.
@@ -23,3 +70,7 @@ p. Use following keys to reset or quit the emulator.
 |_. Key                |_.  Action |
 | <kbd>Backspace</kbd> | Reset     |
 | <kbd>Escape</kbd>    | Quit      |
+
+h2. License
+
+The code is available under the MIT license.
