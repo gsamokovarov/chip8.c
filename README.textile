@@ -23,11 +23,13 @@ Once the CMake files are generated, running @make@ will build the interpreter an
 
 h2. Install
 
-Installing source packages with `make install` is not always a great idea. If you are running some Unix flavour you may want to utilize your system packaging tools. An utility named @checkinstall@ is pretty convinient in those situations. You can use it to generate and install a package, that is suitible for you. This package will be named @chip8.c@ and will be easily uninstallable through your package system.
+Installing source packages with `make install` is not always a great idea. If you are running some Unix flavour you may want to utilize your system packaging tools. An utility named "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ is pretty convinient in those situations. You can use it to generate and install a package, that is suitible for you. This package will be named @chip8.c@ and will be easily uninstallable through your package system.
 
-I'm going to guide you through the process of installing @checkinstall@ on Ubuntu Linux. The process will be similar for other Linux distributions or your favorite Unix-like operating system.
+I'm going to guide you through the process of installing "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ on Ubuntu Linux. The process will be similar for other Linux distributions or your favorite Unix-like operating system.
 
-On Ubuntu Linux the @checkinstall@ is not installed by the default and you can install it with:
+h3. CheckInstall
+
+On Ubuntu Linux "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ is not installed by the default and you can install it with:
 
 <code>
 sudo apt-get install checkinstall
@@ -39,7 +41,7 @@ Asuming that you have already built the project in the @build@ directory, run:
 sudo checkinstall --pkgname=chip8.c
 </code>
 
-Just follow the instructions and once done and if everything went successful, you should see a message like the following:
+Just follow the instructions and if everything went successful, you should see a message like the following:
 
 <pre>
 **********************************************************************
