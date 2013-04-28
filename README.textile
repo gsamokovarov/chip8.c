@@ -36,7 +36,7 @@ Once the CMake files are generated, use @sudo make install@ to install it.
 
 h2. Install
 
-Installing source packages with `make install` is not always a great idea. If you are running some Unix flavour you may want to utilize your system packaging tools. An utility named "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ is pretty convinient in those situations. You can use it to generate and install a package, that is suitible for you. This package will be named @chip8.c@ and will be easily uninstallable through your package system.
+Installing source packages with @make install@ is not always a great idea. If you are running some Unix flavour you may want to utilize your system packaging tools. An utility named "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ is pretty convinient in those situations. You can use it to generate and install a package, that is suitible for you. This package will be named @chip8.c@ and will be easily uninstallable through your package system.
 
 I'm going to guide you through the process of installing "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ on Ubuntu Linux. The process will be similar for other Linux distributions or your favorite Unix-like operating system.
 
