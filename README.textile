@@ -22,7 +22,7 @@ cmake .
 make
 </pre>
 
-However, Running @cmake .@ at the project root directory will result in a lot of cruft files needed by the CMake build process. A better idea is to run:
+However, running @cmake .@ at the project root directory will result in a lot of cruft files needed by the CMake build process. A better idea is to run:
 
 <pre>
 cd build
@@ -30,9 +30,7 @@ cmake ..
 make
 </pre>
 
-That will keep the CMake specific files in a convinient location.
-
-Once the CMake files are generated, use @sudo make install@ to install it.
+That will keep the CMake specific files in a convinient location. Once @make@ has been run, use @sudo make install@ to install it.
 
 h2. Install
 
