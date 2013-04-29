@@ -1,8 +1,7 @@
-#include <assert.h>
-#include <stdio.h>
+#include "test.h"
 #include "chip8.h"
 
-void test_new(void) {
+TEST(new) {
   unsigned int i;
   chip8_t * chip8 = chip8_new();
 
@@ -26,7 +25,7 @@ void test_new(void) {
   chip8_free(chip8);
 }
 
-void test_clear_screen(void) {
+TEST(clear_screen) {
   unsigned int i;
   chip8_t * chip8 = chip8_new();
 
@@ -45,7 +44,7 @@ void test_clear_screen(void) {
   chip8_free(chip8);
 }
 
-void test_return(void) {
+TEST(return) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x00;
@@ -62,7 +61,7 @@ void test_return(void) {
   chip8_free(chip8);
 }
 
-void test_instruction_jump(void) {
+TEST(instruction_jump) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x11;
@@ -75,7 +74,7 @@ void test_instruction_jump(void) {
   chip8_free(chip8);
 }
 
-void test_call(void) {
+TEST(call) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x21;
@@ -89,7 +88,7 @@ void test_call(void) {
   chip8_free(chip8);
 }
 
-void test_skip_next_if_vx_is_kk(void) {
+TEST(skip_next_if_vx_is_kk) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x31;
@@ -114,7 +113,7 @@ void test_skip_next_if_vx_is_kk(void) {
   chip8_free(chip8);
 }
 
-void test_skip_next_if_vx_isnt_kk(void) {
+TEST(skip_next_if_vx_isnt_kk) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x41;
@@ -136,7 +135,7 @@ void test_skip_next_if_vx_isnt_kk(void) {
   chip8_free(chip8);
 }
 
-void test_skip_next_if_vx_is_vy(void) {
+TEST(skip_next_if_vx_is_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x51;
@@ -163,7 +162,7 @@ void test_skip_next_if_vx_is_vy(void) {
   chip8_free(chip8);
 }
 
-void test_skip_next_if_vx_isnt_vy(void) {
+TEST(skip_next_if_vx_isnt_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x91;
@@ -190,7 +189,7 @@ void test_skip_next_if_vx_isnt_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_kk(void) {
+TEST(set_vx_to_kk) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x61;
@@ -203,7 +202,7 @@ void test_set_vx_to_kk(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_plus_kk(void) {
+TEST(set_vx_to_vx_plus_kk) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x61;
@@ -223,7 +222,7 @@ void test_set_vx_to_vx_plus_kk(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vy(void) {
+TEST(set_vx_to_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -239,7 +238,7 @@ void test_set_vx_to_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_or_vy(void) {
+TEST(set_vx_to_vx_or_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -255,7 +254,7 @@ void test_set_vx_to_vx_or_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_and_vy(void) {
+TEST(set_vx_to_vx_and_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -271,7 +270,7 @@ void test_set_vx_to_vx_and_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_xor_vy(void) {
+TEST(set_vx_to_vx_xor_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -287,7 +286,7 @@ void test_set_vx_to_vx_xor_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_plus_vy(void) {
+TEST(set_vx_to_vx_plus_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -304,7 +303,7 @@ void test_set_vx_to_vx_plus_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_sub_vy(void) {
+TEST(set_vx_to_vx_sub_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -321,7 +320,7 @@ void test_set_vx_to_vx_sub_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_shm_vy(void) {
+TEST(set_vx_to_vx_shm_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -337,7 +336,7 @@ void test_set_vx_to_vx_shm_vy(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vy_sub_vx(void) {
+TEST(set_vx_to_vy_sub_vx) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -354,7 +353,7 @@ void test_set_vx_to_vy_sub_vx(void) {
   chip8_free(chip8);
 }
 
-void test_set_vx_to_vx_shl_vy(void) {
+TEST(set_vx_to_vx_shl_vy) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0x81;
@@ -370,7 +369,7 @@ void test_set_vx_to_vx_shl_vy(void) {
   chip8_free(chip8);
 }
 
-void test_instruction_jump_plus_v0(void) {
+TEST(instruction_jump_plus_v0) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0xB1;
@@ -385,7 +384,7 @@ void test_instruction_jump_plus_v0(void) {
   chip8_free(chip8);
 }
 
-void test_draw_xor_mode(void) {
+TEST(draw_xor_mode) {
   chip8_t * chip8 = chip8_new();
 
   chip8->registers[0] = 0;
@@ -414,7 +413,7 @@ void test_draw_xor_mode(void) {
   chip8_free(chip8);
 }
 
-void test_get_hex_sprite_location(void) {
+TEST(get_hex_sprite_location) {
   unsigned int i;
   chip8_t * chip8 = chip8_new();
 
@@ -436,7 +435,7 @@ void test_get_hex_sprite_location(void) {
   chip8_free(chip8);
 }
 
-void test_binary_coded_decimal(void) {
+TEST(binary_coded_decimal) {
   chip8_t * chip8 = chip8_new();
 
   chip8->memory[0x200] = 0xF0;
@@ -453,7 +452,7 @@ void test_binary_coded_decimal(void) {
   chip8_free(chip8);
 }
 
-void test_copy_memory_into_registers(void) {
+TEST(copy_memory_into_registers) {
   unsigned int i;
   chip8_t * chip8 = chip8_new();
 
@@ -481,7 +480,7 @@ void test_copy_memory_into_registers(void) {
   chip8_free(chip8);
 }
 
-void test_copy_registers_into_memory(void) {
+TEST(copy_registers_into_memory) {
   unsigned int i;
   chip8_t * chip8 = chip8_new();
 
@@ -509,33 +508,32 @@ void test_copy_registers_into_memory(void) {
   chip8_free(chip8);
 }
 
-int main(void) {
-  test_new();
-  test_clear_screen();
-  test_return();
-  test_instruction_jump();
-  test_call();
-  test_skip_next_if_vx_is_kk();
-  test_skip_next_if_vx_isnt_kk();
-  test_skip_next_if_vx_is_vy();
-  test_skip_next_if_vx_isnt_vy();
-  test_set_vx_to_kk();
-  test_set_vx_to_vx_plus_kk();
-  test_set_vx_to_vy();
-  test_set_vx_to_vx_or_vy();
-  test_set_vx_to_vx_and_vy();
-  test_set_vx_to_vx_xor_vy();
-  test_set_vx_to_vx_plus_vy();
-  test_set_vx_to_vx_sub_vy();
-  test_set_vx_to_vx_shm_vy();
-  test_set_vx_to_vy_sub_vx();
-  test_set_vx_to_vx_shl_vy();
-  test_instruction_jump_plus_v0();
-  test_draw_xor_mode();
-  test_get_hex_sprite_location();
-  test_binary_coded_decimal();
-  test_copy_memory_into_registers();
-  test_copy_registers_into_memory();
-
-  return 0;
-}
+static test_t chip8_test_suite[] = {
+  TEST_REF(new),
+  TEST_REF(clear_screen),
+  TEST_REF(return),
+  TEST_REF(instruction_jump),
+  TEST_REF(call),
+  TEST_REF(skip_next_if_vx_is_kk),
+  TEST_REF(skip_next_if_vx_isnt_kk),
+  TEST_REF(skip_next_if_vx_is_vy),
+  TEST_REF(skip_next_if_vx_isnt_vy),
+  TEST_REF(set_vx_to_kk),
+  TEST_REF(set_vx_to_vx_plus_kk),
+  TEST_REF(set_vx_to_vy),
+  TEST_REF(set_vx_to_vx_or_vy),
+  TEST_REF(set_vx_to_vx_and_vy),
+  TEST_REF(set_vx_to_vx_xor_vy),
+  TEST_REF(set_vx_to_vx_plus_vy),
+  TEST_REF(set_vx_to_vx_sub_vy),
+  TEST_REF(set_vx_to_vx_shm_vy),
+  TEST_REF(set_vx_to_vy_sub_vx),
+  TEST_REF(set_vx_to_vx_shl_vy),
+  TEST_REF(instruction_jump_plus_v0),
+  TEST_REF(draw_xor_mode),
+  TEST_REF(get_hex_sprite_location),
+  TEST_REF(binary_coded_decimal),
+  TEST_REF(copy_memory_into_registers),
+  TEST_REF(copy_registers_into_memory),
+  0
+};
