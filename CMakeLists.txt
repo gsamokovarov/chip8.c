@@ -43,7 +43,7 @@ endif()
 enable_testing()
 
 # Define the test files and their requirements.
-file(GLOB_RECURSE TEST_SOURCES test/main.c src/chip8.c)
+file(GLOB_RECURSE TEST_SOURCES test/main.c src/chip8.c src/io.c src/app.c)
 
 # Add a test_chip8 target.
 add_executable(test_chip8 ${TEST_SOURCES})
