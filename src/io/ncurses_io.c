@@ -8,6 +8,7 @@
 io_t * ncurses_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
+  self->name     = "ncurses";
   self->setup    = &ncurses_io_setup;
   self->render   = &ncurses_io_render;
   self->beep     = &ncurses_io_beep;

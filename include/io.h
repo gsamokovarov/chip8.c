@@ -15,6 +15,7 @@ typedef void (* io_teardown_t)(io_t *);
 typedef void * io_custom_t;
 
 typedef struct io {
+  char        * name;
   io_setup_t    setup;
   io_render_t   render;
   io_beep_t     beep;

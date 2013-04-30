@@ -8,6 +8,7 @@
 io_t * sdl_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
+  self->name     = "sdl";
   self->setup    = &sdl_io_setup;
   self->render   = &sdl_io_render;
   self->beep     = &sdl_io_beep;

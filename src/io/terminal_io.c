@@ -8,6 +8,7 @@
 io_t * terminal_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
+  self->name     = "terminal";
   self->setup    = &terminal_io_setup;
   self->render   = &terminal_io_render;
   self->beep     = &terminal_io_beep;
