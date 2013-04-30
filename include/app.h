@@ -21,6 +21,7 @@ void app_parse_command_line(app_t *, int, char **);
 void app_teardown(app_t *);
 void app_free(app_t *);
 
+void current_app_set_to(app_t *);
 void current_app_setup_signal_handlers(void);
 void current_app_handle_interrupt(int);
 
