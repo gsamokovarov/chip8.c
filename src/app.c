@@ -6,6 +6,16 @@
 #include "io.h"
 #include "app.h"
 
+app_t * app_new(void) {
+  app_t * self = (app_t *) malloc(sizeof(app_t));
+
+  self->running = 0;
+  self->io      = 0;
+  self->chip8   = chip8_new();
+
+  return self;
+}
+
 void app_run(app_t * self) {
   if (self->io && self->chip8) {
     while (self->running) {
