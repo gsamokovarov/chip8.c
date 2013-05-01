@@ -61,6 +61,9 @@ void app_free(app_t * self) {
   if (self->io) {
     io_free(self->io);
   }
+  if (current_app == self) {
+    current_app_set_to(0);
+  }
   free(self);
 }
 
