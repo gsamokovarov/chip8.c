@@ -3,7 +3,8 @@
 
 #include <assert.h>
 
-#define TEST(name) void test_##name(void)
+#define SUITE(name) test_t ##name_test_suite[]
+#define TEST(suite, name) void test_##suite_##name(void)
 #define TEST_REF(name) test_##name
 #define RUN_TEST_SUITE(suite) do { \
   int i;                           \

@@ -18,6 +18,7 @@ app_t * app_new(void) {
 
 void app_run(app_t * self) {
   if (self->io && self->chip8) {
+    self->running = 1;
     while (self->running) {
       if (io_listen(self->io, self->chip8)) {
         break;
