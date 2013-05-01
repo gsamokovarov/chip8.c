@@ -33,7 +33,7 @@ TEST(app_parse_command_line) {
   char * argv[] = {"chip8", "--io", "terminal"};
 
   app_parse_command_line(app, argc, argv);
-  assert(strcmp(app->io->name, "terminal") == 0);
+  assert(app->io && strcmp(app->io->name, "terminal") == 0);
 
   app_free(app);
 }
