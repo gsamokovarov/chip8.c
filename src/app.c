@@ -1,9 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
+#include <string.h>
 #include <getopt.h>
 #include "chip8.h"
 #include "io.h"
+#include "io/sdl_io.h"
+#include "io/ncurses_io.h"
+#include "io/terminal_io.h"
 #include "app.h"
 
 app_t * current_app = 0;
@@ -44,10 +48,28 @@ void app_setup(app_t * self) {
 }
 
 void app_parse_command_line(app_t * self, int argc, char ** argv) {
+  int option;
   struct option options[] = {
-    {"io", optional_argument, 0, 'i'},
+    {"io", required_argument, 0, 'i'},
+    {"help", no_argument, 0, 'h'},
     {0, 0, 0, 0}
   };
+
+  while (~(option = getopt_long(argc, argv, "i:h", options, 0))) {
+    switch (option) {
+    case 'i':
+      if (strcmp(optarg, "sdl") == 0) {
+        self->io = sdl_io_new();
+      } else if (strcmp(optarg, "terminal") == 0) {
+        self->io = terminal_io_new();
+      } else if (strcmp(optarg, "ncurses") == 0) {
+        self->io = ncurses_io_new();
+      } else {
+        fprintf(stderr, "Invalid io, must be: sdl (default), terminal or ncurses");
+      }
+      break;
+    }
+  }
 }
 
 void app_teardown(app_t * self) {
