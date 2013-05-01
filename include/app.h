@@ -12,7 +12,7 @@ typedef struct app {
   chip8_t             * chip8;
 } app_t;
 
-static app_t * current_app = 0;
+extern app_t * current_app;
 
 app_t * app_new(void);
 void app_setup(app_t *);

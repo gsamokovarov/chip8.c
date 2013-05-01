@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include "test.h"
 #include "io.h"
@@ -22,13 +23,14 @@ TEST(current_app_set_to) {
   assert(current_app == app);
 
   app_free(app);
-  current_app_set_to(0);
+
+  assert(current_app == 0);
 }
 
 TEST(app_parse_command_line) {
-  app_t * app = app_new();
-  int     argc = 3;
-  char  * argv[] = {"chip8", "--io", "terminal"};
+  app_t   * app = app_new();
+  int      argc = 3;
+  char * argv[] = {"chip8", "--io", "terminal"};
 
   app_parse_command_line(app, argc, argv);
   assert(strcmp(app->io->name, "terminal") == 0);

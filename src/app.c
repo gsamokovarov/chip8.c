@@ -6,6 +6,8 @@
 #include "io.h"
 #include "app.h"
 
+app_t * current_app = 0;
+
 app_t * app_new(void) {
   app_t * self = (app_t *) malloc(sizeof(app_t));
 
