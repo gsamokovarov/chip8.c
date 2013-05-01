@@ -534,6 +534,5 @@ static test_t chip8_test_suite[] = {
   UNIT(chip8_get_hex_sprite_location),
   UNIT(chip8_binary_coded_decimal),
   UNIT(chip8_copy_memory_into_registers),
-  UNIT(chip8_copy_registers_into_memory),
-  0
+  UNIT(chip8_copy_registers_into_memory)
 };

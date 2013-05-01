@@ -41,6 +41,5 @@ TEST(app_parse_command_line) {
 static test_t app_test_suite[] = {
   UNIT(app_new),
   UNIT(current_app_set_to),
-  UNIT(app_parse_command_line),
-  0
+  UNIT(app_parse_command_line)
 };
