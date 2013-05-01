@@ -2,6 +2,7 @@
 #define _APP_H
 
 #include <signal.h>
+#include <getopt.h>
 
 typedef struct io io_t;
 typedef struct chip8 chip8_t;
@@ -11,6 +12,12 @@ typedef struct app {
   io_t                * io;
   chip8_t             * chip8;
 } app_t;
+
+static struct option app_options[]; = {
+  {"io", required_argument, 0, 'i'},
+  {"help", no_argument, 0, 'h'},
+  {0, 0, 0, 0}
+};
 
 extern app_t * current_app;
 
