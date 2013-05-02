@@ -49,13 +49,8 @@ void app_setup(app_t * self) {
 
 void app_parse_command_line(app_t * self, int argc, char ** argv) {
   int option;
-  struct option options[] = {
-    {"io", required_argument, 0, 'i'},
-    {"help", no_argument, 0, 'h'},
-    {0, 0, 0, 0}
-  };
 
-  while (~(option = getopt_long(argc, argv, "i:h", options, 0))) {
+  while (~(option = getopt_long(argc, argv, "i:h", app_options, 0))) {
     switch (option) {
     case 'i':
       if (strcmp(optarg, "sdl") == 0) {
@@ -68,6 +63,12 @@ void app_parse_command_line(app_t * self, int argc, char ** argv) {
         fprintf(stderr, "Invalid io, must be: sdl (default), terminal or ncurses");
       }
       break;
+    case 'h':
+      break;
+    }
+
+    if (!self->io) {
+      self->io = sdl_io_new();
     }
   }
 }

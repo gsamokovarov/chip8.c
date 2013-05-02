@@ -13,7 +13,7 @@ typedef struct app {
   chip8_t             * chip8;
 } app_t;
 
-static struct option app_options[]; = {
+const static struct option app_options[] = {
   {"io", required_argument, 0, 'i'},
   {"help", no_argument, 0, 'h'},
   {0, 0, 0, 0}
