@@ -9,6 +9,7 @@ typedef struct chip8 chip8_t;
 
 typedef struct app {
   volatile sig_atomic_t running;
+  char                * filename;
   io_t                * io;
   chip8_t             * chip8;
 } app_t;

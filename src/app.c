@@ -76,6 +76,12 @@ void app_parse_command_line(app_t * self, int argc, char ** argv) {
     if (!self->io) {
       self->io = sdl_io_new();
     }
+
+    if (optind < argc) {
+      self->filename = argv[optind];
+    } else {
+      fprintf(stderr, "FILE is required");
+    }
   }
 }
 
