@@ -50,20 +50,26 @@ void app_setup(app_t * self) {
 void app_parse_command_line(app_t * self, int argc, char ** argv) {
   int option;
 
-  while (~(option = getopt_long(argc, argv, "i:h", app_options, 0))) {
+  while (~(option = getopt_long(argc, argv, "stnh", APP_OPTIONS, 0))) {
     switch (option) {
-    case 'i':
-      if (strcmp(optarg, "sdl") == 0) {
+    case 's':
+      if (!self->io) {
         self->io = sdl_io_new();
-      } else if (strcmp(optarg, "terminal") == 0) {
+      }
+      break;
+    case 't':
+      if (!self->io) {
         self->io = terminal_io_new();
-      } else if (strcmp(optarg, "ncurses") == 0) {
+      }
+      break;
+    case 'n':
+      if (!self->io) {
         self->io = ncurses_io_new();
-      } else {
-        fprintf(stderr, "Invalid io, must be: sdl (default), terminal or ncurses");
       }
       break;
     case 'h':
+    case '?':
+      printf("%s", APP_USAGE_MESSAGE);
       break;
     }
 

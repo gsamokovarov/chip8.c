@@ -13,11 +13,19 @@ typedef struct app {
   chip8_t             * chip8;
 } app_t;
 
-const static struct option app_options[] = {
-  {"io", required_argument, 0, 'i'},
+const static struct option APP_OPTIONS[] = {
+  {"sdl", no_argument, 0, 's'},
+  {"terminal", no_argument, 0, 't'},
+  {"ncurses", no_argument, 0, 'n'},
   {"help", no_argument, 0, 'h'},
   {0, 0, 0, 0}
 };
+
+const static char * APP_USAGE_MESSAGE = "Usage: chip8 [OPTION...] FILE...\n"
+  "\n"
+  "  -s, --sdl                  use SDL for input and output (default)\n"
+  "  -t, --terminal             use the terminal for output (experimental)\n"
+  "  -n, --ncurses              use ncurses for output (experimental)\n";
 
 extern app_t * current_app;
 

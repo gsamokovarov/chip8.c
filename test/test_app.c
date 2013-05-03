@@ -29,8 +29,8 @@ TEST(current_app_set_to) {
 
 TEST(app_parse_command_line) {
   app_t   * app = app_new();
-  int      argc = 3;
-  char * argv[] = {"chip8", "--io", "terminal"};
+  int      argc = 2;
+  char * argv[] = {"chip8", "--terminal"};
 
   app_parse_command_line(app, argc, argv);
   assert(app->io && strcmp(app->io->name, "terminal") == 0);
