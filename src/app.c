@@ -26,7 +26,7 @@ void app_run(app_t * self) {
   if (self->io && self->chip8) {
     self->running = 1;
     while (self->running) {
-      if (io_listen(self->io, self->chip8)) {
+      if (!io_listen(self->io, self->chip8)) {
         break;
       };
       chip8_tick(self->chip8);

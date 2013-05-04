@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
 #include <string.h>
@@ -6,62 +7,30 @@
 #include "io/terminal_io.h"
 #include "io/ncurses_io.h"
 #include "io/sdl_io.h"
-
-void handle_interrupt(int);
-volatile sig_atomic_t chip8_isnt_interrupted = 1;
+#include "app.h"
 
 int main(int argc, char ** argv) {
-  chip8_t * chip8 = chip8_new();
-  io_t    * io    = 0;
+  app_t * app = app_new();
 
-  if (argc == 3) {
-    if (!chip8_load_file(chip8, argv[2])) {
-      goto error;
-    };
-    if (strcmp(argv[1], "sdl") == 0) {
-      io = sdl_io_new();
-    } else if (strcmp(argv[1], "ncurses") == 0) {
-      io = ncurses_io_new();
-    } else if (strcmp(argv[1], "terminal") == 0) {
-      io = terminal_io_new();
-    } else {
-      fprintf(stderr, "Invalid io, use sdl or terminal\n");
-      goto error;
-    }
-    signal(SIGINT, handle_interrupt);
-    io_setup(io);
-    while (chip8_isnt_interrupted) {
-      if (!io_listen(io, chip8)) {
-        break;
-      };
-      chip8_tick(chip8);
-      io_render(io, chip8);
-      io_beep(io, chip8);
-      io_delay(io, chip8);
-    }
-    io_teardown(io);
-  } else {
-    fprintf(stderr, "Usage: %s <sdl|terminal> <filename>\n", argv[0]);
+  app_parse_command_line(app, argc, argv);
+
+  if (!app->filename || !chip8_load_file(app->chip8, app->filename)) {
+    goto error;
   }
 
-  chip8_free(chip8);
-  if (io) {
-    io_free(io);
-  }
+  current_app_set_to(app);
+  current_app_setup_signal_handlers();
 
-  return 0;
+  app_setup(app);
+  app_run(app);
+  app_teardown(app);
+
+  app_free(app);
+
+  return EXIT_SUCCESS;
 
 error:
-  chip8_free(chip8);
-  if (io) {
-    io_free(io);
-  }
+  app_free(app);
 
-  return 1;
-}
-
-void handle_interrupt(int signal) {
-  UNUSED(signal);
-
-  chip8_isnt_interrupted = 0;
+  return EXIT_FAILURE;
 }
