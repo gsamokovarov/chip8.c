@@ -117,7 +117,7 @@ void current_app_set_to(app_t * app) {
   current_app = app;
 }
 
-void current_app_setup_signal_handlers(void) {
+void current_app_register_signal_handlers(void) {
   if (current_app) {
     signal(SIGINT, current_app_handle_interrupt);
   } else {

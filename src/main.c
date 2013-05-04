@@ -15,7 +15,7 @@ int main(int argc, char ** argv) {
   app_parse_command_line(app, argc, argv);
 
   current_app_set_to(app);
-  current_app_setup_signal_handlers();
+  current_app_register_signal_handlers();
 
   if (!app_setup(app)) {
     goto error;
