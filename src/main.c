@@ -12,17 +12,14 @@
 int main(int argc, char ** argv) {
   app_t * app = app_new();
 
-  app_parse_command_line(app, argc, argv);
-
   current_app_set_to(app);
   current_app_register_signal_handlers();
 
+  app_parse_command_line(app, argc, argv);
   if (!app_setup(app)) {
     goto error;
   }
-
   app_run(app);
-
   app_teardown(app);
   app_free(app);
 
