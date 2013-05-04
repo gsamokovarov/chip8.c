@@ -50,6 +50,7 @@ void app_setup(app_t * self) {
 void app_parse_command_line(app_t * self, int argc, char ** argv) {
   int option;
 
+  optind = 0;
   while (~(option = getopt_long(argc, argv, "stnh", APP_OPTIONS, 0))) {
     switch (option) {
     case 's':
@@ -72,16 +73,16 @@ void app_parse_command_line(app_t * self, int argc, char ** argv) {
       printf("%s", APP_USAGE_MESSAGE);
       break;
     }
+  }
 
-    if (!self->io) {
-      self->io = sdl_io_new();
-    }
+  if (!self->io) {
+    self->io = sdl_io_new();
+  }
 
-    if (optind < argc) {
-      self->filename = argv[optind];
-    } else {
-      fprintf(stderr, "FILE is required");
-    }
+  if (optind <= argc) {
+    self->filename = argv[optind];
+  } else {
+    fprintf(stderr, "FILE is required\n");
   }
 }
 
