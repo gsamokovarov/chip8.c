@@ -24,6 +24,7 @@ const static struct option APP_OPTIONS[] = {
 
 const static char * APP_USAGE_MESSAGE = "Usage: chip8 [OPTION...] FILE...\n"
   "\n"
+  "Options:\n"
   "  -s, --sdl                  use SDL for input and output (default)\n"
   "  -t, --terminal             use the terminal for output (experimental)\n"
   "  -n, --ncurses              use ncurses for output (experimental)\n";

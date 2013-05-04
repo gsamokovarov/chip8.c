@@ -30,11 +30,11 @@ cmake ..
 make
 </pre>
 
-That will keep the CMake specific files in a convinient location. Once @make@ has been run, use @sudo make install@ to install it.
+That will keep the CMake specific files in a convenient location. Once @make@ has been run, use @sudo make install@ to install it.
 
 h2. Install
 
-Installing source packages with @make install@ is not always a great idea. If you are running some Unix flavour you may want to utilize your system packaging tools. An utility named "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ is pretty convinient in those situations. You can use it to generate and install a package, that is suitible for you. This package will be named @chip8.c@ and will be easily uninstallable through your package system.
+Installing source packages with @make install@ is not always a great idea. If you are running some Unix flavour you may want to utilize your system packaging tools. An utility named "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ is pretty convenient in those situations. You can use it to generate and install a package, that is suitable for you. This package will be named @chip8.c@ and will be easily uninstallable through your package system.
 
 I'm going to guide you through the process of installing "CheckInstall":http://asic-linux.com.mx/~izto/checkinstall/ on Ubuntu Linux. The process will be similar for other Linux distributions or your favorite Unix-like operating system.
 
@@ -70,7 +70,20 @@ Just follow the instructions and if everything went successful, you should see a
 
 h2. Usage
 
-p. The CHIP-8 uses a hexadecimal keyboard, which maps rather well to the layout of the current generation keyboard numeric pad.
+<pre>
+Usage: chip8 [OPTION...] FILE...
+
+Options:
+  -s, --sdl                  use SDL for input and output (default)
+  -t, --terminal             use the terminal for output (experimental)
+  -n, --ncurses              use ncurses for output (experimental)
+</pre>
+
+h3. --sdl
+
+SDL is the default backend, you don't need to explicitly specify it. It uses the "SDL":http://www.libsdl.org library display the CHIP-8 graphics and feed it with input from the keyboard.
+
+The CHIP-8 uses a hexadecimal keyboard, which maps rather well to the layout of the current generation keyboard numeric pad.
 
 ||                  <kbd>C</kbd> | <kbd>D</kbd> |    <kbd>E</kbd> |
 |    <kbd>1</kbd> | <kbd>2</kbd> | <kbd>3</kbd> |/2. <kbd>F</kbd> |
@@ -78,11 +91,25 @@ p. The CHIP-8 uses a hexadecimal keyboard, which maps rather well to the layout 
 |    <kbd>7</kbd> | <kbd>8</kbd> | <kbd>9</kbd> |/2. <kbd>B</kbd> |
 |\2. <kbd>A</kbd> | <kbd>0</kbd> |
 
-p. Use following keys to reset or quit the emulator.
+Use following keys to reset or quit the emulator.
 
 |_. Key                |_.  Action |
 | <kbd>Backspace</kbd> | Reset     |
 | <kbd>Escape</kbd>    | Quit      |
+
+This is the only backend that supports input.
+
+h3. --terminal
+
+The terminal backend uses escape symbols to render dynamic content straight to the terminal. It requires a terminal that is at least 65x32 render the content correctly.
+
+This backend does not support input.
+
+h3. --ncurses
+
+The ncurses backend uses the ncurses library to display dynamic content to the terminal. It is faster than the @--terminal@ backend, but requires the use of an external (ncurses) library.
+
+This backend does not support input.
 
 h2. License
 
