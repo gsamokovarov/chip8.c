@@ -2,25 +2,35 @@
 #define _CHIP8_H
 
 #include <stdint.h>
+#include <pthread.h>
 
 #define PC(chip8) chip8->program_counter
 #define V(chip8)  chip8->registers
 #define V0(chip8) chip8->registers[0]
 #define VF(chip8) chip8->registers[0xF]
 #define I(chip8)  chip8->index_register
-#define DT(chip8) chip8->delay_timer
-#define ST(chip8) chip8->sound_timer
+#define DT(chip8) chip8->delay_timer->value
+#define ST(chip8) chip8->sound_timer->value
 #define SP(chip8) chip8->stack_pointer
 
+typedef struct chip8_timer {
+  uint8_t   value;
+  pthread_t thread;
+} chip8_timer_t;
+
+chip8_timer_t * chip8_timer_new(void);
+void * chip8_timer_loop(chip8_timer_t *);
+void chip8_timer_free(chip8_timer_t *);
+
 typedef struct chip8 {
+  chip8_timer_t * delay_timer;
+  chip8_timer_t * sound_timer;
   uint16_t opcode;
   uint8_t  memory[4096];
   uint8_t  registers[16];
   uint16_t index_register;
   uint16_t program_counter;
   uint8_t  screen[64 * 32];
-  uint8_t  delay_timer;
-  uint8_t  sound_timer;
   uint16_t stack[16];
   uint16_t stack_pointer;
   uint8_t  keys[16];

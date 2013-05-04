@@ -3,11 +3,37 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
+#include <pthread.h>
 #include "chip8.h"
 
 #define BYTE3(blob) ((blob & 0x0F00) >> 8)
 #define BYTE2(blob) ((blob & 0x00F0) >> 4)
 #define BYTE1(blob) ((blob & 0x000F))
+
+chip8_timer_t * chip8_timer_new(void) {
+  chip8_timer_t * self = (chip8_timer_t *) malloc(sizeof(chip8_timer_t));
+
+  self->value = 0;
+  pthread_create(&self->thread, 0, (void *) chip8_timer_loop, self);
+
+  return self;
+}
+
+void * chip8_timer_loop(chip8_timer_t * self) {
+  while (1) {
+    if (self->value) {
+      self->value--;
+    }
+    usleep(16667);
+  }
+}
+
+void chip8_timer_free(chip8_timer_t * self) {
+  pthread_cancel(self->thread);
+  pthread_detach(self->thread);
+  free(self);
+}
 
 chip8_t * chip8_new(void) {
   chip8_t * self = (chip8_t *) malloc(sizeof(chip8_t));
@@ -15,9 +41,9 @@ chip8_t * chip8_new(void) {
   self->program_counter = 0x200;
   self->index_register  = 0;
   self->stack_pointer   = 0;
-  self->sound_timer     = 0;
-  self->delay_timer     = 0;
   self->opcode          = 0;
+  self->sound_timer     = chip8_timer_new();
+  self->delay_timer     = chip8_timer_new();
 
   memcpy(self->memory, chip8_hex_font, sizeof(chip8_hex_font));
   memset(self->registers, 0, sizeof(self->registers));
@@ -253,23 +279,15 @@ void chip8_tick(chip8_t * self) {
   default:
     chip8_no_such_opcode(self);
   }
-
-  if (DT(self)) {
-    DT(self)--;
-  }
-
-  if (ST(self)) {
-    ST(self)--;
-  }
 }
 
 void chip8_reset(chip8_t * self) {
-  self->program_counter = 0x200;
-  self->index_register  = 0;
-  self->stack_pointer   = 0;
-  self->sound_timer     = 0;
-  self->delay_timer     = 0;
-  self->opcode          = 0;
+  self->program_counter    = 0x200;
+  self->index_register     = 0;
+  self->stack_pointer      = 0;
+  self->opcode             = 0;
+  self->sound_timer->value = 0;
+  self->delay_timer->value = 0;
 
   memset(self->registers, 0, sizeof(self->registers));
   memset(self->screen, 0, sizeof(self->screen));
@@ -310,5 +328,11 @@ void chip8_no_such_opcode(chip8_t * self) {
 }
 
 void chip8_free(chip8_t * self) {
+  if (self->delay_timer) {
+    chip8_timer_free(self->delay_timer);
+  }
+  if (self->sound_timer) {
+    chip8_timer_free(self->sound_timer);
+  }
   free(self);
 }

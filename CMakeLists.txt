@@ -6,6 +6,9 @@ cmake_minimum_required(VERSION 2.6)
 
 # Let's start with the package requirements
 
+# We really need some form of threads.
+find_package(Threads REQUIRED)
+
 # The most stable IO at the moment is the SDL one, so we have a hard dependency
 # on it.
 find_package(SDL 1.2.0 REQUIRED)
@@ -34,7 +37,7 @@ file(GLOB_RECURSE CHIP8_SOURCES src/*.c)
 # Define our one and only executable.
 add_executable(chip8 ${CHIP8_SOURCES})
 
-target_link_libraries(chip8 ${SDL_LIBRARY})
+target_link_libraries(chip8 ${SDL_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 if (CURSES_FOUND)
   target_link_libraries(chip8 ${CURSES_LIBRARIES})
 endif()
@@ -48,6 +51,7 @@ file(GLOB_RECURSE TEST_SOURCES test/main.c test/mock_io/*.c src/chip8.c src/io.c
 # Add a test_chip8 target.
 add_executable(test_chip8 ${TEST_SOURCES})
 add_dependencies(test_chip8 chip8)
+target_link_libraries(test_chip8 ${CMAKE_THREAD_LIBS_INIT})
 
 # Add a test running the actual unit tests through CMake.
 add_test(test test_chip8)
