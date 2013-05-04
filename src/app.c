@@ -41,9 +41,17 @@ void app_run(app_t * self) {
   }
 }
 
-void app_setup(app_t * self) {
+int app_setup(app_t * self) {
   if (self->io) {
     io_setup(self->io);
+  } else {
+    return 0;
+  }
+
+  if (self->filename) {
+    return chip8_load_file(self->chip8, self->filename);
+  } else {
+    return 0;
   }
 }
 
