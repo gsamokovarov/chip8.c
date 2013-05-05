@@ -81,7 +81,7 @@ Options:
 
 h3. sdl
 
-SDL is the default backend, you don't need to explicitly specify it. It uses the "SDL":http://www.libsdl.org library display the CHIP-8 graphics and feed it with input from the keyboard.
+SDL is the default backend, you don't need to explicitly specify it. It uses the "SDL":http://www.libsdl.org library to display the CHIP-8 graphics and feed it with input from the keyboard.
 
 The CHIP-8 uses a hexadecimal keyboard, which maps rather well to the layout of the current generation keyboard numeric pad.
 
@@ -142,5 +142,4 @@ The following games are distributed with the interpreter:
 You can find them in the @roms@ folder.
 
 h2. License
-
 The code is available under the MIT license.
