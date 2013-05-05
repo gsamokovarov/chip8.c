@@ -79,7 +79,7 @@ Options:
   -n, --ncurses              use ncurses for output (experimental)
 </pre>
 
-h3. --sdl
+h3. sdl
 
 SDL is the default backend, you don't need to explicitly specify it. It uses the "SDL":http://www.libsdl.org library display the CHIP-8 graphics and feed it with input from the keyboard.
 
@@ -99,17 +99,47 @@ Use following keys to reset or quit the emulator.
 
 This is the only backend that supports input.
 
-h3. --terminal
+h3. terminal
 
 The terminal backend uses escape symbols to render dynamic content straight to the terminal. It requires a terminal that is at least 65x32 render the content correctly.
 
 This backend does not support input.
 
-h3. --ncurses
+h3. ncurses
 
 The ncurses backend uses the ncurses library to display dynamic content to the terminal. It is faster than the @--terminal@ backend, but requires the use of an external (ncurses) library.
 
 This backend does not support input.
+
+h2. Games
+
+The following games are distributed with the interpreter:
+
+* 15PUZZLE
+* BLINKY
+* BLITZ
+* BRIX
+* CONNECT4
+* GUESS
+* HIDDEN
+* INVADERS
+* KALEID
+* MAZE
+* MERLIN
+* MISSILE
+* PONG
+* PONG2
+* PUZZLE
+* SYZYGY
+* TANK
+* TETRIS
+* TICTAC
+* UFO
+* VBRIX
+* VERS
+* WIPEOFF
+
+You can find them in the @roms@ folder.
 
 h2. License
 
