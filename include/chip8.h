@@ -15,6 +15,8 @@
 
 typedef struct chip8_timer {
   uint8_t   value;
+  int       active;
+  int       done;
   pthread_t thread;
 } chip8_timer_t;
 

@@ -14,23 +14,29 @@
 chip8_timer_t * chip8_timer_new(void) {
   chip8_timer_t * self = (chip8_timer_t *) malloc(sizeof(chip8_timer_t));
 
-  self->value = 0;
+  self->value  = 0;
+  self->active = 1;
+  self->done   = 0;
+
   pthread_create(&self->thread, 0, (void *) chip8_timer_loop, self);
 
   return self;
 }
 
 void * chip8_timer_loop(chip8_timer_t * self) {
-  while (1) {
+  while (self->active) {
     if (self->value) {
       self->value--;
     }
     usleep(16667);
   }
+  self->done = 1;
+  return 0;
 }
 
 void chip8_timer_free(chip8_timer_t * self) {
-  pthread_cancel(self->thread);
+  self->active = 0;
+  while (!self->done);
   pthread_detach(self->thread);
   free(self);
 }
