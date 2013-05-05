@@ -42,17 +42,19 @@ void app_run(app_t * self) {
 }
 
 int app_setup(app_t * self) {
-  if (self->io) {
-    io_setup(self->io);
-  } else {
-    return 0;
+  if (!self->filename || !self->io) {
+    goto error;
   }
 
-  if (self->filename) {
-    return chip8_load_file(self->chip8, self->filename);
-  } else {
-    return 0;
+  if (!chip8_load_file(self->chip8, self->filename)) {
+    goto error;
   }
+  io_setup(self->io);
+
+  return 1;
+
+error:
+  return 0;
 }
 
 int app_parse_command_line(app_t * self, int argc, char ** argv) {
