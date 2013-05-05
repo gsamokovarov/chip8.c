@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "test.h"
 #include "chip8.h"
 
@@ -6,17 +7,17 @@ TEST(chip8_new) {
   chip8_t * chip8 = chip8_new();
 
   i = 0;
-  while (i < sizeof(chip8->keys)) {
+  while (i < sizeof(chip8->keys) / sizeof(chip8->keys[0])) {
     assert(chip8->keys[i++] == 0);
   }
 
   i = 0;
-  while (i < sizeof(chip8->stack)) {
+  while (i < sizeof(chip8->stack) / sizeof(chip8->stack[0])) {
     assert(chip8->stack[i++] == 0);
   }
 
   i = 0;
-  while (i < sizeof(chip8->screen)) {
+  while (i < sizeof(chip8->screen) / sizeof(chip8->screen[0])) {
     assert(chip8->screen[i++] == 0);
   }
 
@@ -35,7 +36,7 @@ TEST(chip8_clear_screen) {
   chip8_tick(chip8);
 
   i = 0;
-  while (i < sizeof(chip8->screen)) {
+  while (i < sizeof(chip8->screen) / sizeof(chip8->screen[0])) {
     assert(chip8->screen[i++] == 0);
   }
 
