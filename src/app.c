@@ -55,7 +55,7 @@ int app_setup(app_t * self) {
   }
 }
 
-void app_parse_command_line(app_t * self, int argc, char ** argv) {
+int app_parse_command_line(app_t * self, int argc, char ** argv) {
   int option;
 
   optind = 0;
@@ -79,7 +79,7 @@ void app_parse_command_line(app_t * self, int argc, char ** argv) {
     case 'h':
     case '?':
       printf("%s", APP_USAGE_MESSAGE);
-      break;
+      return 0;
     }
   }
 
@@ -87,11 +87,19 @@ void app_parse_command_line(app_t * self, int argc, char ** argv) {
     self->io = sdl_io_new();
   }
 
+  if (!optind) {
+    printf("%s", APP_USAGE_MESSAGE);
+    return 0;
+  }
+
   if (optind <= argc) {
     self->filename = argv[optind];
   } else {
     fprintf(stderr, "FILE is required\n");
+    return 0;
   }
+
+  return 1;
 }
 
 void app_teardown(app_t * self) {

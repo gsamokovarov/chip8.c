@@ -34,7 +34,7 @@ extern app_t * current_app;
 app_t * app_new(void);
 int  app_setup(app_t *);
 void app_run(app_t *);
-void app_parse_command_line(app_t *, int, char **);
+int  app_parse_command_line(app_t *, int, char **);
 void app_teardown(app_t *);
 void app_free(app_t *);
 
