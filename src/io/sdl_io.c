@@ -5,6 +5,28 @@
 #include "chip8.h"
 #include "io/sdl_io.h"
 
+sdl_io_custom_t * sdl_io_custom_new(void) {
+  sdl_io_custom_t * self = (sdl_io_custom_t *) malloc(sizeof(sdl_io_custom_t));
+
+  self->audio_spec = malloc(sizeof(SDL_AudioSpec));
+
+  self->audio_spec->freq     = 44100;
+  self->audio_spec->format   = AUDIO_S16SYS;
+  self->audio_spec->channels = 1;
+  self->audio_spec->samples  = 512;
+  self->audio_spec->callback = 0;
+  self->audio_spec->userdata = 0;
+
+  return self;
+}
+
+void sdl_io_custom_free(sdl_io_custom_t * self) {
+  if (self->audio_spec) {
+    free(self->audio_spec);
+  }
+  SDL_FreeSurface(self->surface);
+}
+
 io_t * sdl_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
@@ -15,7 +37,7 @@ io_t * sdl_io_new(void) {
   self->listen   = &sdl_io_listen;
   self->delay    = &sdl_io_delay;
   self->teardown = &sdl_io_teardown;
-  self->custom   = (sdl_io_custom_t *) malloc(sizeof(sdl_io_custom_t));
+  self->custom   = sdl_io_custom_new();
 
   return self;
 }
@@ -196,6 +218,9 @@ void sdl_io_delay(io_t * self, chip8_t * chip8) {
 }
 
 void sdl_io_teardown(io_t * self) {
-  SDL_FreeSurface(SDL_IO_CUSTOM(self)->surface);
+  if (self->custom) {
+    sdl_io_custom_free(SDL_IO_CUSTOM(self));
+    self->custom = 0;
+  }
   SDL_Quit();
 }
