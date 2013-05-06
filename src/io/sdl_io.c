@@ -24,7 +24,7 @@ void sdl_io_setup(io_t * self) {
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_WM_SetCaption("CHIP-8", 0);
 
-  SDL_IO_CUSTOM(self)->surface = SDL_SetVideoMode(64 * 8, 32 * 8, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+  SDL_IO_CUSTOM(self)->surface = SDL_SetVideoMode(64 * 12, 32 * 12, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 }
 
 void sdl_io_render(io_t * self, chip8_t * chip8) {
@@ -32,16 +32,16 @@ void sdl_io_render(io_t * self, chip8_t * chip8) {
   Uint32 black, white;
   SDL_Rect rect;
 
-  rect.w = 8;
-  rect.h = 8;
+  rect.w = 12;
+  rect.h = 12;
 
   black = SDL_MapRGB(SDL_IO_CUSTOM(self)->surface->format, 0, 0, 0);
   white = SDL_MapRGB(SDL_IO_CUSTOM(self)->surface->format, 255, 255, 255);
 
   for (j = 0; j < 32; j++) {
     for (i = 0; i < 64; i++) {
-      rect.x = (i * 8);
-      rect.y = (j * 8);
+      rect.x = (i * 12);
+      rect.y = (j * 12);
 
       SDL_FillRect(SDL_IO_CUSTOM(self)->surface, &rect, chip8->screen[32 * i + j] ? white : black);
     }
