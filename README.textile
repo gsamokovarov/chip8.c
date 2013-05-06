@@ -134,6 +134,7 @@ The following games are distributed with the interpreter:
 * UFO
 * VBRIX
 * VERS
+* WALL
 * WIPEOFF
 
 You can find them in the @roms@ folder.
