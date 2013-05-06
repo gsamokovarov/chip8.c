@@ -142,4 +142,5 @@ The following games are distributed with the interpreter:
 You can find them in the @roms@ folder.
 
 h2. License
+
 The code is available under the MIT license.
