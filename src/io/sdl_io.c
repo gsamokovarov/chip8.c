@@ -28,7 +28,7 @@ void sdl_io_setup(io_t * self) {
 }
 
 void sdl_io_render(io_t * self, chip8_t * chip8) {
-  unsigned char i, j;
+  Uint8 i, j;
   Uint32 black, white;
   SDL_Rect rect;
 
