@@ -22,7 +22,7 @@ io_t * sdl_io_new(void) {
 
 void sdl_io_setup(io_t * self) {
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_WM_SetCaption("Chip-8", 0);
+  SDL_WM_SetCaption("CHIP-8", 0);
 
   SDL_IO_CUSTOM(self)->surface = SDL_SetVideoMode(64 * 8, 32 * 8, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 }
