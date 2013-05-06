@@ -8,7 +8,8 @@ typedef struct chip8 chip8_t;
 typedef struct SDL_Surface SDL_Surface;
 
 typedef struct sdl_io_custom {
-  SDL_Surface * surface;
+  SDL_Surface   * surface;
+  SDL_AudioSpec * audio_spec
 } sdl_io_custom_t;
 
 io_t * sdl_io_new(void);
