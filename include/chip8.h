@@ -21,6 +21,7 @@ typedef struct chip8_timer {
 } chip8_timer_t;
 
 chip8_timer_t * chip8_timer_new(void);
+void chip8_timer_reset(chip8_timer_t *);
 void * chip8_timer_loop(chip8_timer_t *);
 void chip8_timer_free(chip8_timer_t *);
 

@@ -23,6 +23,10 @@ chip8_timer_t * chip8_timer_new(void) {
   return self;
 }
 
+void chip8_timer_reset(chip8_timer_t * self) {
+  self->value = 0;
+}
+
 void * chip8_timer_loop(chip8_timer_t * self) {
   while (self->active) {
     if (self->value) {
@@ -292,8 +296,9 @@ void chip8_reset(chip8_t * self) {
   self->index_register     = 0;
   self->stack_pointer      = 0;
   self->opcode             = 0;
-  self->sound_timer->value = 0;
-  self->delay_timer->value = 0;
+
+  chip8_timer_reset(self->sound_timer);
+  chip8_timer_reset(self->delay_timer);
 
   memset(self->registers, 0, sizeof(self->registers));
   memset(self->screen, 0, sizeof(self->screen));

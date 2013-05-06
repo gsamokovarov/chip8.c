@@ -6,6 +6,40 @@ TEST(chip8_new) {
   unsigned int i;
   chip8_t * chip8 = chip8_new();
 
+  assert(chip8->program_counter == 0x200);
+  assert(chip8->index_register  == 0);
+  assert(chip8->stack_pointer   == 0);
+  assert(chip8->opcode          == 0);
+
+  i = 0;
+  while (i < sizeof(chip8->keys) / sizeof(chip8->keys[0])) {
+    assert(chip8->keys[i++] == 0);
+  }
+
+  i = 0;
+  while (i < sizeof(chip8->stack) / sizeof(chip8->stack[0])) {
+    assert(chip8->stack[i++] == 0);
+  }
+
+  i = 0;
+  while (i < sizeof(chip8->screen) / sizeof(chip8->screen[0])) {
+    assert(chip8->screen[i++] == 0);
+  }
+
+  assert(chip8->program_counter == 0x200);
+
+  chip8_free(chip8);
+}
+
+TEST(chip8_reset) {
+  unsigned int i;
+  chip8_t * chip8 = chip8_new();
+
+  assert(chip8->program_counter == 0x200);
+  assert(chip8->index_register  == 0);
+  assert(chip8->stack_pointer   == 0);
+  assert(chip8->opcode          == 0);
+
   i = 0;
   while (i < sizeof(chip8->keys) / sizeof(chip8->keys[0])) {
     assert(chip8->keys[i++] == 0);
