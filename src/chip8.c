@@ -7,10 +7,6 @@
 #include <pthread.h>
 #include "chip8.h"
 
-#define BYTE3(blob) ((blob & 0x0F00) >> 8)
-#define BYTE2(blob) ((blob & 0x00F0) >> 4)
-#define BYTE1(blob) ((blob & 0x000F))
-
 chip8_timer_t * chip8_timer_new(void) {
   chip8_timer_t * self = (chip8_timer_t *) malloc(sizeof(chip8_timer_t));
 

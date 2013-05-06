@@ -4,6 +4,10 @@
 #include <stdint.h>
 #include <pthread.h>
 
+#define BYTE3(blob) ((blob & 0x0F00) >> 8)
+#define BYTE2(blob) ((blob & 0x00F0) >> 4)
+#define BYTE1(blob) ((blob & 0x000F))
+
 #define PC(chip8) chip8->program_counter
 #define V(chip8)  chip8->registers
 #define V0(chip8) chip8->registers[0]
