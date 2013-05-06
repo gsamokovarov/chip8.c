@@ -119,6 +119,7 @@ The following games are distributed with the interpreter:
 * BLINKY
 * BLITZ
 * BRIX
+* CAVE
 * CONNECT4
 * GUESS
 * HIDDEN
