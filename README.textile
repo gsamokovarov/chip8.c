@@ -101,7 +101,7 @@ This is the only backend that supports input.
 
 h3. terminal
 
-The terminal backend uses escape symbols to render dynamic content straight to the terminal. It requires a terminal that is at least 65x32 render the content correctly.
+The terminal backend uses escape symbols to render dynamic content straight to the terminal. It requires a terminal that is at least 64x32 to render the content correctly.
 
 This backend does not support input.
 
