@@ -103,13 +103,9 @@ h3. terminal
 
 The terminal backend uses escape symbols to render dynamic content straight to the terminal. It requires a terminal that is at least 64x32 to render the content correctly.
 
-This backend does not support input.
-
 h3. ncurses
 
 The ncurses backend uses the ncurses library to display dynamic content to the terminal. It is faster than the @--terminal@ backend, but requires the use of an external (ncurses) library.
-
-This backend does not support input.
 
 h2. Games
 
