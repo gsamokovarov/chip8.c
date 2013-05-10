@@ -17,6 +17,8 @@ sdl_io_custom_t * sdl_io_custom_new(void) {
   self->audio_spec->callback = 0;
   self->audio_spec->userdata = 0;
 
+  self->surface = SDL_SetVideoMode(64 * 12, 32 * 12, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+
   return self;
 }
 
@@ -45,8 +47,6 @@ io_t * sdl_io_new(void) {
 void sdl_io_setup(io_t * self) {
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_WM_SetCaption("CHIP-8", 0);
-
-  SDL_IO_CUSTOM(self)->surface = SDL_SetVideoMode(64 * 12, 32 * 12, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 }
 
 void sdl_io_render(io_t * self, chip8_t * chip8) {
