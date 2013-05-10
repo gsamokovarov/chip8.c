@@ -82,7 +82,7 @@ int sdl_io_listen(io_t * self, chip8_t * chip8) {
 
   SDL_Event event;
 
-  if (SDL_PollEvent(&event)) {
+  while (SDL_PollEvent(&event)) {
     switch (event.type) {
     case SDL_QUIT:
       return 0;
