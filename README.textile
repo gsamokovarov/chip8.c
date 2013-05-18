@@ -8,6 +8,8 @@
 
 bq. CHIP-8 is an interpreted programming language, developed by Joseph Weisbecker. Initially used on the COSMAC VIP and Telmac 1800 8-bit microcomputers in the mid-1970s, it allowed video games to be easily programmable.
 
+!https://raw.github.com/gsamokovarov/chip8.c/master/.chip8.png!
+
 h2. Build
 
 The project uses CMake as a build system and has the following dependencies:
