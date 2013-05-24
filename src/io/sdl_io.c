@@ -23,9 +23,7 @@ sdl_io_custom_t * sdl_io_custom_new(void) {
 }
 
 void sdl_io_custom_free(sdl_io_custom_t * self) {
-  if (self->audio_spec) {
-    free(self->audio_spec);
-  }
+  if (self->audio_spec) free(self->audio_spec);
   SDL_FreeSurface(self->surface);
 }
 

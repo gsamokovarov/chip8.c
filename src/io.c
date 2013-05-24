@@ -26,8 +26,6 @@ inline void io_teardown(io_t * self) {
 }
 
 inline void io_free(io_t * self) {
-  if (self->custom) {
-    free(self->custom);
-  }
+  if (self->custom) free(self->custom);
   free(self);
 }

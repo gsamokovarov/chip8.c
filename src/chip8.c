@@ -25,9 +25,7 @@ void chip8_timer_reset(chip8_timer_t * self) {
 
 void * chip8_timer_loop(chip8_timer_t * self) {
   while (self->active) {
-    if (self->value) {
-      self->value--;
-    }
+    if (self->value) self->value--;
     usleep(16667);
   }
   self->done = 1;
@@ -185,15 +183,9 @@ void chip8_tick(chip8_t * self) {
       for (i = 0; i < height; i++) {
         row = self->memory[I(self) + i];
         for (j = 0; j < width; j++) {
-          if (!(pixel = row & (0x80 >> j))) {
-            continue;
-          }
-          if ((location = 32 * (x_coord + j) + (y_coord + i)) > (64 * 32)) {
-            continue;
-          }
-          if (self->screen[location]) {
-            VF(self) = 1;
-          }
+          if (!(pixel = row & (0x80 >> j))) continue;
+          if ((location = 32 * (x_coord + j) + (y_coord + i)) > (64 * 32)) continue;
+          if (self->screen[location]) VF(self) = 1;
           self->screen[location] ^= 1;
         }
       }
@@ -305,27 +297,19 @@ int chip8_load_file(chip8_t * self, char * filename) {
   FILE   * file;
   uint64_t size, maximum_file_size = 4096 - 0x200;
 
-  if (!(file = fopen(filename, "rb"))) {
-    goto error;
-  }
+  if (!(file = fopen(filename, "rb"))) goto error;
 
   fseek(file, 0, SEEK_END);
-  if ((size = ftell(file)) > maximum_file_size) {
-    goto error;
-  }
+  if ((size = ftell(file)) > maximum_file_size) goto error;
   fseek(file, 0, SEEK_SET);
 
-  if (fread(self->memory + 0x200, 1, size, file) != size) {
-    goto error;
-  }
+  if (fread(self->memory + 0x200, 1, size, file) != size) goto error;
 
   fclose(file);
   return 1;
 
 error:
-  if (file) {
-    fclose(file);
-  }
+  if (file) fclose(file);
   perror("Error");
   return 0;
 }
@@ -335,11 +319,7 @@ void chip8_no_such_opcode(chip8_t * self) {
 }
 
 void chip8_free(chip8_t * self) {
-  if (self->delay_timer) {
-    chip8_timer_free(self->delay_timer);
-  }
-  if (self->sound_timer) {
-    chip8_timer_free(self->sound_timer);
-  }
+  if (self->delay_timer) chip8_timer_free(self->delay_timer);
+  if (self->sound_timer) chip8_timer_free(self->sound_timer);
   free(self);
 }

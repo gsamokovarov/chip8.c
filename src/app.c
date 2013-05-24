@@ -26,9 +26,7 @@ void app_run(app_t * self) {
   if (self->io && self->chip8) {
     self->running = 1;
     while (self->running) {
-      if (!io_listen(self->io, self->chip8)) {
-        break;
-      };
+      if (!io_listen(self->io, self->chip8)) break;
       chip8_tick(self->chip8);
       io_render(self->io, self->chip8);
       io_beep(self->io, self->chip8);
@@ -42,13 +40,9 @@ void app_run(app_t * self) {
 }
 
 int app_setup(app_t * self) {
-  if (!self->filename || !self->io) {
-    goto error;
-  }
+  if (!self->filename || !self->io) goto error;
+  if (!chip8_load_file(self->chip8, self->filename)) goto error;
 
-  if (!chip8_load_file(self->chip8, self->filename)) {
-    goto error;
-  }
   io_setup(self->io);
 
   return 1;
@@ -64,19 +58,13 @@ int app_parse_command_line(app_t * self, int argc, char ** argv) {
   while (~(option = getopt_long(argc, argv, "stnh", APP_OPTIONS, 0))) {
     switch (option) {
     case 's':
-      if (!self->io) {
-        self->io = sdl_io_new();
-      }
+      if (!self->io) self->io = sdl_io_new();
       break;
     case 't':
-      if (!self->io) {
-        self->io = terminal_io_new();
-      }
+      if (!self->io) self->io = terminal_io_new();
       break;
     case 'n':
-      if (!self->io) {
-        self->io = ncurses_io_new();
-      }
+      if (!self->io) self->io = ncurses_io_new();
       break;
     case 'h':
     case '?':
@@ -105,21 +93,13 @@ int app_parse_command_line(app_t * self, int argc, char ** argv) {
 }
 
 void app_teardown(app_t * self) {
-  if (self->io) {
-    io_teardown(self->io);
-  }
+  if (self->io) io_teardown(self->io);
 }
 
 void app_free(app_t * self) {
-  if (self->chip8) {
-    chip8_free(self->chip8);
-  }
-  if (self->io) {
-    io_free(self->io);
-  }
-  if (current_app == self) {
-    current_app_set_to(0);
-  }
+  if (self->chip8) chip8_free(self->chip8);
+  if (self->io) io_free(self->io);
+  if (current_app == self) current_app_set_to(0);
   free(self);
 }
 
