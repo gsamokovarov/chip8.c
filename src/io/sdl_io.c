@@ -8,7 +8,7 @@
 sdl_io_custom_t * sdl_io_custom_new(void) {
   sdl_io_custom_t * self = (sdl_io_custom_t *) malloc(sizeof(sdl_io_custom_t));
 
-  self->audio_spec = malloc(sizeof(SDL_AudioSpec));
+  self->audio_spec = (SDL_AudioSpec *) malloc(sizeof(SDL_AudioSpec));
 
   self->audio_spec->freq     = 44100;
   self->audio_spec->format   = AUDIO_S16SYS;
