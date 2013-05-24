@@ -73,9 +73,7 @@ int app_parse_command_line(app_t * self, int argc, char ** argv) {
     }
   }
 
-  if (!self->io) {
-    self->io = sdl_io_new();
-  }
+  if (!self->io) self->io = sdl_io_new();
 
   if (!optind) {
     printf("%s", APP_USAGE_MESSAGE);
