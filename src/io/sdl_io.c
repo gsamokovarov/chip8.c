@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 #include "io.h"
 #include "chip8.h"
 #include "io/sdl_io.h"
@@ -8,23 +9,14 @@
 sdl_io_custom_t * sdl_io_custom_new(void) {
   sdl_io_custom_t * self = (sdl_io_custom_t *) malloc(sizeof(sdl_io_custom_t));
 
-  self->audio_spec = (SDL_AudioSpec *) malloc(sizeof(SDL_AudioSpec));
-
-  self->audio_spec->freq     = 44100;
-  self->audio_spec->format   = AUDIO_S16SYS;
-  self->audio_spec->channels = 1;
-  self->audio_spec->samples  = 512;
-  self->audio_spec->callback = 0;
-  self->audio_spec->userdata = 0;
-
   self->surface = SDL_SetVideoMode(64 * 12, 32 * 12, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
   return self;
 }
 
 void sdl_io_custom_free(sdl_io_custom_t * self) {
-  if (self->audio_spec) free(self->audio_spec);
-  SDL_FreeSurface(self->surface);
+  if (self->sound) Mix_FreeChunk(self->sound);
+  if (self->surface) SDL_FreeSurface(self->surface);
 }
 
 io_t * sdl_io_new(void) {
@@ -44,6 +36,9 @@ io_t * sdl_io_new(void) {
 
 void sdl_io_setup(io_t * self) {
   SDL_Init(SDL_INIT_EVERYTHING);
+  Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
+  SDL_IO_CUSTOM(self)->sound = Mix_LoadWAV(getenv("CHIP8_BEEP_PATH"));
+  if (!SDL_IO_CUSTOM(self)->sound) SDL_IO_CUSTOM(self)->sound = Mix_LoadWAV("beep.wav");
   SDL_WM_SetCaption("CHIP-8", 0);
 }
 
@@ -73,6 +68,12 @@ void sdl_io_render(io_t * self, chip8_t * chip8) {
 void sdl_io_beep(io_t * self, chip8_t * chip8) {
   UNUSED(self);
   UNUSED(chip8);
+
+  if (ST(chip8) && !Mix_PlayingMusic()) {
+    if (SDL_IO_CUSTOM(self)->sound) {
+      Mix_PlayChannelTimed(-1, SDL_IO_CUSTOM(self)->sound, 0, ST(chip8));
+    }
+  }
 }
 
 int sdl_io_listen(io_t * self, chip8_t * chip8) {
@@ -221,4 +222,5 @@ void sdl_io_teardown(io_t * self) {
     self->custom = 0;
   }
   SDL_Quit();
+  Mix_CloseAudio();
 }

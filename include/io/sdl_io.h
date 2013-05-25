@@ -6,11 +6,11 @@
 typedef struct io io_t;
 typedef struct chip8 chip8_t;
 typedef struct SDL_Surface SDL_Surface;
-typedef struct SDL_AudioSpec SDL_AudioSpec;
+typedef struct Mix_Chunk Mix_Chunk;
 
 typedef struct sdl_io_custom {
-  SDL_Surface   * surface;
-  SDL_AudioSpec * audio_spec;
+  SDL_Surface * surface;
+  Mix_Chunk   * sound;
 } sdl_io_custom_t;
 
 sdl_io_custom_t * sdl_io_custom_new(void);

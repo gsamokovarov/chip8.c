@@ -12,8 +12,9 @@ find_package(Threads REQUIRED)
 # The most stable IO at the moment is the SDL one, so we have a hard dependency
 # on it.
 find_package(SDL 1.2.0 REQUIRED)
-include_directories(${SDL_INCLUDE_DIRS})
-link_directories(${SDL_LIBRARY_DIRS})
+find_package(SDL_mixer 1.2.0 REQUIRED)
+include_directories(${SDL_INCLUDE_DIRS} ${SDLMIXER_INCLUDE_DIRS})
+link_directories(${SDL_LIBRARY_DIRS} ${SDLMIXER_LIBRARY_DIRS})
 
 # We softly depend on ncurses too.
 find_package(Curses)
@@ -37,7 +38,7 @@ file(GLOB_RECURSE CHIP8_SOURCES src/*.c)
 # Define our one and only executable.
 add_executable(chip8 ${CHIP8_SOURCES})
 
-target_link_libraries(chip8 ${SDL_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(chip8 ${SDL_LIBRARY} ${SDLMIXER_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 if (CURSES_FOUND)
   target_link_libraries(chip8 ${CURSES_LIBRARIES})
 endif()
