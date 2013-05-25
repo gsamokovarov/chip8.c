@@ -24,4 +24,6 @@ void sdl_io_delay(io_t *, chip8_t *);
 int  sdl_io_listen(io_t *, chip8_t *);
 void sdl_io_teardown(io_t *);
 
+static void sdl_io_load_beep_sound(io_t *);
+
 #endif
