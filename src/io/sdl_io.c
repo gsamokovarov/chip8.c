@@ -36,7 +36,7 @@ io_t * sdl_io_new(void) {
 
 void sdl_io_setup(io_t * self) {
   SDL_Init(SDL_INIT_EVERYTHING);
-  Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
+  Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 4096);
   SDL_IO_CUSTOM(self)->sound = Mix_LoadWAV(getenv("CHIP8_BEEP_PATH"));
   if (!SDL_IO_CUSTOM(self)->sound) SDL_IO_CUSTOM(self)->sound = Mix_LoadWAV("beep.wav");
   SDL_WM_SetCaption("CHIP-8", 0);
@@ -69,9 +69,9 @@ void sdl_io_beep(io_t * self, chip8_t * chip8) {
   UNUSED(self);
   UNUSED(chip8);
 
-  if (ST(chip8) && !Mix_PlayingMusic()) {
+  if (ST(chip8) == 1 && !Mix_Playing(-1)) {
     if (SDL_IO_CUSTOM(self)->sound) {
-      Mix_PlayChannelTimed(-1, SDL_IO_CUSTOM(self)->sound, 0, ST(chip8));
+      Mix_PlayChannel(-1, SDL_IO_CUSTOM(self)->sound, 0);
     }
   }
 }
