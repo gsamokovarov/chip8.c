@@ -313,7 +313,7 @@ int chip8_load_rom(chip8_t * self, char * filename) {
   if ((file_size = ftell(file)) > maximum_file_size) goto error;
   fseek(file, 0, SEEK_SET);
 
-  if (fread(self->memory + 0x200, 1, file_size, file) != file_size) goto error;
+  if (fread(&self->memory[0x200], 1, file_size, file) != file_size) goto error;
 
   fclose(file);
   free(embedded_path);
