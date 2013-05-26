@@ -66,7 +66,6 @@ TEST(app_parse_command_line_filename) {
   char * argv[] = {"chip8", "roms/INVADERS"};
 
   assert(app_parse_command_line(app, argc, argv));
-  assert(strcmp(app->io->name, "sdl") == 0);
   assert(strcmp(app->filename, "roms/INVADERS") == 0);
 
   app_free(app);
