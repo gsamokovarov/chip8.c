@@ -6,7 +6,7 @@
 #define TEST(name) void test_##name(void)
 #define UNIT(name) test_##name
 #define RUN_TEST_SUITE(suite) do {                         \
-  int i, len ;                                             \
+  int i, len;                                              \
                                                            \
   for (i = 0; i < sizeof(suite) / sizeof(suite[0]); i++) { \
     suite[i]();                                            \
