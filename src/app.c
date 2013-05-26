@@ -40,9 +40,10 @@ void app_run(app_t * self) {
 }
 
 int app_setup(app_t * self) {
-  if (!self->filename || !self->io) goto error;
-  if (!chip8_load_file(self->chip8, self->filename)) goto error;
+  if (!self->filename) goto error;
+  if (!chip8_load_rom(self->chip8, self->filename)) goto error;
 
+  if (!self->io) self->io = sdl_io_new();
   io_setup(self->io);
 
   return 1;
@@ -72,8 +73,6 @@ int app_parse_command_line(app_t * self, int argc, char ** argv) {
       return 0;
     }
   }
-
-  if (!self->io) self->io = sdl_io_new();
 
   if (!optind) {
     printf("%s", APP_USAGE_MESSAGE);

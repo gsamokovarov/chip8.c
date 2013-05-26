@@ -62,4 +62,5 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS test_chip8)
 
 # Define an install target for the chip8 executable.
 install(TARGETS chip8 RUNTIME DESTINATION bin)
-install(FILES resource/beep.wav DESTINATION share/chip8/)
+install(FILES resource/beep.wav DESTINATION share/chip8)
+install(DIRECTORY resource/roms DESTINATION share/chip8)

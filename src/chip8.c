@@ -293,23 +293,35 @@ void chip8_reset(chip8_t * self) {
   memset(self->stack, 0, sizeof(self->stack));
 }
 
-int chip8_load_file(chip8_t * self, char * filename) {
+int chip8_load_rom(chip8_t * self, char * filename) {
   FILE   * file;
-  uint64_t size, maximum_file_size = 4096 - 0x200;
+  char   * embedded_path;
+  uint64_t embedded_path_size, file_size, maximum_file_size = 4096 - 0x200;
 
-  if (!(file = fopen(filename, "rb"))) goto error;
+  embedded_path_size = strlen("/usr/local/share/chip8/roms/") + strlen(filename) + 1;
+  if (!(embedded_path = malloc(embedded_path_size))) goto error;
+
+  sprintf(embedded_path, "%s%s", "/usr/local/share/chip8/roms/", filename);
+  if (!(file = fopen(embedded_path, "rb"))) {
+    sprintf(embedded_path, "%s%s", "/usr/share/chip8/roms/", filename);
+    if (!(file = fopen(embedded_path, "rb"))) {
+      if (!(file = fopen(filename, "rb"))) goto error;
+    }
+  }
 
   fseek(file, 0, SEEK_END);
-  if ((size = ftell(file)) > maximum_file_size) goto error;
+  if ((file_size = ftell(file)) > maximum_file_size) goto error;
   fseek(file, 0, SEEK_SET);
 
-  if (fread(self->memory + 0x200, 1, size, file) != size) goto error;
+  if (fread(self->memory + 0x200, 1, file_size, file) != file_size) goto error;
 
   fclose(file);
+  free(embedded_path);
   return 1;
 
 error:
   if (file) fclose(file);
+  if (embedded_path) free(embedded_path);
   perror("Error");
   return 0;
 }
