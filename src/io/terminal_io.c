@@ -8,14 +8,16 @@
 io_t * terminal_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
-  self->name     = "terminal";
-  self->setup    = &terminal_io_setup;
-  self->render   = &terminal_io_render;
-  self->beep     = &terminal_io_beep;
-  self->listen   = &terminal_io_listen;
-  self->teardown = &terminal_io_teardown;
-  self->delay    = &terminal_io_delay;
-  self->custom   = 0;
+  if (self) {
+    self->name     = "terminal";
+    self->setup    = &terminal_io_setup;
+    self->render   = &terminal_io_render;
+    self->beep     = &terminal_io_beep;
+    self->listen   = &terminal_io_listen;
+    self->teardown = &terminal_io_teardown;
+    self->delay    = &terminal_io_delay;
+    self->custom   = 0;
+  }
 
   return self;
 }

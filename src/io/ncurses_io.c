@@ -8,14 +8,16 @@
 io_t * ncurses_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
-  self->name     = "ncurses";
-  self->setup    = &ncurses_io_setup;
-  self->render   = &ncurses_io_render;
-  self->beep     = &ncurses_io_beep;
-  self->listen   = &ncurses_io_listen;
-  self->teardown = &ncurses_io_teardown;
-  self->delay    = &ncurses_io_delay;
-  self->custom   = 0;
+  if (self) {
+    self->name     = "ncurses";
+    self->setup    = &ncurses_io_setup;
+    self->render   = &ncurses_io_render;
+    self->beep     = &ncurses_io_beep;
+    self->listen   = &ncurses_io_listen;
+    self->teardown = &ncurses_io_teardown;
+    self->delay    = &ncurses_io_delay;
+    self->custom   = 0;
+  }
 
   return self;
 }

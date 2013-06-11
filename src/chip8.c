@@ -10,11 +10,13 @@
 chip8_timer_t * chip8_timer_new(void) {
   chip8_timer_t * self = (chip8_timer_t *) malloc(sizeof(chip8_timer_t));
 
-  self->value  = 0;
-  self->active = 1;
-  self->done   = 0;
+  if (self) {
+    self->value  = 0;
+    self->active = 1;
+    self->done   = 0;
 
-  pthread_create(&self->thread, 0, (void *) chip8_timer_loop, self);
+    pthread_create(&self->thread, 0, (void *) chip8_timer_loop, self);
+  }
 
   return self;
 }
@@ -42,20 +44,22 @@ void chip8_timer_free(chip8_timer_t * self) {
 chip8_t * chip8_new(void) {
   chip8_t * self = (chip8_t *) malloc(sizeof(chip8_t));
 
-  self->program_counter = 0x200;
-  self->index_register  = 0;
-  self->stack_pointer   = 0;
-  self->opcode          = 0;
-  self->sound_timer     = chip8_timer_new();
-  self->delay_timer     = chip8_timer_new();
+  if (self) {
+    self->program_counter = 0x200;
+    self->index_register  = 0;
+    self->stack_pointer   = 0;
+    self->opcode          = 0;
+    self->sound_timer     = chip8_timer_new();
+    self->delay_timer     = chip8_timer_new();
 
-  memcpy(self->memory, chip8_hex_font, sizeof(chip8_hex_font));
-  memset(self->registers, 0, sizeof(self->registers));
-  memset(self->screen, 0, sizeof(self->screen));
-  memset(self->stack, 0, sizeof(self->stack));
-  memset(self->keys, 0, sizeof(self->keys));
+    memcpy(self->memory, chip8_hex_font, sizeof(chip8_hex_font));
+    memset(self->registers, 0, sizeof(self->registers));
+    memset(self->screen, 0, sizeof(self->screen));
+    memset(self->stack, 0, sizeof(self->stack));
+    memset(self->keys, 0, sizeof(self->keys));
 
-  srand(time(0));
+    srand(time(0));
+  }
 
   return self;
 }

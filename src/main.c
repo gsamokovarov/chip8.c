@@ -12,6 +12,11 @@
 int main(int argc, char ** argv) {
   app_t * app = app_new();
 
+  if (!app) {
+    fprintf(stderr, "Can not allocate app at %d\n", __LINE__);
+    goto error;
+  }
+
   current_app_set_to(app);
   current_app_register_signal_handlers();
 

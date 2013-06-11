@@ -9,7 +9,9 @@
 sdl_io_custom_t * sdl_io_custom_new(void) {
   sdl_io_custom_t * self = (sdl_io_custom_t *) malloc(sizeof(sdl_io_custom_t));
 
-  self->surface = SDL_SetVideoMode(64 * 12, 32 * 12, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+  if (self) {
+    self->surface = SDL_SetVideoMode(64 * 12, 32 * 12, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+  }
 
   return self;
 }
@@ -22,14 +24,16 @@ void sdl_io_custom_free(sdl_io_custom_t * self) {
 io_t * sdl_io_new(void) {
   io_t * self = (io_t *) malloc(sizeof(io_t));
 
-  self->name     = "sdl";
-  self->setup    = &sdl_io_setup;
-  self->render   = &sdl_io_render;
-  self->beep     = &sdl_io_beep;
-  self->listen   = &sdl_io_listen;
-  self->delay    = &sdl_io_delay;
-  self->teardown = &sdl_io_teardown;
-  self->custom   = sdl_io_custom_new();
+  if (self) {
+    self->name     = "sdl";
+    self->setup    = &sdl_io_setup;
+    self->render   = &sdl_io_render;
+    self->beep     = &sdl_io_beep;
+    self->listen   = &sdl_io_listen;
+    self->delay    = &sdl_io_delay;
+    self->teardown = &sdl_io_teardown;
+    self->custom   = sdl_io_custom_new();
+  }
 
   return self;
 }

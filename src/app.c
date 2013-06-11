@@ -15,9 +15,12 @@ app_t * current_app = 0;
 app_t * app_new(void) {
   app_t * self = (app_t *) malloc(sizeof(app_t));
 
-  self->running = 0;
-  self->io      = 0;
-  self->chip8   = chip8_new();
+  if (self) {
+    self->running = 0;
+    self->io      = 0;
+
+    if (!(self->chip8 = chip8_new())) return 0;
+  }
 
   return self;
 }
@@ -44,6 +47,8 @@ int app_setup(app_t * self) {
   if (!chip8_load_rom(self->chip8, self->filename)) goto error;
 
   if (!self->io) self->io = sdl_io_new();
+  if (!self->io) goto error;
+
   io_setup(self->io);
 
   return 1;
