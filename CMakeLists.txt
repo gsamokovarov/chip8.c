@@ -28,6 +28,9 @@ endif()
 # Include our own headers, which live in the include directory.
 include_directories(include)
 
+# Bring all the warnings and try C11 as an standard.
+add_definitions("-Wall -std=c11")
+
 # Use a generated config.h. This allow us to bubble options from the CMake
 # configuration to the C compilator.
 configure_file("include/config.h.in" "${CMAKE_SOURCE_DIR}/include/config.h")
