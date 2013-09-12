@@ -28,8 +28,8 @@ endif()
 # Include our own headers, which live in the include directory.
 include_directories(include)
 
-# Bring all the warnings and try C11 as an standard.
-add_definitions("-Wall -std=c11")
+# On clang, the default standard is gnu99. Use gnu89 as GCC.
+add_definitions("-Wall -std=gnu89")
 
 # Use a generated config.h. This allow us to bubble options from the CMake
 # configuration to the C compilator.
